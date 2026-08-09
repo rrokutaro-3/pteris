@@ -1,0 +1,24 @@
+name = "lean-store-api"
+main = "src/api/index.js"
+compatibility_date = "2026-08-08"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lean-store-db"
+database_id = "your-d1-database-id"
+
+[vars]
+RESEND_FROM_EMAIL = "orders@yourbrand.com"
+STORE_URL = "https://yourbrand.pages.dev"
+CDN_BASE_URL = "https://cdn.yourbrand.com"
+# Must stay >= 30: this value also sets the Stripe Checkout Session's
+# expires_at (see src/api/routes/checkout.js), and Stripe rejects any
+# expires_at less than 30 minutes in the future. A value below 30 makes
+# every checkout fail at Stripe session creation.
+RESERVATION_TTL_MINUTES = "30"
+
+# Secrets (set via: wrangler secret put <name>)
+# STRIPE_SECRET_KEY
+# STRIPE_WEBHOOK_SECRET
+# RESEND_API_KEY
+# ADMIN_API_KEY

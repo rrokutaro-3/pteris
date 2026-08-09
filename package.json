@@ -1,0 +1,27 @@
+{
+  "name": "lean-ecommerce-engine",
+  "version": "2.2.0",
+  "description": "File-based e-commerce backend. D1 for stock/orders. Cloudflare Workers for API.",
+  "type": "module",
+  "scripts": {
+    "build": "node src/build/build-all.js",
+    "build:products": "node src/build/build-products.js",
+    "build:index": "node src/build/build-index.js",
+    "build:configs": "node src/build/build-configs.js",
+    "sync:stock": "node src/build/sync-stock.js",
+    "sync:prices": "node src/build/sync-prices.js",
+    "dev:api": "wrangler dev src/api/index.js",
+    "deploy:api": "wrangler deploy src/api/index.js",
+    "db:migrate": "wrangler d1 execute lean-store-db --file=src/schema/d1-schema.sql",
+    "migrate:assets": "node scripts/migrate-assets-to-hf.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.600.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

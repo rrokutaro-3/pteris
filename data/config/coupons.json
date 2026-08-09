@@ -1,0 +1,23 @@
+{
+  "active": ["WELCOME10", "FREESHIP"],
+  "codes": {
+    "WELCOME10": {
+      "type": "percentage",
+      "value": 10,
+      "minOrder": 0,
+      "usageLimit": null,
+      "maxDiscount": 50.00,
+      "expires": null,
+      "description": "10% off for new customers"
+    },
+    "FREESHIP": {
+      "type": "fixed",
+      "value": 7.99,
+      "minOrder": 50.00,
+      "usageLimit": null,
+      "maxDiscount": null,
+      "expires": null,
+      "description": "Covers standard shipping on orders over $50"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "profiles": [
+    {
+      "id": "standard",
+      "name": "Standard Shipping",
+      "deliveryTime": "5-7 business days",
+      "rates": [
+        { "name": "Light", "minWeight": 0, "maxWeight": 0.5, "price": 4.99, "countries": ["US", "CA"] },
+        { "name": "Standard", "minWeight": 0.5, "maxWeight": 2.0, "price": 7.99, "countries": ["US", "CA"] },
+        { "name": "Heavy", "minWeight": 2.0, "maxWeight": 10.0, "price": 12.99, "countries": ["US", "CA"] }
+      ],
+      "freeThreshold": 75.00
+    },
+    {
+      "id": "express",
+      "name": "Express Shipping",
+      "deliveryTime": "2-3 business days",
+      "rates": [
+        { "name": "Express", "minWeight": 0, "maxWeight": 5.0, "price": 15.99, "countries": ["US"] }
+      ],
+      "freeThreshold": null
+    },
+    {
+      "id": "international",
+      "name": "International Shipping",
+      "deliveryTime": "10-20 business days",
+      "rates": [
+        { "name": "International", "minWeight": 0, "maxWeight": 2.0, "price": 24.99, "countries": ["GB", "DE", "FR", "AU"] },
+        { "name": "International Heavy", "minWeight": 2.0, "maxWeight": 10.0, "price": 39.99, "countries": ["GB", "DE", "FR", "AU"] }
+      ],
+      "freeThreshold": null
+    }
+  ],
+  "defaultProfile": "standard",
+  "origin": {
+    "country": "US",
+    "zip": "10001"
+  }
+}

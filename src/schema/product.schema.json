@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LeanEcommerceProduct",
+  "type": "object",
+  "required": ["id", "type", "identity", "pricing", "description", "categories", "variants", "media", "seo", "meta"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^p-[a-zA-Z0-9_-]+$" },
+    "type": { "type": "string", "enum": ["physical", "digital", "service", "subscription", "bundle"] },
+    "identity": {
+      "type": "object",
+      "required": ["name", "slug", "sku", "status"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "sku": { "type": "string" },
+        "barcode": { "type": "string" },
+        "brand": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "draft", "archived"] }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "required": ["currency", "price"],
+      "properties": {
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "price": { "type": "number", "minimum": 0 },
+        "compareAtPrice": { "type": "number", "minimum": 0 },
+        "costPrice": { "type": "number", "minimum": 0 },
+        "taxClass": { "type": "string" }
+      }
+    },
+    "description": {
+      "type": "object",
+      "properties": {
+        "short": { "type": "string" },
+        "full": { "type": "string" },
+        "highlights": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "categories": { "type": "array", "items": { "type": "string" } },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "value"],
+        "properties": {
+          "name": { "type": "string" },
+          "value": { "type": "string" },
+          "group": { "type": "string" },
+          "visible": { "type": "boolean" },
+          "filterable": { "type": "boolean" }
+        }
+      }
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "sku", "options", "price"],
+        "properties": {
+          "id": { "type": "string" },
+          "sku": { "type": "string" },
+          "barcode": { "type": "string" },
+          "options": { "type": "object", "additionalProperties": { "type": "string" } },
+          "price": { "type": "number", "minimum": 0 },
+          "weight": { "type": "number" },
+          "dimensions": {
+            "type": "object",
+            "properties": {
+              "l": { "type": "number" },
+              "w": { "type": "number" },
+              "h": { "type": "number" },
+              "unit": { "type": "string", "enum": ["cm", "in", "m", "ft"] }
+            }
+          },
+          "image": { "type": "string" },
+          "stock": { "type": "integer", "minimum": 0 },
+          "lowStockThreshold": { "type": "integer", "minimum": 0 },
+          "backorder": { "type": "boolean" }
+        }
+      }
+    },
+    "media": {
+      "type": "object",
+      "properties": {
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["url", "alt"],
+            "properties": {
+              "url": { "type": "string" },
+              "alt": { "type": "string" },
+              "type": { "type": "string", "enum": ["image", "360", "zoom"] },
+              "order": { "type": "integer" },
+              "variant": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "videos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "url": { "type": "string" },
+              "thumbnail": { "type": "string" },
+              "order": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "ugc": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "platform": { "type": "string", "enum": ["tiktok", "instagram", "youtube", "pinterest"] },
+          "url": { "type": "string" },
+          "thumbnail": { "type": "string" },
+          "username": { "type": "string" }
+        }
+      }
+    },
+    "relations": {
+      "type": "object",
+      "properties": {
+        "related": { "type": "array", "items": { "type": "string" } },
+        "upsells": { "type": "array", "items": { "type": "string" } },
+        "crossSells": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "shipping": {
+      "type": "object",
+      "properties": {
+        "profile": { "type": "string" },
+        "weight": { "type": "number" },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "l": { "type": "number" },
+            "w": { "type": "number" },
+            "h": { "type": "number" },
+            "unit": { "type": "string" }
+          }
+        },
+        "requiresShipping": { "type": "boolean" }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "keywords": { "type": "array", "items": { "type": "string" } },
+        "ogImage": { "type": "string" },
+        "canonical": { "type": "string" },
+        "structuredData": { "type": "object" }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "publishedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "defaultRate": 0.00,
+  "includedInPrice": false,
+  "rules": [
+    { "country": "US", "state": "CA", "rate": 0.0725, "included": false, "name": "California Sales Tax" },
+    { "country": "US", "state": "NY", "rate": 0.08, "included": false, "name": "New York Sales Tax" },
+    { "country": "US", "state": "TX", "rate": 0.0625, "included": false, "name": "Texas Sales Tax" },
+    { "country": "GB", "rate": 0.20, "included": true, "name": "UK VAT" },
+    { "country": "DE", "rate": 0.19, "included": true, "name": "German VAT" },
+    { "country": "FR", "rate": 0.20, "included": true, "name": "French VAT" }
+  ]
+}

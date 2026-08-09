@@ -1,0 +1,40 @@
+{
+  "name": "Your Brand",
+  "url": "https://yourbrand.pages.dev",
+  "currency": "USD",
+  "language": "en",
+  "timezone": "America/Los_Angeles",
+  "features": {
+    "reviews": true,
+    "wishlist": true,
+    "guestCheckout": true,
+    "backorders": false,
+    "quickView": true,
+    "sizeGuide": true
+  },
+  "notifications": {
+    "banner": {
+      "active": true,
+      "text": "Free shipping on orders over $75",
+      "link": "/page/shipping",
+      "bgColor": "#000000",
+      "textColor": "#ffffff",
+      "dismissible": true
+    }
+  },
+  "contact": {
+    "email": "hello@yourbrand.com",
+    "returnsEmail": "returns@yourbrand.com",
+    "supportEmail": "support@yourbrand.com",
+    "phone": "+1-555-123-4567",
+    "address": "123 Fashion Ave, New York, NY 10001"
+  },
+  "social": {
+    "instagram": "https://instagram.com/yourbrand",
+    "tiktok": "https://tiktok.com/@yourbrand",
+    "pinterest": "https://pinterest.com/yourbrand",
+    "youtube": "https://youtube.com/@yourbrand"
+  },
+  "_version": "2026-08-09T02-11-10-403Z",
+  "_updatedAt": "2026-08-09T02:11:10.471Z"
+}
