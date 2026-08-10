@@ -2,23 +2,33 @@ name = "lean-store-api"
 main = "src/api/index.js"
 compatibility_date = "2026-08-08"
 
+# ─────────────────────────────────────────────────────────────────
+# DO NOT edit these values manually.
+# Run `bash setup.sh` — it fills everything in automatically.
+# ─────────────────────────────────────────────────────────────────
+
 [[d1_databases]]
 binding = "DB"
 database_name = "lean-store-db"
-database_id = "your-d1-database-id"
+database_id = "your-d1-database-id"   # patched by setup.sh
 
 [vars]
-RESEND_FROM_EMAIL = "orders@yourbrand.com"
-STORE_URL = "https://yourbrand.pages.dev"
-CDN_BASE_URL = "https://cdn.yourbrand.com"
+RESEND_FROM_EMAIL = "orders@yourdomain.com"   # patched by setup.sh
+STORE_URL = "https://your-store.pages.dev"    # patched by setup.sh
+CDN_BASE_URL = "https://your-store.pages.dev" # patched by setup.sh
+
 # Must stay >= 30: this value also sets the Stripe Checkout Session's
 # expires_at (see src/api/routes/checkout.js), and Stripe rejects any
 # expires_at less than 30 minutes in the future. A value below 30 makes
 # every checkout fail at Stripe session creation.
 RESERVATION_TTL_MINUTES = "30"
 
-# Secrets (set via: wrangler secret put <name>)
-# STRIPE_SECRET_KEY
-# STRIPE_WEBHOOK_SECRET
-# RESEND_API_KEY
-# ADMIN_API_KEY
+# ─────────────────────────────────────────────────────────────────
+# Secrets — never put real values here.
+# Set via Codespace terminal after running setup.sh:
+#   npx wrangler secret put STRIPE_SECRET_KEY
+#   npx wrangler secret put STRIPE_WEBHOOK_SECRET
+#   npx wrangler secret put RESEND_API_KEY
+#   npx wrangler secret put ADMIN_API_KEY
+# setup.sh handles all of these automatically.
+# ─────────────────────────────────────────────────────────────────
