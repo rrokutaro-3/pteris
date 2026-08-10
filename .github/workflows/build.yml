@@ -6,10 +6,9 @@ on:
     paths:
       - 'data/source/**'
       - 'data/config/**'
+      - 'data/spa/**'
       - 'src/build/**'
       - 'src/schema/**'
-      # NOTE: sync-stock.js writes to data/source/products but we do NOT commit those changes
-      # The build runs the sync in-memory, then builds. No git commit of synced files.
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
@@ -20,7 +19,7 @@ on:
         default: 'Manual trigger'
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: '22'
 
 jobs:
   build:
@@ -39,15 +38,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # NOTE: `npm run build` (below) already runs sync-stock then
-      # sync-prices internally, in the correct order, as part of
-      # build-all.js. A previous version of this workflow also ran them
-      # here as a separate step before calling build — that meant every
-      # build synced stock/prices to D1 twice per run (once here against
-      # stale pre-build data, once inside build-all against the freshly
-      # built products), burning double the D1 write-quota and Cloudflare
-      # API calls for no benefit. Do not add a standalone sync step here;
-      # let build-all.js own sync ordering.
       - name: Build catalog
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -55,23 +45,20 @@ jobs:
           D1_DATABASE_ID: ${{ secrets.D1_DATABASE_ID }}
         run: npm run build
 
-      # Stage the catalog output at the artifact root (not nested under
-      # data/) before uploading. StoreClient (spa/lib/store-client.js)
-      # fetches `{baseUrl}/index.json`, `{baseUrl}/products/*.json`,
-      # `{baseUrl}/batches/*.json`, `{baseUrl}/config/*.json` directly off
-      # the site root, so the deployed Pages artifact needs index.json,
-      # products/, batches/, config/, and .version at its top level —
-      # uploading `data/*` directly (as a previous version of this
-      # workflow did) would nest everything one level too deep as
-      # data/index.json, data/products/, etc.
       - name: Stage deploy payload
         run: |
           mkdir -p site
+          # Catalog output
           cp data/index.json site/
           cp -r data/products site/
           cp -r data/batches site/
           cp -r data/config site/
           cp data/.version site/
+          # Storefront
+          [ -f data/index.html ]       && cp data/index.html site/index.html
+          [ -f data/store-config.js ]  && cp data/store-config.js site/store-config.js
+          [ -d data/lib ]              && cp -r data/lib site/lib
+          [ -d data/spa ]              && cp -r data/spa site/spa
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -85,16 +72,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # NOTE: this job intentionally does NOT check out the repo. A
-      # previous version ran actions/checkout@v4 here, then downloaded the
-      # build artifact into ./data, then ran `pages deploy .` — which
-      # deploys the whole working directory, not just the built catalog.
-      # That published src/, scripts/, package.json, wrangler.toml, and
-      # raw data/source/ (pre-sale, pre-sync product data) to the public
-      # Pages site alongside the intended index.json + products/ +
-      # batches/ + config/ output. Deploy only the downloaded artifact,
-      # which is already flattened to the site root (see "Stage deploy
-      # payload" in the build job).
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -106,11 +83,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy ./deploy --project-name=your-store --branch=main
+          command: pages deploy ./deploy --project-name=${{ secrets.PAGES_PROJECT_NAME }} --branch=main
 
       - name: Purge CDN cache
+        if: ${{ secrets.CLOUDFLARE_ZONE_ID != '' }}
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+          curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             --data '{"purge_everything":true}'
