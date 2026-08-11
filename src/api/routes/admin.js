@@ -202,5 +202,74 @@ export async function handleAdmin(request, env, { path, method }) {
     return json({ cleaned });
   }
 
+  // ─── MEDIA UPLOAD (R2) ───
+  // Accepts multipart/form-data with a single `file` field.
+  // Requires env.ASSETS_BUCKET (R2 binding) and env.CDN_BASE_URL.
+  // Optional env.UPLOAD_PATH_PREFIX (default: "uploads") sets the key prefix.
+  //
+  // The key is: {prefix}/{YYYY-MM}/{original-filename}
+  // so uploads stay organised without collisions by date.
+  //
+  // Returns: { url: "https://cdn.yourdomain.com/uploads/2026-08/image.webp" }
+  if (path === '/api/admin/upload' && method === 'POST') {
+    if (!env.ASSETS_BUCKET) {
+      return json({
+        error: 'R2 not configured',
+        hint: 'Bind an R2 bucket to the Worker as ASSETS_BUCKET in wrangler.toml, then set CDN_BASE_URL to the bucket\'s public URL.'
+      }, 501);
+    }
+
+    let formData;
+    try {
+      formData = await request.formData();
+    } catch {
+      return json({ error: 'Could not parse form data. Send multipart/form-data with a "file" field.' }, 400);
+    }
+
+    const file = formData.get('file');
+    if (!file || typeof file.arrayBuffer !== 'function') {
+      return json({ error: 'Missing "file" field in form data.' }, 400);
+    }
+
+    // Validate file type — only allow images and videos.
+    const ALLOWED_TYPES = new Set([
+      'image/webp', 'image/jpeg', 'image/png', 'image/gif', 'image/avif',
+      'video/mp4', 'video/webm',
+    ]);
+    const contentType = file.type || 'application/octet-stream';
+    if (!ALLOWED_TYPES.has(contentType)) {
+      return json({ error: `File type "${contentType}" is not allowed. Allowed: ${[...ALLOWED_TYPES].join(', ')}` }, 415);
+    }
+
+    // Cap upload size at 50 MB.
+    const MAX_BYTES = 50 * 1024 * 1024;
+    const buffer = await file.arrayBuffer();
+    if (buffer.byteLength > MAX_BYTES) {
+      return json({ error: `File too large (${(buffer.byteLength / 1024 / 1024).toFixed(1)} MB). Maximum is 50 MB.` }, 413);
+    }
+
+    // Build a date-prefixed R2 key.
+    const prefix = (env.UPLOAD_PATH_PREFIX || 'uploads').replace(/^\/|\/$/g, '');
+    const now = new Date();
+    const month = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
+    // Sanitise the original filename: lowercase, strip non-alphanumeric except dots and hyphens.
+    const rawName = (file.name || `file-${Date.now()}`).toLowerCase().replace(/[^a-z0-9._-]/g, '-');
+    const key = `${prefix}/${month}/${rawName}`;
+
+    try {
+      await env.ASSETS_BUCKET.put(key, buffer, {
+        httpMetadata: { contentType },
+      });
+    } catch (err) {
+      console.error('R2 put failed:', err);
+      return json({ error: 'Upload to R2 failed. Check the bucket binding and permissions.' }, 502);
+    }
+
+    const cdnBase = (env.CDN_BASE_URL || '').replace(/\/$/, '');
+    const url = cdnBase ? `${cdnBase}/${key}` : `/${key}`;
+
+    return json({ url, key, contentType, size: buffer.byteLength });
+  }
+
   return json({ error: 'Admin route not found' }, 404);
 }
