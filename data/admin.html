@@ -2452,16 +2452,23 @@ function renderMedia() {
         <div class="card-header"><span class="card-title">R2 setup</span></div>
         <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
           <p style="font-size:13px;color:var(--ink-subtle);line-height:1.7">
-            Uploads go to Cloudflare R2 via <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px">POST /api/admin/upload</code> on your Worker.
-            To enable it:
+            If uploads return a "R2 not configured" error, two things need to be done from your Codespace terminal:
           </p>
-          <ol style="font-size:13px;color:var(--ink-subtle);line-height:1.9;padding-left:18px">
-            <li>Create an R2 bucket: <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">npx wrangler r2 bucket create your-store-assets</code></li>
-            <li>Set <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">bucket_name</code> in <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">wrangler.toml</code> under <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">[[r2_buckets]]</code></li>
-            <li>Enable public access on the bucket in the Cloudflare dashboard and set <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">CDN_BASE_URL</code> to the bucket's public URL</li>
-            <li>Redeploy: <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">npm run deploy:api</code></li>
+          <ol style="font-size:13px;color:var(--ink-subtle);line-height:2;padding-left:18px">
+            <li>
+              In the Cloudflare dashboard → <strong>R2 → your bucket → Settings → Public Access</strong>, click <strong>Allow Access</strong> and copy the <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">https://pub-xxxx.r2.dev</code> URL that appears.
+            </li>
+            <li>
+              Run in your Codespace:
+              <pre style="background:var(--surface-2);border:1px solid var(--hairline);border-radius:var(--r-md);padding:10px 12px;margin:6px 0;font-size:12px;line-height:1.7;overflow-x:auto">npx wrangler vars put CDN_BASE_URL https://pub-xxxx.r2.dev
+npm run deploy:api</pre>
+              (Replace the URL with the one you copied.)
+            </li>
           </ol>
-          <p style="font-size:12px;color:var(--ink-tertiary)">Without R2, paste public image URLs directly into product media fields in the Products editor.</p>
+          <p style="font-size:12px;color:var(--ink-tertiary)">
+            The bucket name is set in <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px">wrangler.toml</code> by <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px">setup.sh</code> — you don't need to edit any files.
+            Without R2, paste image URLs directly into product media fields in the Products editor.
+          </p>
         </div>
       </div>
     </div>
