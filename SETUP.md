@@ -120,6 +120,71 @@ The whole thing takes about 3–5 minutes.
 
 ---
 
+## After Setup — R2 Media Uploads (optional)
+
+R2 powers the **Media** tab in the admin panel — you can upload, resize, and get a CDN URL for product images without leaving the browser.
+
+**You already created the bucket** (good). Now there are two small things to finish:
+
+### 1. Enable public access on the bucket
+
+The bucket needs a public URL so images are actually reachable from the web.
+
+Cloudflare dashboard → **R2** → click your bucket → **Settings** tab → **Public Access** → click **Allow Access**.
+
+A URL will appear — it looks like `https://pub-abcdef1234567890.r2.dev`. Copy it.
+
+### 2. Tell your Worker the public URL
+
+Run this from your Codespace (no file editing required):
+
+```bash
+export CLOUDFLARE_API_TOKEN="your-token"
+export CLOUDFLARE_ACCOUNT_ID="your-account-id"
+npx wrangler vars put CDN_BASE_URL https://pub-xxxx.r2.dev
+npm run deploy:api
+```
+
+Replace `https://pub-xxxx.r2.dev` with the URL you copied. That's it — uploads in the admin panel will now return usable public URLs.
+
+> **Why can't this be a secret?** R2 bucket bindings are structural — the bucket name has to be declared in `wrangler.toml` so Cloudflare knows which bucket to attach to the Worker. `setup.sh` already patches that for you. `CDN_BASE_URL` (the public-facing URL) is a regular var and doesn't need to be in any file — the `wrangler vars put` command above sets it directly on the deployed Worker.
+
+### Using a custom domain instead of r2.dev
+
+If you'd rather serve images from `cdn.yourdomain.com` instead of the r2.dev subdomain:
+
+1. R2 dashboard → your bucket → **Settings → Custom Domains → Connect Domain**
+2. Enter your subdomain (e.g. `cdn.yourdomain.com`)
+3. Cloudflare adds the DNS record automatically (domain must be on Cloudflare)
+4. Once active, run the same command with your custom domain:
+   ```bash
+   npx wrangler vars put CDN_BASE_URL https://cdn.yourdomain.com
+   npm run deploy:api
+   ```
+
+### If you skipped R2 during setup
+
+You can add it at any time:
+
+```bash
+export CLOUDFLARE_API_TOKEN="your-token"
+export CLOUDFLARE_ACCOUNT_ID="your-account-id"
+
+# 1. Create the bucket
+npx wrangler r2 bucket create your-bucket-name
+
+# 2. Add the binding to wrangler.toml — edit this section:
+#    [[r2_buckets]]
+#    binding = "ASSETS_BUCKET"
+#    bucket_name = "your-bucket-name"   ← put your actual name here
+
+# 3. Enable public access in the dashboard (see above), then:
+npx wrangler vars put CDN_BASE_URL https://pub-xxxx.r2.dev
+npm run deploy:api
+```
+
+---
+
 ## After Setup — Stripe Webhook
 
 This has to happen after deploying because you need the Worker URL.
@@ -301,15 +366,12 @@ node scripts/seed-inventory.js
 
 ### Product images
 
-The product JSON just stores image URLs — the actual image files need to live somewhere. Options:
+The product JSON just stores image URLs — the actual image files need to live somewhere.
 
-**Cloudflare R2 (recommended — same account, free tier)**
-1. Cloudflare dashboard → **Storage & Databases → R2**
-2. Create a bucket
-3. Enable public access
-4. Upload images, use the public URL in your product JSON
+**Cloudflare R2 (recommended — same CDN, 10 GB free)**  
+Set up via the admin panel's **Media** tab once R2 is configured (see the R2 section above). You can upload, auto-resize, and copy the URL directly from the browser. No CLI needed after initial setup.
 
-**Cloudinary, Imgur, or any CDN** also works — just put the URL in `media.images[].url` and `variants[].image`.
+**Any public CDN** also works — Cloudinary, Bunny.net, Imgur, etc. Just paste the URL into `media.images[].url` and `variants[].image` in the product JSON.
 
 ---
 
