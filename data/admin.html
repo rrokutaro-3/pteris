@@ -1,0 +1,2964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pteris Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<!-- CodeMirror for JSON editor -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+
+/* ── Design tokens (Linear-inspired) ── */
+:root {
+  --primary:       #5e6ad2;
+  --primary-hover: #828fff;
+  --primary-focus: #5e69d1;
+  --ink:           #f7f8f8;
+  --ink-muted:     #d0d6e0;
+  --ink-subtle:    #8a8f98;
+  --ink-tertiary:  #62666d;
+  --canvas:        #010102;
+  --surface-1:     #0f1011;
+  --surface-2:     #141516;
+  --surface-3:     #18191a;
+  --hairline:      #23252a;
+  --hairline-strong: #34343a;
+  --success:       #27a644;
+  --danger:        #d94f4f;
+  --warning:       #c8822a;
+  --r-xs: 4px; --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px;
+  --font: 'Inter', -apple-system, system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ── Layout ── */
+#app { display: flex; height: 100vh; }
+
+/* ── Sidebar ── */
+#sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--surface-1);
+  border-right: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  z-index: 10;
+  transition: width 0.18s ease;
+  overflow: hidden;
+}
+#sidebar.collapsed { width: 52px; }
+
+#sidebar-logo {
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 220px; /* prevent logo squishing during transition */
+}
+#sidebar-logo svg { color: var(--primary); flex-shrink: 0; }
+#sidebar-logo-text { font-size: 13px; font-weight: 600; letter-spacing: -0.2px; color: var(--ink); }
+#sidebar-logo-sub { font-size: 11px; color: var(--ink-tertiary); margin-top: 1px; }
+#sidebar-logo-words { transition: opacity 0.12s; white-space: nowrap; }
+#sidebar.collapsed #sidebar-logo-words { opacity: 0; pointer-events: none; }
+
+/* Collapse toggle button */
+#sidebar-toggle {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--ink-tertiary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  transition: color 0.12s, background 0.12s;
+  white-space: nowrap;
+}
+#sidebar-toggle:hover { color: var(--ink); background: rgba(255,255,255,0.05); }
+#sidebar-toggle svg { width: 14px; height: 14px; transition: transform 0.18s; }
+#sidebar.collapsed #sidebar-toggle svg { transform: rotate(180deg); }
+
+#sidebar-store {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--hairline);
+  min-width: 220px;
+  transition: opacity 0.12s;
+}
+#sidebar.collapsed #sidebar-store { opacity: 0; pointer-events: none; height: 0; padding: 0; border: none; overflow: hidden; }
+#store-name-label { font-size: 11px; color: var(--ink-tertiary); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+#store-url-display { font-size: 12px; color: var(--ink-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+#sidebar-nav { flex: 1; padding: 8px 0; overflow-y: auto; overflow-x: hidden; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  border-radius: 0;
+  transition: color 0.12s, background 0.12s;
+  position: relative;
+  white-space: nowrap;
+  min-width: 220px;
+}
+.nav-item:hover { color: var(--ink); background: rgba(255,255,255,0.03); }
+.nav-item.active { color: var(--ink); background: rgba(94,106,210,0.08); }
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 4px; bottom: 4px;
+  width: 2px;
+  background: var(--primary);
+  border-radius: 0 2px 2px 0;
+}
+.nav-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* Collapsed nav: show tooltip on hover */
+#sidebar.collapsed .nav-item { min-width: 52px; justify-content: center; padding: 10px 0; }
+#sidebar.collapsed .nav-item .nav-label { display: none; }
+#sidebar.collapsed .nav-item .nav-count { display: none; }
+#sidebar.collapsed .nav-item .nav-low-dot { display: none; }
+#sidebar.collapsed #sidebar-footer { opacity: 0; pointer-events: none; }
+
+/* Nav counts — subtle, no color alarm */
+.nav-count {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-tertiary);
+  min-width: 16px;
+  text-align: right;
+}
+/* Low-stock dot — replaces the red pill badge */
+.nav-low-dot {
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warning);
+  flex-shrink: 0;
+  display: none;
+}
+.nav-low-dot.show { display: block; }
+
+#sidebar-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--hairline);
+}
+#disconnect-btn {
+  width: 100%;
+  padding: 7px 12px;
+  background: transparent;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  color: var(--ink-subtle);
+  font-size: 12px;
+  font-family: var(--font);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s;
+}
+#disconnect-btn:hover { color: var(--ink); border-color: var(--hairline-strong); background: rgba(255,255,255,0.03); }
+
+/* ── Main ── */
+#main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+#topbar {
+  height: 52px;
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  flex-shrink: 0;
+  background: var(--canvas);
+}
+#page-title { font-size: 14px; font-weight: 600; letter-spacing: -0.2px; color: var(--ink); }
+#topbar-actions { display: flex; gap: 8px; align-items: center; }
+
+#content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+/* ── Connect Screen ── */
+#connect-screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--canvas);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+#connect-screen.show { display: flex; }
+.connect-card {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+}
+.connect-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+.connect-logo svg { color: var(--primary); }
+.connect-logo-text { font-size: 16px; font-weight: 600; letter-spacing: -0.3px; }
+.connect-subtitle { font-size: 13px; color: var(--ink-subtle); margin-bottom: 24px; line-height: 1.5; }
+
+/* ── Forms ── */
+.form-group { margin-bottom: 16px; }
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+  letter-spacing: 0;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
+  appearance: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(94, 106, 210, 0.2);
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--ink-tertiary); }
+.form-textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a8f98' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; cursor: pointer; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.form-hint { font-size: 11px; color: var(--ink-tertiary); margin-top: 4px; }
+.form-section { margin-bottom: 28px; }
+.form-section-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Toggle */
+.toggle-group { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.toggle {
+  position: relative;
+  width: 34px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--hairline-strong);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 12px; height: 12px;
+  left: 3px; top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.15s;
+}
+.toggle input:checked + .toggle-slider { background: var(--primary); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(16px); }
+.toggle-label { font-size: 13px; color: var(--ink-muted); }
+
+/* Checkbox */
+.check-group { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; cursor: pointer; }
+.check-group input[type="checkbox"] {
+  width: 14px; height: 14px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+.check-label { font-size: 13px; color: var(--ink-muted); }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.12s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-primary:active { background: var(--primary-focus); }
+.btn-secondary { background: var(--surface-2); color: var(--ink); border: 1px solid var(--hairline-strong); }
+.btn-secondary:hover { background: var(--surface-3); }
+.btn-ghost { background: transparent; color: var(--ink-subtle); }
+.btn-ghost:hover { background: rgba(255,255,255,0.04); color: var(--ink); }
+.btn-danger { background: rgba(217,79,79,0.12); color: var(--danger); border: 1px solid rgba(217,79,79,0.2); }
+.btn-danger:hover { background: rgba(217,79,79,0.2); }
+.btn-sm { padding: 4px 10px; font-size: 12px; }
+.btn-icon { padding: 6px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── Cards / Surfaces ── */
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+}
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.card-title { font-size: 13px; font-weight: 600; color: var(--ink); letter-spacing: -0.1px; }
+.card-body { padding: 20px; }
+
+/* ── Stats Grid ── */
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+.stat-card {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  padding: 20px;
+}
+.stat-label { font-size: 11px; font-weight: 500; color: var(--ink-tertiary); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 8px; }
+.stat-value { font-size: 28px; font-weight: 600; color: var(--ink); letter-spacing: -1px; line-height: 1; }
+.stat-sub { font-size: 12px; color: var(--ink-subtle); margin-top: 4px; }
+.stat-accent { color: var(--primary); }
+.stat-success { color: var(--success); }
+.stat-warn { color: var(--warning); }
+
+/* ── Table ── */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+tbody tr { border-bottom: 1px solid var(--hairline); transition: background 0.1s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: rgba(255,255,255,0.02); }
+tbody td { padding: 12px 16px; font-size: 13px; color: var(--ink-muted); vertical-align: middle; }
+tbody td:first-child { color: var(--ink); }
+.td-actions { display: flex; gap: 4px; justify-content: flex-end; }
+
+/* ── Badges / Pills ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.badge-active    { background: rgba(39,166,68,0.12);  color: #4cbc6e; }
+.badge-draft     { background: rgba(138,143,152,0.12); color: var(--ink-subtle); }
+.badge-archived  { background: rgba(138,143,152,0.08); color: var(--ink-tertiary); }
+.badge-paid      { background: rgba(39,166,68,0.12);  color: #4cbc6e; }
+.badge-pending   { background: rgba(200,130,42,0.12); color: #d49245; }
+.badge-shipped   { background: rgba(94,106,210,0.12); color: var(--primary-hover); }
+.badge-cancelled { background: rgba(217,79,79,0.1);   color: #e07070; }
+.badge-refunded  { background: rgba(138,143,152,0.12); color: var(--ink-subtle); }
+.badge-low       { background: rgba(200,130,42,0.12); color: #d49245; }
+.badge-out       { background: rgba(217,79,79,0.1);   color: #e07070; }
+
+/* ── Pagination ── */
+.pagination { display: flex; align-items: center; gap: 6px; padding: 16px 20px; border-top: 1px solid var(--hairline); }
+.page-info { font-size: 12px; color: var(--ink-subtle); flex: 1; }
+
+/* ── Modal / Drawer ── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 50;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.overlay.show { display: flex; }
+.modal {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  width: 100%;
+  max-width: 560px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modal-lg { max-width: 860px; }
+.modal-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.modal-title { font-size: 14px; font-weight: 600; letter-spacing: -0.2px; }
+.modal-body { flex: 1; overflow-y: auto; padding: 20px; }
+.modal-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+  background: var(--surface-1);
+}
+
+/* Drawer (right panel) */
+.drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; display: none; }
+.drawer-overlay.show { display: block; }
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: 520px;
+  background: var(--surface-1);
+  border-left: 1px solid var(--hairline);
+  z-index: 51;
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.2s ease;
+}
+.drawer.show { transform: translateX(0); }
+.drawer-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--hairline);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.drawer-title { font-size: 14px; font-weight: 600; letter-spacing: -0.2px; }
+.drawer-body { flex: 1; overflow-y: auto; padding: 20px; }
+.drawer-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--hairline);
+  display: flex; gap: 8px; justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+/* ── Toast ── */
+#toast-container {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toast {
+  background: var(--surface-2);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--ink);
+  display: flex; align-items: center; gap: 8px;
+  animation: slideIn 0.15s ease;
+  max-width: 320px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+.toast svg { flex-shrink: 0; }
+.toast.toast-success svg { color: var(--success); }
+.toast.toast-error svg { color: var(--danger); }
+.toast.toast-warn svg { color: var(--warning); }
+@keyframes slideIn { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes fadeOut { to { opacity: 0; transform: translateY(4px); } }
+
+/* ── Empty State ── */
+.empty-state {
+  text-align: center;
+  padding: 64px 24px;
+  color: var(--ink-subtle);
+}
+.empty-state svg { margin-bottom: 16px; opacity: 0.3; }
+.empty-state-title { font-size: 14px; font-weight: 500; color: var(--ink-muted); margin-bottom: 6px; }
+.empty-state-sub { font-size: 13px; color: var(--ink-tertiary); }
+
+/* ── Search / Filter bar ── */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.search-input-wrap { position: relative; flex: 1; min-width: 180px; }
+.search-input-wrap svg {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  color: var(--ink-tertiary); width: 14px; height: 14px;
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 7px 10px 7px 32px;
+  outline: none;
+  transition: border-color 0.12s;
+}
+.search-input:focus { border-color: var(--primary); }
+.search-input::placeholder { color: var(--ink-tertiary); }
+
+.filter-tabs { display: flex; gap: 2px; background: var(--surface-2); border-radius: var(--r-md); padding: 3px; border: 1px solid var(--hairline); }
+.filter-tab {
+  padding: 5px 12px;
+  font-size: 12px; font-weight: 500;
+  color: var(--ink-subtle);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  border: none; background: transparent; font-family: var(--font);
+  transition: all 0.12s;
+}
+.filter-tab:hover { color: var(--ink); }
+.filter-tab.active { background: var(--surface-3); color: var(--ink); }
+
+/* ── Inventory inline edit ── */
+.qty-cell { display: flex; align-items: center; gap: 6px; }
+.qty-display {
+  font-size: 13px; font-weight: 500; color: var(--ink);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+  transition: background 0.1s;
+}
+.qty-display:hover { background: var(--surface-2); }
+.qty-input {
+  width: 64px;
+  background: var(--surface-2);
+  border: 1px solid var(--primary);
+  border-radius: var(--r-sm);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 3px 8px;
+  outline: none;
+}
+.qty-input:focus { box-shadow: 0 0 0 2px rgba(94,106,210,0.2); }
+
+/* ── Image upload / resize ── */
+.upload-zone {
+  border: 2px dashed var(--hairline-strong);
+  border-radius: var(--r-lg);
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--surface-2);
+}
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: var(--primary);
+  background: rgba(94,106,210,0.05);
+}
+.upload-zone p { font-size: 13px; color: var(--ink-subtle); margin-top: 8px; }
+.upload-zone small { font-size: 12px; color: var(--ink-tertiary); }
+.upload-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+.preview-img { border-radius: var(--r-md); overflow: hidden; aspect-ratio: 1; background: var(--surface-3); }
+.preview-img img { width: 100%; height: 100%; object-fit: contain; }
+.resize-controls { background: var(--surface-2); border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 16px; margin-top: 12px; }
+.resize-controls .form-label { color: var(--ink-subtle); }
+.slider-row { display: flex; align-items: center; gap: 10px; }
+input[type="range"] {
+  flex: 1;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+.slider-val { font-size: 12px; color: var(--ink-muted); min-width: 40px; text-align: right; }
+.format-toggle { display: flex; gap: 4px; }
+.format-btn {
+  padding: 4px 10px;
+  font-size: 12px; font-weight: 500;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  border: 1px solid var(--hairline-strong);
+  background: transparent;
+  color: var(--ink-subtle);
+  font-family: var(--font);
+  transition: all 0.12s;
+}
+.format-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+.size-info { font-size: 12px; color: var(--ink-subtle); margin-top: 10px; text-align: center; }
+.size-info span { color: var(--success); font-weight: 500; }
+
+/* ── Variant editor ── */
+.variant-row {
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.variant-row-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.variant-id-label { font-size: 11px; color: var(--ink-tertiary); font-family: var(--mono); }
+
+/* ── Tag input ── */
+.tag-input-wrap {
+  background: var(--surface-2);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  padding: 6px 8px;
+  display: flex; flex-wrap: wrap; gap: 6px;
+  cursor: text;
+  min-height: 38px;
+  transition: border-color 0.12s;
+}
+.tag-input-wrap:focus-within { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(94,106,210,0.2); }
+.tag-chip {
+  background: rgba(94,106,210,0.12);
+  color: var(--primary-hover);
+  border-radius: var(--r-sm);
+  padding: 2px 8px;
+  font-size: 12px;
+  display: flex; align-items: center; gap: 4px;
+}
+.tag-chip button {
+  background: none; border: none; color: inherit; cursor: pointer; padding: 0; line-height: 1; opacity: 0.7;
+  font-size: 14px;
+}
+.tag-chip button:hover { opacity: 1; }
+.tag-real-input {
+  background: none; border: none; outline: none; color: var(--ink); font-family: var(--font); font-size: 13px;
+  flex: 1; min-width: 80px;
+}
+.tag-real-input::placeholder { color: var(--ink-tertiary); }
+
+/* ── CodeMirror theme overrides ── */
+.CodeMirror {
+  font-family: var(--mono) !important;
+  font-size: 12px !important;
+  background: var(--surface-2) !important;
+  color: #c9d1d9 !important;
+  border-radius: var(--r-md) !important;
+  border: 1px solid var(--hairline-strong) !important;
+  height: auto !important;
+  min-height: 200px;
+  padding: 4px 0;
+}
+.CodeMirror-focused { border-color: var(--primary) !important; box-shadow: 0 0 0 2px rgba(94,106,210,0.2) !important; }
+.CodeMirror-scroll { min-height: 200px; max-height: 480px; }
+.CodeMirror-gutters { background: var(--surface-2) !important; border-right: 1px solid var(--hairline) !important; }
+.CodeMirror-linenumber { color: var(--ink-tertiary) !important; }
+.cm-s-default .cm-keyword  { color: #ff7b72; }
+.cm-s-default .cm-string   { color: #a5d6ff; }
+.cm-s-default .cm-number   { color: #79c0ff; }
+.cm-s-default .cm-atom     { color: #d2a8ff; }
+.cm-s-default .cm-property { color: #7ee787; }
+.cm-s-default .cm-comment  { color: var(--ink-tertiary); font-style: italic; }
+.cm-s-default .cm-variable { color: #ffa657; }
+
+/* ── Detail sections (order) ── */
+.detail-section { margin-bottom: 20px; }
+.detail-label { font-size: 11px; color: var(--ink-tertiary); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 8px; }
+.detail-value { font-size: 13px; color: var(--ink-muted); line-height: 1.6; }
+.detail-value strong { color: var(--ink); font-weight: 500; }
+.line-items { display: flex; flex-direction: column; gap: 10px; }
+.line-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px;
+  background: var(--surface-2);
+  border-radius: var(--r-md);
+  border: 1px solid var(--hairline);
+}
+.line-item-img { width: 44px; height: 44px; border-radius: var(--r-sm); object-fit: cover; background: var(--surface-3); flex-shrink: 0; }
+.line-item-info { flex: 1; min-width: 0; }
+.line-item-name { font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.line-item-meta { font-size: 12px; color: var(--ink-subtle); margin-top: 2px; }
+.line-item-price { font-size: 13px; font-weight: 500; color: var(--ink); flex-shrink: 0; }
+
+/* ── Financials ── */
+.financials { background: var(--surface-2); border: 1px solid var(--hairline); border-radius: var(--r-md); overflow: hidden; }
+.fin-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 13px;
+}
+.fin-row:last-child { border-bottom: none; }
+.fin-row.fin-total { font-weight: 600; color: var(--ink); }
+.fin-label { color: var(--ink-subtle); }
+.fin-value { color: var(--ink-muted); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--hairline-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-tertiary); }
+
+/* ── Media editor ── */
+.media-item-row {
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  padding: 12px;
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 10px;
+  align-items: start;
+}
+.media-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-sm);
+  background: var(--surface-3);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.media-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.media-thumb svg { color: var(--ink-tertiary); opacity: 0.4; }
+.media-fields { display: flex; flex-direction: column; gap: 6px; }
+.media-fields .form-row { margin: 0; }
+.media-fields .form-group { margin: 0; }
+.media-actions { display: flex; gap: 4px; flex-direction: column; align-items: flex-end; }
+.media-drag-handle { cursor: grab; color: var(--ink-tertiary); padding: 4px; }
+.video-item-row {
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+/* ── Utilities ── */
+.flex { display: flex; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.ml-auto { margin-left: auto; }
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.text-subtle { color: var(--ink-subtle); }
+.text-muted { color: var(--ink-muted); }
+.mono { font-family: var(--mono); font-size: 12px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+.divider { border: none; border-top: 1px solid var(--hairline); margin: 16px 0; }
+</style>
+</head>
+<body>
+
+<!-- ── Toast container ── -->
+<div id="toast-container"></div>
+
+<!-- ── Connect Screen ── -->
+<div id="connect-screen">
+  <div class="connect-card">
+    <div class="connect-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      <span class="connect-logo-text">Pteris Admin</span>
+    </div>
+    <p class="connect-subtitle">Connect to your store's Worker API to manage products, orders, and inventory.</p>
+    <div class="form-group">
+      <label class="form-label">Worker API URL</label>
+      <input class="form-input" id="conn-api-url" type="url" placeholder="https://your-store-api.workers.dev">
+      <p class="form-hint">Your Cloudflare Worker URL — <code style="font-family:var(--mono);font-size:10px;color:var(--ink-subtle)">/api</code> is appended automatically</p>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Admin Key</label>
+      <input class="form-input" id="conn-admin-key" type="password" placeholder="••••••••••••••••••••••••••••••••">
+      <p class="form-hint">Your ADMIN_API_KEY secret</p>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Store / CDN URL</label>
+      <input class="form-input" id="conn-store-url" type="url" placeholder="https://yourstore.pages.dev">
+      <p class="form-hint">Your Cloudflare Pages URL (for fetching product catalog)</p>
+    </div>
+    <div class="form-group">
+      <label class="form-label">GitHub Token <span style="color:var(--ink-tertiary);font-weight:400">(optional — for editing products &amp; configs)</span></label>
+      <input class="form-input" id="conn-gh-token" type="password" placeholder="github_pat_...">
+      <p class="form-hint">Fine-grained PAT with Contents: write on your store repo</p>
+    </div>
+    <div class="form-group">
+      <label class="form-label">GitHub Repo <span style="color:var(--ink-tertiary);font-weight:400">(optional)</span></label>
+      <input class="form-input" id="conn-gh-repo" type="text" placeholder="owner/repo-name">
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px" id="connect-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      Connect
+    </button>
+    <p id="connect-error" style="color:var(--danger);font-size:12px;margin-top:10px;display:none"></p>
+  </div>
+</div>
+
+<!-- ── Main App ── -->
+<div id="app" style="display:none">
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div id="sidebar-logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      <div id="sidebar-logo-words">
+        <div style="font-size:13px;font-weight:600;letter-spacing:-0.2px;color:var(--ink)">Pteris</div>
+        <div style="font-size:11px;color:var(--ink-tertiary);margin-top:1px">Admin</div>
+      </div>
+      <button id="sidebar-toggle" title="Collapse sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+    <div id="sidebar-store">
+      <div class="store-name-label" style="font-size:11px;color:var(--ink-tertiary);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">Store</div>
+      <div id="store-url-display" style="font-size:12px;color:var(--ink-subtle)">—</div>
+    </div>
+    <nav id="sidebar-nav">
+      <div class="nav-item active" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span class="nav-label">Dashboard</span>
+      </div>
+      <div class="nav-item" data-page="products">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="nav-label">Products</span>
+        <span class="nav-count" id="products-count" style="display:none"></span>
+      </div>
+      <div class="nav-item" data-page="inventory">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span class="nav-label">Inventory</span>
+        <span class="nav-low-dot" id="low-stock-badge"></span>
+      </div>
+      <div class="nav-item" data-page="orders">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span class="nav-label">Orders</span>
+        <span class="nav-count" id="orders-count" style="display:none"></span>
+      </div>
+      <div class="nav-item" data-page="media">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span class="nav-label">Media</span>
+      </div>
+      <div class="nav-item" data-page="coupons">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        <span class="nav-label">Coupons</span>
+      </div>
+      <div class="nav-item" data-page="configs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
+        <span class="nav-label">Configs</span>
+      </div>
+      <div class="nav-item" data-page="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <span class="nav-label">Settings</span>
+      </div>
+    </nav>
+    <div id="sidebar-footer">
+      <button id="disconnect-btn">Disconnect store</button>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main id="main">
+    <header id="topbar">
+      <span id="page-title">Dashboard</span>
+      <div id="topbar-actions"></div>
+    </header>
+    <div id="content">
+      <!-- page content injected here -->
+    </div>
+  </main>
+</div>
+
+<!-- ── Modals / Drawers ── -->
+<!-- Order detail drawer -->
+<div class="drawer-overlay" id="order-drawer-overlay"></div>
+<div class="drawer" id="order-drawer">
+  <div class="drawer-header">
+    <span class="drawer-title" id="order-drawer-title">Order</span>
+    <button class="btn btn-ghost btn-icon btn-sm" id="close-order-drawer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="order-drawer-body"></div>
+  <div class="drawer-footer" id="order-drawer-footer"></div>
+</div>
+
+<!-- Product modal -->
+<div class="overlay" id="product-modal-overlay">
+  <div class="modal modal-lg" id="product-modal">
+    <div class="modal-header">
+      <span class="modal-title" id="product-modal-title">Add Product</span>
+      <button class="btn btn-ghost btn-icon btn-sm" id="close-product-modal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="product-modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="cancel-product-modal">Cancel</button>
+      <button class="btn btn-primary" id="save-product-btn">Save product</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm modal -->
+<div class="overlay" id="confirm-overlay">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-header">
+      <span class="modal-title" id="confirm-title">Confirm</span>
+    </div>
+    <div class="modal-body"><p id="confirm-body" style="color:var(--ink-muted);font-size:13px"></p></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="confirm-cancel">Cancel</button>
+      <button class="btn btn-danger" id="confirm-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Ship order modal -->
+<div class="overlay" id="ship-overlay">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <span class="modal-title">Mark as Shipped</span>
+      <button class="btn btn-ghost btn-icon btn-sm" onclick="closeModal('ship-overlay')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Tracking Number</label>
+        <input class="form-input" id="ship-tracking" type="text" placeholder="1Z999AA10123456784">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Carrier</label>
+        <select class="form-select" id="ship-carrier">
+          <option value="">Select carrier</option>
+          <option>UPS</option><option>USPS</option><option>FedEx</option>
+          <option>DHL</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes <span style="color:var(--ink-tertiary);font-weight:400">(optional)</span></label>
+        <input class="form-input" id="ship-notes" type="text" placeholder="Left at door">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('ship-overlay')">Cancel</button>
+      <button class="btn btn-primary" id="ship-confirm-btn">Mark shipped</button>
+    </div>
+  </div>
+</div>
+
+<!-- Refund modal -->
+<div class="overlay" id="refund-overlay">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-header">
+      <span class="modal-title">Record Refund</span>
+      <button class="btn btn-ghost btn-icon btn-sm" onclick="closeModal('refund-overlay')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--ink-subtle);margin-bottom:16px">This records the refund in your database. Issue the actual refund in your Stripe dashboard.</p>
+      <div class="form-group">
+        <label class="form-label">Refund Amount ($)</label>
+        <input class="form-input" id="refund-amount" type="number" step="0.01" min="0" placeholder="0.00">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reason</label>
+        <input class="form-input" id="refund-reason" type="text" placeholder="Customer request — wrong size">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('refund-overlay')">Cancel</button>
+      <button class="btn btn-danger" id="refund-confirm-btn">Record refund</button>
+    </div>
+  </div>
+</div>
+
+<!-- Coupon modal -->
+<div class="overlay" id="coupon-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="coupon-modal-title">Add Coupon</span>
+      <button class="btn btn-ghost btn-icon btn-sm" onclick="closeModal('coupon-overlay')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="coupon-modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('coupon-overlay')">Cancel</button>
+      <button class="btn btn-primary" id="coupon-save-btn">Save coupon</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════ */
+const S = {
+  apiUrl: '',
+  adminKey: '',
+  storeUrl: '',
+  ghToken: '',
+  ghRepo: '',
+  currentPage: 'dashboard',
+  stats: null,
+  products: [],
+  inventory: [],
+  orders: { data: [], page: 1, total: 0, status: '' },
+  coupons: null,
+  activeOrderId: null,
+  activeProductId: null,
+  productForm: {},
+  variantDraft: [],
+  tagDraftCategories: [],
+  tagDraftTags: [],
+  uploadFiles: [],
+  uploadFormat: 'webp',
+  uploadWidth: 1200,
+  uploadQuality: 85,
+};
+
+/* ═══════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════ */
+function loadStoredConnection() {
+  const stored = localStorage.getItem('pteris_conn');
+  if (!stored) return false;
+  try {
+    const c = JSON.parse(stored);
+    S.apiUrl   = c.apiUrl   || '';
+    S.adminKey = c.adminKey || '';
+    S.storeUrl = c.storeUrl || '';
+    S.ghToken  = c.ghToken  || '';
+    S.ghRepo   = c.ghRepo   || '';
+    return !!(S.apiUrl && S.adminKey);
+  } catch { return false; }
+}
+
+function saveConnection() {
+  localStorage.setItem('pteris_conn', JSON.stringify({
+    apiUrl: S.apiUrl, adminKey: S.adminKey, storeUrl: S.storeUrl,
+    ghToken: S.ghToken, ghRepo: S.ghRepo
+  }));
+}
+
+async function boot() {
+  if (loadStoredConnection()) {
+    const ok = await verifyConnection();
+    if (ok) { showApp(); return; }
+  }
+  showConnectScreen();
+}
+
+async function verifyConnection() {
+  try {
+    const r = await apiFetch('/health');
+    return r.status === 'ok';
+  } catch { return false; }
+}
+
+function showConnectScreen() {
+  document.getElementById('connect-screen').classList.add('show');
+  document.getElementById('app').style.display = 'none';
+  // Pre-fill
+  document.getElementById('conn-api-url').value   = S.apiUrl;
+  document.getElementById('conn-admin-key').value = S.adminKey;
+  document.getElementById('conn-store-url').value = S.storeUrl;
+  document.getElementById('conn-gh-token').value  = S.ghToken;
+  document.getElementById('conn-gh-repo').value   = S.ghRepo;
+}
+
+function showApp() {
+  document.getElementById('connect-screen').classList.remove('show');
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('store-url-display').textContent = S.storeUrl || S.apiUrl;
+  navigateTo('dashboard');
+}
+
+/* connect button */
+document.getElementById('connect-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('connect-btn');
+  const err = document.getElementById('connect-error');
+  err.style.display = 'none';
+  // Normalize: strip trailing slash, then ensure URL ends with /api.
+  // Workers serve all routes under /api — if the user pastes their
+  // bare worker URL (e.g. https://foo.workers.dev) instead of the
+  // /api-suffixed form, every request 404s. Auto-correct silently.
+  let rawApiUrl = document.getElementById('conn-api-url').value.trim().replace(/\/$/, '');
+  if (rawApiUrl && !rawApiUrl.endsWith('/api')) rawApiUrl = rawApiUrl + '/api';
+  S.apiUrl   = rawApiUrl;
+  S.adminKey = document.getElementById('conn-admin-key').value.trim();
+  S.storeUrl = document.getElementById('conn-store-url').value.trim().replace(/\/$/, '');
+  S.ghToken  = document.getElementById('conn-gh-token').value.trim();
+  S.ghRepo   = document.getElementById('conn-gh-repo').value.trim();
+  if (!S.apiUrl || !S.adminKey) { err.textContent = 'API URL and Admin Key are required.'; err.style.display = 'block'; return; }
+  btn.disabled = true; btn.textContent = 'Connecting…';
+  const ok = await verifyConnection();
+  btn.disabled = false; btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg> Connect`;
+  if (!ok) { err.textContent = 'Could not connect. Check the URL and key.'; err.style.display = 'block'; return; }
+  saveConnection();
+  showApp();
+});
+
+document.getElementById('disconnect-btn').addEventListener('click', () => {
+  localStorage.removeItem('pteris_conn');
+  S.apiUrl = S.adminKey = S.storeUrl = S.ghToken = S.ghRepo = '';
+  showConnectScreen();
+});
+
+/* ── Sidebar collapse ── */
+(function() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle  = document.getElementById('sidebar-toggle');
+  // Restore collapsed state from storage
+  if (localStorage.getItem('pteris_sidebar') === 'collapsed') {
+    sidebar.classList.add('collapsed');
+  }
+  toggle.addEventListener('click', () => {
+    const isCollapsed = sidebar.classList.toggle('collapsed');
+    localStorage.setItem('pteris_sidebar', isCollapsed ? 'collapsed' : 'expanded');
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════
+   ROUTING
+═══════════════════════════════════════════════════════ */
+document.getElementById('sidebar-nav').addEventListener('click', e => {
+  const item = e.target.closest('.nav-item');
+  if (item) navigateTo(item.dataset.page);
+});
+
+const PAGE_TITLES = {
+  dashboard: 'Dashboard', products: 'Products', inventory: 'Inventory',
+  orders: 'Orders', media: 'Media', coupons: 'Coupons', configs: 'Configs', settings: 'Settings'
+};
+
+function navigateTo(page) {
+  S.currentPage = page;
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.toggle('active', el.dataset.page === page));
+  document.getElementById('page-title').textContent = PAGE_TITLES[page] || page;
+  document.getElementById('topbar-actions').innerHTML = '';
+  const pages = { dashboard: renderDashboard, products: renderProducts, inventory: renderInventory, orders: renderOrders, media: renderMedia, coupons: renderCoupons, configs: renderConfigs, settings: renderSettings };
+  (pages[page] || (() => {}))();
+}
+
+/* ═══════════════════════════════════════════════════════
+   API
+═══════════════════════════════════════════════════════ */
+async function apiFetch(path, opts = {}) {
+  const url = S.apiUrl + path;
+  const res = await fetch(url, {
+    ...opts,
+    headers: { 'Authorization': `Bearer ${S.adminKey}`, 'Content-Type': 'application/json', ...(opts.headers || {}) }
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || `HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
+async function storeFetch(path) {
+  const url = S.storeUrl + path;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+async function ghFetch(path, opts = {}) {
+  if (!S.ghToken || !S.ghRepo) throw new Error('GitHub not configured. Add your token and repo in Settings.');
+  const url = `https://api.github.com/repos/${S.ghRepo}/contents/${path}`;
+  const res = await fetch(url, {
+    ...opts,
+    headers: { 'Authorization': `Bearer ${S.ghToken}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json', ...(opts.headers || {}) }
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.message || `GitHub ${res.status}`);
+  }
+  return res.json();
+}
+
+async function ghGetFile(path) {
+  const data = await ghFetch(path);
+  const content = atob(data.content.replace(/\n/g, ''));
+  return { content, sha: data.sha };
+}
+
+async function ghPutFile(path, content, sha, message) {
+  await ghFetch(path, {
+    method: 'PUT',
+    body: JSON.stringify({ message, content: btoa(unescape(encodeURIComponent(content))), sha })
+  });
+}
+
+async function ghDeleteFile(path, sha, message) {
+  await ghFetch(path, { method: 'DELETE', body: JSON.stringify({ message, sha }) });
+}
+
+/* ═══════════════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════════════ */
+function $id(id) { return document.getElementById(id); }
+function setContent(html) { $id('content').innerHTML = html; }
+
+function fmt$(n) { return n != null ? `$${parseFloat(n).toFixed(2)}` : '—'; }
+function fmtDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
+function statusBadge(s) {
+  const cls = { active:'badge-active', draft:'badge-draft', archived:'badge-archived',
+    paid:'badge-paid', pending:'badge-pending', shipped:'badge-shipped',
+    cancelled:'badge-cancelled', refunded:'badge-refunded' };
+  return `<span class="badge ${cls[s]||'badge-draft'}">${s}</span>`;
+}
+
+function stockBadge(v) {
+  const avail = Math.max(0, (v.qty||0) - (v.reserved||0));
+  if (avail === 0 && !v.backorder) return `<span class="badge badge-out">Out</span>`;
+  if (avail <= 5) return `<span class="badge badge-low">${avail} left</span>`;
+  return `<span style="color:var(--success);font-size:13px;font-weight:500">${avail}</span>`;
+}
+
+function closeModal(id) { $id(id).classList.remove('show'); }
+function openModal(id)  { $id(id).classList.add('show'); }
+
+function confirm(title, body, okLabel = 'Confirm') {
+  return new Promise(resolve => {
+    $id('confirm-title').textContent = title;
+    $id('confirm-body').textContent = body;
+    $id('confirm-ok').textContent = okLabel;
+    openModal('confirm-overlay');
+    const ok = $id('confirm-ok');
+    const ca = $id('confirm-cancel');
+    const cleanup = (val) => { closeModal('confirm-overlay'); ok.onclick = null; ca.onclick = null; resolve(val); };
+    ok.onclick = () => cleanup(true);
+    ca.onclick = () => cleanup(false);
+  });
+}
+
+function toast(msg, type = 'success') {
+  const icons = {
+    success: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+    error:   `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+    warn:    `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+  };
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  t.innerHTML = `${icons[type]||''} <span>${msg}</span>`;
+  $id('toast-container').appendChild(t);
+  setTimeout(() => { t.style.animation = 'fadeOut 0.2s ease forwards'; setTimeout(() => t.remove(), 200); }, 3500);
+}
+
+/* Tag input widget */
+function TagInput(containerId, initial = []) {
+  const wrap = $id(containerId);
+  let tags = [...initial];
+  function render() {
+    wrap.innerHTML = tags.map((t, i) =>
+      `<span class="tag-chip">${t}<button onclick="window.__tagRemove_${containerId}(${i})">×</button></span>`
+    ).join('') + `<input class="tag-real-input" placeholder="Add…" id="${containerId}-inp">`;
+    $id(`${containerId}-inp`).addEventListener('keydown', e => {
+      if ((e.key === 'Enter' || e.key === ',') && e.target.value.trim()) {
+        e.preventDefault(); tags.push(e.target.value.trim()); render();
+      } else if (e.key === 'Backspace' && !e.target.value && tags.length) {
+        tags.pop(); render();
+      }
+    });
+  }
+  window[`__tagRemove_${containerId}`] = (i) => { tags.splice(i, 1); render(); };
+  render();
+  return { get: () => tags };
+}
+
+/* ═══════════════════════════════════════════════════════
+   DASHBOARD
+═══════════════════════════════════════════════════════ */
+async function renderDashboard() {
+  setContent(`<div style="display:flex;align-items:center;gap:10px;color:var(--ink-subtle);padding:40px 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg>Loading…</div>
+  <style>@keyframes spin{to{transform:rotate(360deg)}}</style>`);
+  try {
+    const stats = await apiFetch('/admin/stats');
+    S.stats = stats;
+    const lowStock = stats.inventory?.lowStock || 0;
+    // Low-stock dot indicator (no text, no red pill)
+    $id('low-stock-badge').classList.toggle('show', lowStock > 0);
+    // Orders count in sidebar
+    const ordersThisMonth = stats.orders?.thisMonth || 0;
+    const ordersEl = $id('orders-count');
+    if (ordersEl && ordersThisMonth > 0) { ordersEl.textContent = ordersThisMonth; ordersEl.style.display = ''; }
+    else if (ordersEl) { ordersEl.style.display = 'none'; }
+
+    setContent(`
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Revenue — Today</div>
+          <div class="stat-value">${fmt$(stats.revenue?.today||0)}</div>
+          <div class="stat-sub">${stats.orders?.today||0} orders</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Revenue — This Week</div>
+          <div class="stat-value">${fmt$(stats.revenue?.thisWeek||0)}</div>
+          <div class="stat-sub">${stats.orders?.thisWeek||0} orders</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Revenue — This Month</div>
+          <div class="stat-value">${fmt$(stats.revenue?.thisMonth||0)}</div>
+          <div class="stat-sub">${stats.orders?.thisMonth||0} orders</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="stat-card" style="cursor:pointer" onclick="navigateTo('inventory')">
+          <div class="stat-label">Low Stock Items</div>
+          <div class="stat-value ${lowStock > 0 ? 'stat-warn' : 'stat-success'}">${lowStock}</div>
+          <div class="stat-sub" style="color:var(--primary);margin-top:8px;font-size:12px">View inventory →</div>
+        </div>
+        <div class="stat-card" style="cursor:pointer" onclick="navigateTo('orders')">
+          <div class="stat-label">Pending Orders</div>
+          <div class="stat-value stat-accent">${stats.orders?.pending||0}</div>
+          <div class="stat-sub" style="color:var(--primary);margin-top:8px;font-size:12px">View orders →</div>
+        </div>
+      </div>
+    `);
+  } catch (e) {
+    setContent(`<div class="empty-state"><div class="empty-state-title">Could not load stats</div><div class="empty-state-sub">${e.message}</div></div>`);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PRODUCTS
+═══════════════════════════════════════════════════════ */
+let allProducts = [];
+let productSearch = '';
+
+async function renderProducts() {
+  // Topbar action
+  $id('topbar-actions').innerHTML = `<button class="btn btn-primary" id="add-product-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add product</button>`;
+  $id('add-product-btn').addEventListener('click', () => openProductModal(null));
+
+  setContent(`<div style="color:var(--ink-subtle);padding:32px 0">Loading products…</div>`);
+
+  try {
+    // Products come from the static index
+    const index = await storeFetch('/index.json');
+    allProducts = Object.entries(index.products || {}).map(([id, ref]) => ({ id, ...ref }));
+    renderProductList();
+  } catch {
+    // Fallback: try fetching individual files if index not available or storeUrl not set
+    setContent(`<div class="empty-state">
+      <div class="empty-state-title">No catalog found</div>
+      <div class="empty-state-sub">Configure your Store URL in Settings to load products.</div>
+    </div>`);
+  }
+}
+
+/* Fuzzy product filter: match against name, id, sku, tags, categories.
+   Splits the query into words and requires every word to hit at least
+   one field — so "silk black" finds "Silk Mini Dress" tagged "black". */
+function productMatchesSearch(p, query) {
+  if (!query) return true;
+  const haystack = [
+    p.name || '', p.id || '', p.sku || '',
+    ...(p.tags || []),
+    ...(p.categories || [])
+  ].join(' ').toLowerCase();
+  return query.toLowerCase().split(/\s+/).filter(Boolean).every(word => haystack.includes(word));
+}
+
+function buildProductRows(filtered) {
+  if (!filtered.length) {
+    return `<tr><td colspan="5"><div class="empty-state"><div class="empty-state-title">No products found</div></div></td></tr>`;
+  }
+  return filtered.map(p => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:var(--r-sm);overflow:hidden;background:var(--surface-2);flex-shrink:0">
+            ${p.image ? `<img src="${p.image}" style="width:100%;height:100%;object-fit:cover">` : ''}
+          </div>
+          <div>
+            <div style="font-weight:500;font-size:13px">${p.name||p.id}</div>
+            <div style="font-size:11px;color:var(--ink-tertiary);margin-top:1px;font-family:var(--mono)">${p.id}</div>
+          </div>
+        </div>
+      </td>
+      <td>${statusBadge(p.status||'active')}</td>
+      <td style="color:var(--ink)">${fmt$(p.price)}</td>
+      <td>${p.inStock === false ? `<span class="badge badge-out">Out</span>` : `<span class="badge badge-active">In stock</span>`}</td>
+      <td>
+        <div class="td-actions">
+          <button class="btn btn-ghost btn-icon btn-sm" title="Edit" onclick="openProductModal('${p.id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="btn btn-ghost btn-icon btn-sm" title="Delete" style="color:var(--danger)" onclick="deleteProduct('${p.id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+          </button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderProductList() {
+  const filtered = allProducts.filter(p => productMatchesSearch(p, productSearch));
+
+  // Update sidebar product count
+  const pcEl = $id('products-count');
+  if (pcEl) { pcEl.textContent = allProducts.length; pcEl.style.display = allProducts.length ? '' : 'none'; }
+
+  // If the product table already exists in the DOM (i.e. user is typing in
+  // the search box), only refresh the tbody — DON'T call setContent() which
+  // destroys the input element and collapses the mobile keyboard.
+  const existingTbody = document.getElementById('product-tbody');
+  if (existingTbody) {
+    existingTbody.innerHTML = buildProductRows(filtered);
+    return;
+  }
+
+  // First render: build the full shell including the search input.
+  setContent(`
+    <div class="filter-bar">
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" id="product-search" placeholder="Search by name, ID, SKU, tag…" value="${productSearch}" autocomplete="off">
+      </div>
+      ${!S.ghToken ? `<span style="font-size:12px;color:var(--warning)">⚠ GitHub not configured — editing unavailable</span>` : ''}
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Product</th><th>Status</th><th>Price</th><th>Stock</th><th></th>
+          </tr></thead>
+          <tbody id="product-tbody">${buildProductRows(filtered)}</tbody>
+        </table>
+      </div>
+    </div>
+    ${!S.ghToken ? `<p style="font-size:12px;color:var(--ink-tertiary);margin-top:12px">Add your GitHub token and repo in Settings to enable creating and editing products.</p>` : ''}
+  `);
+
+  // Listen on input: only update tbody, never replace the full DOM.
+  $id('product-search').addEventListener('input', e => {
+    productSearch = e.target.value;
+    const filtered2 = allProducts.filter(p => productMatchesSearch(p, productSearch));
+    document.getElementById('product-tbody').innerHTML = buildProductRows(filtered2);
+  });
+}
+
+async function openProductModal(productId) {
+  if (!S.ghToken) { toast('GitHub not configured. Add your token in Settings.', 'warn'); return; }
+  S.activeProductId = productId;
+  S.variantDraft = [];
+  S.mediaImagesDraft = [];
+  S.mediaVideosDraft = [];
+
+  let product = null;
+  if (productId) {
+    try {
+      const { content } = await ghGetFile(`data/source/products/${productId}.json`);
+      product = JSON.parse(content);
+    } catch (e) {
+      toast('Could not load product file: ' + e.message, 'error'); return;
+    }
+  }
+
+  $id('product-modal-title').textContent = productId ? `Edit — ${product?.identity?.name || productId}` : 'Add Product';
+  S.variantDraft = product?.variants ? JSON.parse(JSON.stringify(product.variants)) : [];
+  S.mediaImagesDraft = product?.media?.images ? JSON.parse(JSON.stringify(product.media.images)) : [];
+  S.mediaVideosDraft = product?.media?.videos ? JSON.parse(JSON.stringify(product.media.videos)) : [];
+
+  $id('product-modal-body').innerHTML = buildProductForm(product);
+  openModal('product-modal-overlay');
+
+  // Init tag inputs
+  window._catTag  = TagInput('pf-categories', product?.categories || []);
+  window._tagsTag = TagInput('pf-tags', product?.tags || []);
+
+  // Render variants
+  renderVariantEditor();
+
+  // Render media editors
+  renderMediaImagesEditor();
+  renderMediaVideosEditor();
+
+  $id('pf-add-variant').addEventListener('click', () => {
+    const opts = {};
+    const optKeysEl = $id('pf-option-keys');
+    if (optKeysEl.value.trim()) {
+      optKeysEl.value.split(',').map(k => k.trim()).filter(Boolean).forEach(k => { opts[k] = ''; });
+    }
+    S.variantDraft.push({ id: `v-${Date.now()}`, sku: '', options: opts, price: 0, weight: 0, stock: 0, lowStockThreshold: 3, backorder: false });
+    renderVariantEditor();
+  });
+
+  $id('pf-add-image').addEventListener('click', () => {
+    S.mediaImagesDraft.push({ url: '', alt: '', type: 'image', order: S.mediaImagesDraft.length + 1, variant: null });
+    renderMediaImagesEditor();
+  });
+
+  $id('pf-add-video').addEventListener('click', () => {
+    S.mediaVideosDraft.push({ url: '', thumbnail: '', order: S.mediaVideosDraft.length + 1 });
+    renderMediaVideosEditor();
+  });
+}
+
+function buildProductForm(p) {
+  const id  = p?.id || '';
+  const idt = p?.identity || {};
+  const pr  = p?.pricing || {};
+  const desc= p?.description || {};
+  const sh  = p?.shipping || {};
+  const seo = p?.seo || {};
+  const optKeys = p?.variants?.[0] ? Object.keys(p.variants[0].options || {}).join(', ') : '';
+
+  return `
+  <div class="form-section">
+    <div class="form-section-title">Identity</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Product ID</label><input class="form-input" id="pf-id" value="${id}" placeholder="p-1234" ${id ? 'readonly style="opacity:.5"' : ''}></div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="form-select" id="pf-status">
+          <option ${idt.status==='active'?'selected':''}>active</option>
+          <option ${idt.status==='draft'?'selected':''}>draft</option>
+          <option ${idt.status==='archived'?'selected':''}>archived</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Name</label><input class="form-input" id="pf-name" value="${idt.name||''}"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">SKU</label><input class="form-input" id="pf-sku" value="${idt.sku||''}"></div>
+      <div class="form-group"><label class="form-label">Slug</label><input class="form-input" id="pf-slug" value="${idt.slug||''}" placeholder="auto-generated from name"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Brand</label><input class="form-input" id="pf-brand" value="${idt.brand||''}"></div>
+      <div class="form-group"><label class="form-label">Barcode</label><input class="form-input" id="pf-barcode" value="${idt.barcode||''}"></div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section-title">Pricing</div>
+    <div class="form-row-3">
+      <div class="form-group"><label class="form-label">Base Price ($)</label><input class="form-input" id="pf-price" type="number" step="0.01" value="${pr.price||''}"></div>
+      <div class="form-group"><label class="form-label">Compare At ($)</label><input class="form-input" id="pf-compare" type="number" step="0.01" value="${pr.compareAtPrice||''}"></div>
+      <div class="form-group"><label class="form-label">Cost Price ($)</label><input class="form-input" id="pf-cost" type="number" step="0.01" value="${pr.costPrice||''}"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Currency</label><input class="form-input" id="pf-currency" value="${pr.currency||'USD'}"></div>
+      <div class="form-group"><label class="form-label">Tax Class</label>
+        <select class="form-select" id="pf-taxclass">
+          <option ${pr.taxClass==='standard'?'selected':''}>standard</option>
+          <option ${pr.taxClass==='reduced'?'selected':''}>reduced</option>
+          <option ${pr.taxClass==='zero'?'selected':''}>zero</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section-title">Description</div>
+    <div class="form-group"><label class="form-label">Short Description</label><input class="form-input" id="pf-desc-short" value="${(desc.short||'').replace(/"/g,'&quot;')}"></div>
+    <div class="form-group"><label class="form-label">Full Description (HTML)</label><textarea class="form-textarea" id="pf-desc-full" style="min-height:120px">${desc.full||''}</textarea></div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section-title">Categories &amp; Tags</div>
+    <div class="form-group"><label class="form-label">Categories</label><div class="tag-input-wrap" id="pf-categories"></div><p class="form-hint">e.g. dresses, dresses/mini-dresses</p></div>
+    <div class="form-group"><label class="form-label">Tags</label><div class="tag-input-wrap" id="pf-tags"></div></div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section-title">Variants</div>
+    <div class="form-group"><label class="form-label">Option Dimensions (comma-separated)</label><input class="form-input" id="pf-option-keys" value="${optKeys}" placeholder="e.g. Color, Size"></div>
+    <div id="variant-editor" style="margin-top:12px"></div>
+    <button class="btn btn-secondary btn-sm" id="pf-add-variant" style="margin-top:8px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add variant
+    </button>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section-title">Media — Images</div>
+    <div id="media-images-editor" style="margin-bottom:10px"></div>
+    <button class="btn btn-secondary btn-sm" id="pf-add-image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add image
+    </button>
+    <p class="form-hint" style="margin-top:6px">Set <em>Variant</em> to a variant ID (e.g. v-1234-blk-s) to associate an image with a specific variant. Leave blank for product-level images.</p>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section-title">Media — Videos</div>
+    <div id="media-videos-editor" style="margin-bottom:10px"></div>
+    <button class="btn btn-secondary btn-sm" id="pf-add-video">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add video
+    </button>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section-title">Shipping</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Profile</label><input class="form-input" id="pf-sh-profile" value="${sh.profile||'standard'}"></div>
+      <div class="form-group"><label class="form-label">Weight (kg)</label><input class="form-input" id="pf-sh-weight" type="number" step="0.01" value="${sh.weight||''}"></div>
+    </div>
+    <div class="toggle-group">
+      <label class="toggle"><input type="checkbox" id="pf-sh-requires" ${sh.requiresShipping!==false?'checked':''}><span class="toggle-slider"></span></label>
+      <span class="toggle-label">Requires shipping</span>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section-title">SEO</div>
+    <div class="form-group"><label class="form-label">Meta Title</label><input class="form-input" id="pf-seo-title" value="${(seo.title||'').replace(/"/g,'&quot;')}"></div>
+    <div class="form-group"><label class="form-label">Meta Description</label><input class="form-input" id="pf-seo-desc" value="${(seo.description||'').replace(/"/g,'&quot;')}"></div>
+    <div class="form-group"><label class="form-label">Canonical URL</label><input class="form-input" id="pf-seo-canonical" value="${seo.canonical||''}"></div>
+    <div class="form-group"><label class="form-label">OG Image URL</label><input class="form-input" id="pf-seo-og" value="${seo.ogImage||''}"></div>
+  </div>
+  `;
+}
+
+function renderVariantEditor() {
+  const container = $id('variant-editor');
+  if (!container) return;
+  if (!S.variantDraft.length) { container.innerHTML = `<p style="font-size:12px;color:var(--ink-tertiary)">No variants yet. Add one above.</p>`; return; }
+  container.innerHTML = S.variantDraft.map((v, i) => `
+    <div class="variant-row">
+      <div class="variant-row-header">
+        <span class="variant-id-label">${v.id}</span>
+        <button class="btn btn-ghost btn-icon btn-sm" style="color:var(--danger)" onclick="removeVariant(${i})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">SKU</label><input class="form-input" id="v-${i}-sku" value="${v.sku||''}"></div>
+        <div class="form-group"><label class="form-label">Price ($)</label><input class="form-input" id="v-${i}-price" type="number" step="0.01" value="${v.price||0}"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Stock Qty</label><input class="form-input" id="v-${i}-stock" type="number" value="${v.stock||0}"></div>
+        <div class="form-group"><label class="form-label">Weight (kg)</label><input class="form-input" id="v-${i}-weight" type="number" step="0.01" value="${v.weight||0}"></div>
+      </div>
+      ${Object.keys(v.options||{}).map(k => `
+        <div class="form-group"><label class="form-label">${k}</label><input class="form-input" id="v-${i}-opt-${k}" value="${v.options[k]||''}"></div>
+      `).join('')}
+      <div class="form-group"><label class="form-label">Image URL</label><input class="form-input" id="v-${i}-image" value="${v.image||''}"></div>
+      <div class="toggle-group" style="margin-top:6px">
+        <label class="toggle"><input type="checkbox" id="v-${i}-backorder" ${v.backorder?'checked':''}><span class="toggle-slider"></span></label>
+        <span class="toggle-label">Allow backorder</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.removeVariant = (i) => { S.variantDraft.splice(i, 1); renderVariantEditor(); };
+
+function renderMediaImagesEditor() {
+  const container = $id('media-images-editor');
+  if (!container) return;
+  if (!S.mediaImagesDraft.length) {
+    container.innerHTML = `<p style="font-size:12px;color:var(--ink-tertiary)">No images yet. Add one below.</p>`;
+    return;
+  }
+
+  // Build variant ID options for the association dropdown
+  const variantOptions = S.variantDraft.map(v => `<option value="${v.id}">${v.id}${v.options ? ' ('+Object.values(v.options).join('/')+')'  : ''}</option>`).join('');
+
+  container.innerHTML = S.mediaImagesDraft.map((img, i) => `
+    <div class="media-item-row">
+      <div class="media-thumb">
+        ${img.url
+          ? `<img src="${img.url}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="display:block">
+             <svg style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`
+          : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`
+        }
+      </div>
+      <div class="media-fields">
+        <div class="form-group">
+          <label class="form-label">URL</label>
+          <input class="form-input" id="mi-${i}-url" value="${(img.url||'').replace(/"/g,'&quot;')}" placeholder="https://cdn.example.com/products/p-xxx/1.webp" oninput="updateMediaThumb(${i})">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Alt text</label>
+            <input class="form-input" id="mi-${i}-alt" value="${(img.alt||'').replace(/"/g,'&quot;')}" placeholder="Front view">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type</label>
+            <select class="form-select" id="mi-${i}-type">
+              <option value="image" ${img.type==='image'||!img.type?'selected':''}>image</option>
+              <option value="360" ${img.type==='360'?'selected':''}>360°</option>
+              <option value="zoom" ${img.type==='zoom'?'selected':''}>zoom</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Order</label>
+            <input class="form-input" id="mi-${i}-order" type="number" value="${img.order != null ? img.order : i+1}" style="max-width:80px">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Variant <span style="color:var(--ink-tertiary);font-weight:400">(optional)</span></label>
+            <select class="form-select" id="mi-${i}-variant">
+              <option value="">— none (product-level)</option>
+              ${variantOptions}
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="media-actions">
+        <button class="btn btn-ghost btn-icon btn-sm" style="color:var(--danger)" title="Remove image" onclick="removeMediaImage(${i})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        ${i > 0 ? `<button class="btn btn-ghost btn-icon btn-sm" title="Move up" onclick="moveMediaImage(${i},-1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>` : ''}
+        ${i < S.mediaImagesDraft.length-1 ? `<button class="btn btn-ghost btn-icon btn-sm" title="Move down" onclick="moveMediaImage(${i},1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>` : ''}
+      </div>
+    </div>
+  `).join('');
+
+  // Set the current variant selection after rendering
+  S.mediaImagesDraft.forEach((img, i) => {
+    const sel = $id(`mi-${i}-variant`);
+    if (sel && img.variant) sel.value = img.variant;
+  });
+}
+
+window.removeMediaImage = (i) => { S.mediaImagesDraft.splice(i, 1); renderMediaImagesEditor(); };
+window.moveMediaImage = (i, dir) => {
+  const j = i + dir;
+  if (j < 0 || j >= S.mediaImagesDraft.length) return;
+  // Commit current field values before reordering so we don't lose edits
+  syncMediaImagesFromDOM();
+  [S.mediaImagesDraft[i], S.mediaImagesDraft[j]] = [S.mediaImagesDraft[j], S.mediaImagesDraft[i]];
+  renderMediaImagesEditor();
+};
+window.updateMediaThumb = (i) => {
+  const url = $id(`mi-${i}-url`)?.value || '';
+  const thumb = document.querySelector(`#media-images-editor .media-item-row:nth-child(${i+1}) .media-thumb`);
+  if (thumb) thumb.innerHTML = url
+    ? `<img src="${url}" alt="" onerror="this.style.display='none'" style="display:block"><svg style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`
+    : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+};
+
+function syncMediaImagesFromDOM() {
+  S.mediaImagesDraft.forEach((img, i) => {
+    img.url     = $id(`mi-${i}-url`)?.value?.trim() || '';
+    img.alt     = $id(`mi-${i}-alt`)?.value?.trim() || '';
+    img.type    = $id(`mi-${i}-type`)?.value || 'image';
+    img.order   = parseInt($id(`mi-${i}-order`)?.value) || i + 1;
+    img.variant = $id(`mi-${i}-variant`)?.value || null;
+  });
+}
+
+function renderMediaVideosEditor() {
+  const container = $id('media-videos-editor');
+  if (!container) return;
+  if (!S.mediaVideosDraft.length) {
+    container.innerHTML = `<p style="font-size:12px;color:var(--ink-tertiary)">No videos yet. Add one below.</p>`;
+    return;
+  }
+  container.innerHTML = S.mediaVideosDraft.map((vid, i) => `
+    <div class="video-item-row">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span style="font-size:11px;color:var(--ink-tertiary)">Video ${i+1}</span>
+        <button class="btn btn-ghost btn-icon btn-sm" style="color:var(--danger)" onclick="removeMediaVideo(${i})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="form-group"><label class="form-label">Video URL (.mp4)</label><input class="form-input" id="mv-${i}-url" value="${(vid.url||'').replace(/"/g,'&quot;')}" placeholder="https://cdn.example.com/products/p-xxx/vid-1.mp4"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Thumbnail URL</label><input class="form-input" id="mv-${i}-thumb" value="${(vid.thumbnail||'').replace(/"/g,'&quot;')}" placeholder="https://cdn.example.com/...thumb.webp"></div>
+        <div class="form-group"><label class="form-label">Order</label><input class="form-input" id="mv-${i}-order" type="number" value="${vid.order != null ? vid.order : i+1}" style="max-width:80px"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.removeMediaVideo = (i) => { S.mediaVideosDraft.splice(i, 1); renderMediaVideosEditor(); };
+
+function collectMedia() {
+  // Sync images from DOM first
+  const images = S.mediaImagesDraft.map((img, i) => ({
+    url:     $id(`mi-${i}-url`)?.value?.trim() || img.url || '',
+    alt:     $id(`mi-${i}-alt`)?.value?.trim() || img.alt || '',
+    type:    $id(`mi-${i}-type`)?.value || img.type || 'image',
+    order:   parseInt($id(`mi-${i}-order`)?.value) || img.order || i + 1,
+    variant: $id(`mi-${i}-variant`)?.value || null,
+  })).filter(img => img.url); // drop empty URL rows
+
+  const videos = S.mediaVideosDraft.map((vid, i) => ({
+    url:       $id(`mv-${i}-url`)?.value?.trim() || vid.url || '',
+    thumbnail: $id(`mv-${i}-thumb`)?.value?.trim() || vid.thumbnail || '',
+    order:     parseInt($id(`mv-${i}-order`)?.value) || vid.order || i + 1,
+  })).filter(v => v.url);
+
+  return { images, videos };
+}
+
+function collectVariants() {
+  return S.variantDraft.map((v, i) => {
+    const optKeys = $id('pf-option-keys').value.split(',').map(k => k.trim()).filter(Boolean);
+    const options = {};
+    optKeys.forEach(k => { options[k] = ($id(`v-${i}-opt-${k}`)?.value || '').trim(); });
+    return {
+      id: v.id,
+      sku: $id(`v-${i}-sku`)?.value?.trim() || '',
+      options,
+      price: parseFloat($id(`v-${i}-price`)?.value) || 0,
+      weight: parseFloat($id(`v-${i}-weight`)?.value) || 0,
+      stock: parseInt($id(`v-${i}-stock`)?.value) || 0,
+      lowStockThreshold: v.lowStockThreshold || 3,
+      backorder: $id(`v-${i}-backorder`)?.checked || false,
+      image: $id(`v-${i}-image`)?.value?.trim() || undefined,
+    };
+  });
+}
+
+function buildProductJson(existingId) {
+  const name = $id('pf-name').value.trim();
+  const rawSlug = $id('pf-slug').value.trim() || name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const id = existingId || $id('pf-id').value.trim() || `p-${Date.now()}`;
+  const variants = collectVariants();
+  const basePrice = parseFloat($id('pf-price').value) || (variants[0]?.price || 0);
+
+  return {
+    id, type: 'physical',
+    identity: {
+      name,
+      slug: rawSlug,
+      sku: $id('pf-sku').value.trim(),
+      barcode: $id('pf-barcode').value.trim(),
+      brand: $id('pf-brand').value.trim(),
+      status: $id('pf-status').value,
+    },
+    pricing: {
+      currency: $id('pf-currency').value.trim() || 'USD',
+      price: basePrice,
+      compareAtPrice: parseFloat($id('pf-compare').value) || null,
+      costPrice: parseFloat($id('pf-cost').value) || null,
+      taxClass: $id('pf-taxclass').value,
+    },
+    description: {
+      short: $id('pf-desc-short').value.trim(),
+      full: $id('pf-desc-full').value.trim(),
+      highlights: [],
+    },
+    categories: window._catTag?.get() || [],
+    tags: window._tagsTag?.get() || [],
+    attributes: [],
+    variants,
+    media: collectMedia(),
+    ugc: [],
+    relations: { related: [], upsells: [], crossSells: [] },
+    shipping: {
+      profile: $id('pf-sh-profile').value.trim() || 'standard',
+      weight: parseFloat($id('pf-sh-weight').value) || 0,
+      requiresShipping: $id('pf-sh-requires').checked,
+    },
+    seo: {
+      title: $id('pf-seo-title').value.trim(),
+      description: $id('pf-seo-desc').value.trim(),
+      canonical: $id('pf-seo-canonical').value.trim(),
+      ogImage: $id('pf-seo-og').value.trim(),
+    },
+    meta: {
+      createdAt: S.activeProductId ? undefined : new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }
+  };
+}
+
+$id('save-product-btn').addEventListener('click', async () => {
+  if (!S.ghToken) { toast('GitHub not configured', 'error'); return; }
+  const btn = $id('save-product-btn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  try {
+    const product = buildProductJson(S.activeProductId);
+    const filePath = `data/source/products/${product.id}.json`;
+    const content = JSON.stringify(product, null, 2);
+    let sha;
+    if (S.activeProductId) {
+      const existing = await ghGetFile(filePath);
+      sha = existing.sha;
+    }
+    await ghPutFile(filePath, content, sha, S.activeProductId ? `Update product ${product.id}` : `Add product ${product.id}`);
+    toast(S.activeProductId ? 'Product updated — build will run automatically' : 'Product added — build will run automatically');
+    closeModal('product-modal-overlay');
+    renderProducts();
+  } catch (e) {
+    toast(e.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = 'Save product';
+});
+
+$id('close-product-modal').addEventListener('click', () => closeModal('product-modal-overlay'));
+$id('cancel-product-modal').addEventListener('click', () => closeModal('product-modal-overlay'));
+
+async function deleteProduct(productId) {
+  if (!S.ghToken) { toast('GitHub not configured', 'error'); return; }
+  const ok = await confirm('Delete Product', `Delete ${productId}? This will remove the file and trigger a rebuild. This cannot be undone.`, 'Delete');
+  if (!ok) return;
+  try {
+    const { sha } = await ghGetFile(`data/source/products/${productId}.json`);
+    await ghDeleteFile(`data/source/products/${productId}.json`, sha, `Delete product ${productId}`);
+    toast('Product deleted — build will run automatically');
+    renderProducts();
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   INVENTORY
+═══════════════════════════════════════════════════════ */
+let invFilter = 'all';
+let invSearch = '';
+let invData = [];
+
+async function renderInventory() {
+  $id('topbar-actions').innerHTML = `
+    <button class="btn btn-secondary" id="inv-cleanup-btn">Clean reservations</button>
+    <button class="btn btn-secondary" id="inv-refresh-btn">Refresh</button>
+  `;
+  $id('inv-refresh-btn').addEventListener('click', loadInventory);
+  $id('inv-cleanup-btn').addEventListener('click', async () => {
+    try {
+      const r = await apiFetch('/admin/cleanup-reservations', { method: 'POST' });
+      toast(`Cleaned ${r.cleaned} expired reservations`);
+      loadInventory();
+    } catch (e) { toast(e.message, 'error'); }
+  });
+  setContent(`<div style="color:var(--ink-subtle);padding:32px 0">Loading inventory…</div>`);
+  loadInventory();
+}
+
+async function loadInventory() {
+  try {
+    const data = await apiFetch('/admin/inventory');
+    invData = data.inventory || [];
+    renderInvList();
+  } catch (e) { setContent(`<div class="empty-state"><div class="empty-state-title">Error: ${e.message}</div></div>`); }
+}
+
+function buildInvRows(filtered) {
+  const rows = filtered.flatMap(item =>
+    Object.entries(item.variants||{}).map(([vid, v]) => {
+      return `<tr>
+        <td>
+          <span class="mono" style="cursor:pointer;color:var(--primary)" 
+            title="Open product" onclick="openInventoryProduct('${item.productId}')">${item.productId}</span>
+        </td>
+        <td><span class="mono" style="color:var(--ink-subtle)">${vid}</span></td>
+        <td>
+          <div class="qty-cell">
+            <div class="qty-display" onclick="startInvEdit(this,'${item.productId}','${vid}','qty')" title="Click to edit">${v.qty||0}</div>
+          </div>
+        </td>
+        <td style="color:var(--ink-subtle)">${v.reserved||0}</td>
+        <td>${stockBadge(v)}</td>
+        <td>
+          <label class="toggle" title="Backorder">
+            <input type="checkbox" ${v.backorder?'checked':''} onchange="updateBackorder('${item.productId}','${vid}',this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </td>
+      </tr>`;
+    })
+  ).join('');
+  return rows || `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-title">No items</div></div></td></tr>`;
+}
+
+function getInvFiltered() {
+  let filtered = invData;
+  if (invFilter === 'low') filtered = invData.filter(i => Object.values(i.variants||{}).some(v => { const a=Math.max(0,(v.qty||0)-(v.reserved||0)); return a<=5 && (a>0||v.backorder); }));
+  if (invFilter === 'out') filtered = invData.filter(i => Object.values(i.variants||{}).some(v => Math.max(0,(v.qty||0)-(v.reserved||0))===0 && !v.backorder));
+  // Search: match product ID or any variant ID (substring)
+  if (invSearch.trim()) {
+    const q = invSearch.trim().toLowerCase();
+    filtered = filtered.filter(i =>
+      i.productId.toLowerCase().includes(q) ||
+      Object.keys(i.variants||{}).some(vid => vid.toLowerCase().includes(q))
+    );
+  }
+  return filtered;
+}
+
+function renderInvList() {
+  const lowStockCount = invData.filter(item =>
+    Object.values(item.variants||{}).some(v => Math.max(0,(v.qty||0)-(v.reserved||0)) <= 5)
+  ).length;
+  $id('low-stock-badge').classList.toggle('show', lowStockCount > 0);
+
+  const filtered = getInvFiltered();
+
+  // If table shell already exists (user typing in search), only update tbody + active tabs.
+  const existingTbody = document.getElementById('inv-tbody');
+  if (existingTbody) {
+    existingTbody.innerHTML = buildInvRows(filtered);
+    // Update active filter tab highlights
+    document.querySelectorAll('.inv-filter-tab').forEach(b => {
+      b.classList.toggle('active', b.dataset.f === invFilter);
+    });
+    return;
+  }
+
+  setContent(`
+    <div class="filter-bar">
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" id="inv-search" placeholder="Search by product or variant ID…" value="${invSearch}" autocomplete="off">
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-tab inv-filter-tab ${invFilter==='all'?'active':''}" data-f="all" onclick="setInvFilter('all')">All</button>
+        <button class="filter-tab inv-filter-tab ${invFilter==='low'?'active':''}" data-f="low" onclick="setInvFilter('low')">Low stock</button>
+        <button class="filter-tab inv-filter-tab ${invFilter==='out'?'active':''}" data-f="out" onclick="setInvFilter('out')">Out of stock</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Product</th><th>Variant</th><th>Qty</th><th>Reserved</th><th>Available</th><th>Backorder</th></tr></thead>
+          <tbody id="inv-tbody">${buildInvRows(filtered)}</tbody>
+        </table>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--ink-tertiary);margin-top:12px">Click a product ID to open it. Click a quantity to edit inline.</p>
+  `);
+
+  $id('inv-search').addEventListener('input', e => {
+    invSearch = e.target.value;
+    document.getElementById('inv-tbody').innerHTML = buildInvRows(getInvFiltered());
+  });
+}
+
+window.setInvFilter = (f) => { invFilter = f; renderInvList(); };
+
+window.startInvEdit = (el, productId, variantId, field) => {
+  const cur = el.textContent;
+  const inp = document.createElement('input');
+  inp.className = 'qty-input';
+  inp.type = 'number';
+  inp.value = cur;
+  el.replaceWith(inp);
+  inp.focus(); inp.select();
+  const commit = async () => {
+    const newVal = parseInt(inp.value);
+    if (isNaN(newVal) || newVal < 0) { inp.replaceWith(el); return; }
+    if (newVal === parseInt(cur)) { inp.replaceWith(el); return; }
+    el.textContent = newVal;
+    inp.replaceWith(el);
+    try {
+      await apiFetch(`/admin/inventory/${productId}`, { method: 'PUT', body: JSON.stringify({ variants: { [variantId]: { [field]: newVal } } }) });
+      // Update local data
+      const item = invData.find(i => i.productId === productId);
+      if (item?.variants?.[variantId]) item.variants[variantId][field] = newVal;
+      toast('Stock updated');
+      renderInvList();
+    } catch (e) { toast(e.message, 'error'); el.textContent = cur; }
+  };
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === 'Tab') { e.preventDefault(); commit(); } if (e.key === 'Escape') inp.replaceWith(el); });
+  inp.addEventListener('blur', commit);
+};
+
+window.updateBackorder = async (productId, variantId, val) => {
+  try {
+    await apiFetch(`/admin/inventory/${productId}`, { method: 'PUT', body: JSON.stringify({ variants: { [variantId]: { backorder: val } } }) });
+    const item = invData.find(i => i.productId === productId);
+    if (item?.variants?.[variantId]) item.variants[variantId].backorder = val;
+    toast(`Backorder ${val ? 'enabled' : 'disabled'}`);
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+// Clicking a product ID in inventory opens the product for editing (if GitHub
+// is configured) or navigates to the products tab with that product pre-searched.
+window.openInventoryProduct = (productId) => {
+  if (S.ghToken) {
+    openProductModal(productId);
+  } else {
+    productSearch = productId;
+    navigateTo('products');
+  }
+};
+
+/* ═══════════════════════════════════════════════════════
+   ORDERS
+═══════════════════════════════════════════════════════ */
+let orderStatusFilter = '';
+let orderPage = 1;
+
+async function renderOrders() {
+  $id('topbar-actions').innerHTML = `<button class="btn btn-secondary" id="export-orders-btn">Export CSV</button>`;
+  $id('export-orders-btn').addEventListener('click', exportOrders);
+  setContent(`<div style="color:var(--ink-subtle);padding:32px 0">Loading orders…</div>`);
+  orderPage = 1; orderStatusFilter = '';
+  await loadOrders();
+}
+
+async function loadOrders() {
+  const statusQ = orderStatusFilter ? `&status=${orderStatusFilter}` : '';
+  try {
+    const data = await apiFetch(`/admin/orders?page=${orderPage}&limit=20${statusQ}`);
+    S.orders = { data: data.orders, page: data.page, total: data.total, status: orderStatusFilter };
+    renderOrderList();
+  } catch (e) { setContent(`<div class="empty-state"><div class="empty-state-title">Error: ${e.message}</div></div>`); }
+}
+
+function renderOrderList() {
+  const statuses = ['', 'pending', 'paid', 'shipped', 'refunded', 'cancelled'];
+  const rows = S.orders.data.map(o => `
+    <tr style="cursor:pointer" onclick="openOrderDrawer('${o.id}')">
+      <td><span class="mono">${o.id}</span></td>
+      <td>${fmtDate(o.createdAt)}</td>
+      <td>${o.customer?.email||'—'}</td>
+      <td>${(o.items||[]).length} item${o.items?.length===1?'':'s'}</td>
+      <td style="color:var(--ink);font-weight:500">${fmt$(o.total)}</td>
+      <td>${statusBadge(o.status)}</td>
+    </tr>
+  `).join('');
+
+  const totalPages = Math.ceil(S.orders.total / 20);
+
+  setContent(`
+    <div class="filter-bar" style="margin-bottom:16px">
+      <div class="filter-tabs">
+        ${statuses.map(s => `<button class="filter-tab ${orderStatusFilter===s?'active':''}" onclick="setOrderFilter('${s}')">${s||'All'}</button>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order ID</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+          <tbody>${rows || `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-title">No orders</div></div></td></tr>`}</tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span class="page-info">${S.orders.total} total · Page ${S.orders.page} of ${totalPages||1}</span>
+        <button class="btn btn-secondary btn-sm" ${orderPage<=1?'disabled':''} onclick="changeOrderPage(-1)">← Prev</button>
+        <button class="btn btn-secondary btn-sm" ${orderPage>=totalPages?'disabled':''} onclick="changeOrderPage(1)">Next →</button>
+      </div>
+    </div>
+  `);
+}
+
+window.setOrderFilter = (s) => { orderStatusFilter = s; orderPage = 1; loadOrders(); };
+window.changeOrderPage = (d) => { orderPage += d; loadOrders(); };
+
+async function openOrderDrawer(orderId) {
+  S.activeOrderId = orderId;
+  $id('order-drawer-title').textContent = `Order ${orderId}`;
+  $id('order-drawer-body').innerHTML = `<div style="color:var(--ink-subtle)">Loading…</div>`;
+  $id('order-drawer-overlay').classList.add('show');
+  $id('order-drawer').classList.add('show');
+  try {
+    const o = await apiFetch(`/admin/orders/${orderId}`);
+    renderOrderDrawer(o);
+  } catch (e) {
+    $id('order-drawer-body').innerHTML = `<div class="empty-state"><div class="empty-state-title">Error: ${e.message}</div></div>`;
+  }
+}
+
+function renderOrderDrawer(o) {
+  const items = (o.items || []).map(i => `
+    <div class="line-item">
+      ${i.image ? `<img class="line-item-img" src="${i.image}" alt="">` : `<div class="line-item-img"></div>`}
+      <div class="line-item-info">
+        <div class="line-item-name">${i.name||'Product'}</div>
+        <div class="line-item-meta">${i.sku||''} · qty ${i.qty}</div>
+      </div>
+      <div class="line-item-price">${fmt$(i.price * i.qty)}</div>
+    </div>
+  `).join('');
+
+  const sh = o.shipping || {};
+
+  $id('order-drawer-body').innerHTML = `
+    <div class="detail-section">
+      <div class="flex items-center" style="gap:10px;margin-bottom:16px">
+        ${statusBadge(o.status)}
+        ${o.coupon ? `<span class="badge badge-active" style="background:rgba(94,106,210,0.1);color:var(--primary-hover)">${o.coupon}</span>` : ''}
+        <span style="font-size:12px;color:var(--ink-tertiary);margin-left:auto">${fmtDate(o.createdAt)}</span>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">Items</div>
+      <div class="line-items">${items||'No items'}</div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">Financial summary</div>
+      <div class="financials">
+        <div class="fin-row"><span class="fin-label">Subtotal</span><span class="fin-value">${fmt$(o.subtotal)}</span></div>
+        ${o.discount ? `<div class="fin-row"><span class="fin-label">Discount</span><span class="fin-value" style="color:var(--success)">−${fmt$(o.discount)}</span></div>` : ''}
+        <div class="fin-row"><span class="fin-label">Shipping</span><span class="fin-value">${fmt$(o.shippingCost)}</span></div>
+        <div class="fin-row"><span class="fin-label">Tax</span><span class="fin-value">${fmt$(o.tax)}</span></div>
+        <div class="fin-row fin-total"><span class="fin-label">Total</span><span>${fmt$(o.total)}</span></div>
+        ${o.refundAmount ? `<div class="fin-row" style="background:rgba(217,79,79,0.05)"><span class="fin-label" style="color:var(--danger)">Refunded</span><span style="color:var(--danger)">−${fmt$(o.refundAmount)}</span></div>` : ''}
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">Customer</div>
+      <div class="detail-value">
+        <strong>${o.customer?.name||'—'}</strong><br>
+        ${o.customer?.email||'—'}
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">Shipping address</div>
+      <div class="detail-value">
+        ${sh.address1||''}${sh.address2?', '+sh.address2:''}<br>
+        ${sh.city||''}, ${sh.state||''} ${sh.zip||''}<br>
+        ${sh.country||''}
+      </div>
+    </div>
+
+    ${o.trackingNumber ? `
+    <div class="detail-section">
+      <div class="detail-label">Fulfillment</div>
+      <div class="detail-value"><strong>${o.carrier||''}</strong> · <span class="mono">${o.trackingNumber}</span></div>
+    </div>` : ''}
+
+    ${o.notes ? `<div class="detail-section"><div class="detail-label">Notes</div><div class="detail-value">${o.notes}</div></div>` : ''}
+
+    <div class="detail-section">
+      <div class="detail-label">Stripe</div>
+      <div class="detail-value mono" style="font-size:11px">${o.stripeSessionId||'—'}</div>
+    </div>
+  `;
+
+  $id('order-drawer-footer').innerHTML = `
+    ${o.status === 'paid' ? `<button class="btn btn-secondary btn-sm" onclick="openShipModal('${o.id}')">Mark shipped</button>` : ''}
+    ${['paid','shipped'].includes(o.status) ? `<button class="btn btn-danger btn-sm" onclick="openRefundModal('${o.id}',${o.total})">Refund</button>` : ''}
+    <button class="btn btn-ghost btn-sm" onclick="closeOrderDrawer()">Close</button>
+  `;
+}
+
+function closeOrderDrawer() {
+  $id('order-drawer-overlay').classList.remove('show');
+  $id('order-drawer').classList.remove('show');
+}
+$id('close-order-drawer').addEventListener('click', closeOrderDrawer);
+$id('order-drawer-overlay').addEventListener('click', closeOrderDrawer);
+
+window.openShipModal = (orderId) => {
+  S.activeOrderId = orderId;
+  $id('ship-tracking').value = '';
+  $id('ship-carrier').value = '';
+  $id('ship-notes').value = '';
+  openModal('ship-overlay');
+};
+
+$id('ship-confirm-btn').addEventListener('click', async () => {
+  const btn = $id('ship-confirm-btn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try {
+    await apiFetch(`/admin/orders/${S.activeOrderId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status: 'shipped', trackingNumber: $id('ship-tracking').value.trim(), carrier: $id('ship-carrier').value, notes: $id('ship-notes').value.trim() })
+    });
+    toast('Order marked as shipped');
+    closeModal('ship-overlay');
+    closeOrderDrawer();
+    loadOrders();
+  } catch (e) { toast(e.message, 'error'); }
+  btn.disabled = false; btn.textContent = 'Mark shipped';
+});
+
+window.openRefundModal = (orderId) => {
+  S.activeOrderId = orderId;
+  $id('refund-amount').value = '';
+  $id('refund-reason').value = '';
+  openModal('refund-overlay');
+};
+
+$id('refund-confirm-btn').addEventListener('click', async () => {
+  const btn = $id('refund-confirm-btn');
+  btn.disabled = true; btn.textContent = 'Recording…';
+  try {
+    await apiFetch(`/admin/orders/${S.activeOrderId}/refund`, {
+      method: 'POST',
+      body: JSON.stringify({ amount: parseFloat($id('refund-amount').value), reason: $id('refund-reason').value.trim() })
+    });
+    toast('Refund recorded. Remember to issue the refund in Stripe.');
+    closeModal('refund-overlay');
+    closeOrderDrawer();
+    loadOrders();
+  } catch (e) { toast(e.message, 'error'); }
+  btn.disabled = false; btn.textContent = 'Record refund';
+});
+
+async function exportOrders() {
+  try {
+    // Fetch all pages
+    let all = [];
+    let page = 1;
+    while (true) {
+      const r = await apiFetch(`/admin/orders?page=${page}&limit=100`);
+      all = all.concat(r.orders || []);
+      if (all.length >= r.total || !(r.orders?.length)) break;
+      page++;
+    }
+    const header = 'Order ID,Date,Customer,Email,Country,Items,Subtotal,Shipping,Tax,Total,Status,Coupon,Tracking';
+    const rows = all.map(o => [
+      o.id, fmtDate(o.createdAt), o.customer?.name||'', o.customer?.email||'',
+      o.shipping?.country||'', (o.items||[]).length,
+      o.subtotal||0, o.shippingCost||0, o.tax||0, o.total||0,
+      o.status, o.coupon||'', o.trackingNumber||''
+    ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
+    const csv = [header, ...rows].join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
+    a.download = `orders-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    toast('Orders exported');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MEDIA
+═══════════════════════════════════════════════════════ */
+let uploadCanvas, uploadCtx, uploadOriginal, uploadProcessed, uploadFilename;
+
+function renderMedia() {
+  $id('topbar-actions').innerHTML = '';
+  setContent(`
+    <div style="max-width:680px">
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header"><span class="card-title">Upload &amp; Resize</span></div>
+        <div class="card-body">
+          <div class="upload-zone" id="upload-zone">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink-tertiary)"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+            <p>Drop images here or <label style="color:var(--primary);cursor:pointer"><input type="file" id="upload-input" accept="image/*" multiple style="display:none">click to choose</label></p>
+            <small>JPEG, PNG, WebP, GIF supported</small>
+          </div>
+
+          <div id="upload-preview-area" style="display:none">
+            <div class="upload-preview" id="upload-preview"></div>
+
+            <div class="resize-controls" id="resize-controls">
+              <div class="form-group" style="margin-bottom:12px">
+                <label class="form-label">Output Width (px)</label>
+                <div class="slider-row">
+                  <input type="range" id="rw-slider" min="200" max="3000" step="50" value="1200">
+                  <div class="slider-val"><span id="rw-val">1200</span>px</div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:12px">
+                <label class="form-label">Quality</label>
+                <div class="slider-row">
+                  <input type="range" id="rq-slider" min="50" max="100" step="5" value="85">
+                  <div class="slider-val"><span id="rq-val">85</span>%</div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:0">
+                <label class="form-label">Format</label>
+                <div class="format-toggle">
+                  <button class="format-btn active" data-fmt="image/webp">WebP</button>
+                  <button class="format-btn" data-fmt="image/jpeg">JPEG</button>
+                  <button class="format-btn" data-fmt="image/png">PNG</button>
+                </div>
+              </div>
+              <div class="size-info" id="size-info"></div>
+            </div>
+
+            <canvas id="upload-canvas" style="display:none"></canvas>
+
+            <div style="display:flex;gap:8px;margin-top:16px;align-items:center">
+              <button class="btn btn-primary" id="do-upload-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+                Upload to R2
+              </button>
+              <span style="font-size:12px;color:var(--ink-tertiary)">via <code style="font-family:var(--mono)">/api/admin/upload</code></span>
+              <button class="btn btn-ghost btn-sm" id="clear-upload-btn" style="margin-left:auto">Clear</button>
+            </div>
+            <div id="upload-result" style="margin-top:12px"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">R2 setup</span></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+          <p style="font-size:13px;color:var(--ink-subtle);line-height:1.7">
+            Uploads go to Cloudflare R2 via <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px">POST /api/admin/upload</code> on your Worker.
+            To enable it:
+          </p>
+          <ol style="font-size:13px;color:var(--ink-subtle);line-height:1.9;padding-left:18px">
+            <li>Create an R2 bucket: <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">npx wrangler r2 bucket create your-store-assets</code></li>
+            <li>Set <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">bucket_name</code> in <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">wrangler.toml</code> under <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">[[r2_buckets]]</code></li>
+            <li>Enable public access on the bucket in the Cloudflare dashboard and set <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">CDN_BASE_URL</code> to the bucket's public URL</li>
+            <li>Redeploy: <code class="mono" style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-size:12px">npm run deploy:api</code></li>
+          </ol>
+          <p style="font-size:12px;color:var(--ink-tertiary)">Without R2, paste public image URLs directly into product media fields in the Products editor.</p>
+        </div>
+      </div>
+    </div>
+  `);
+
+  uploadCanvas = $id('upload-canvas');
+  uploadCtx    = uploadCanvas.getContext('2d');
+  S.uploadFormat = 'image/webp';
+  S.uploadWidth  = 1200;
+  S.uploadQuality = 85;
+  S.uploadFiles = [];
+
+  // Zone interactions
+  const zone = $id('upload-zone');
+  const inp  = $id('upload-input');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+  inp.addEventListener('change', () => handleFiles(inp.files));
+
+  // Sliders
+  $id('rw-slider').addEventListener('input', e => { S.uploadWidth = parseInt(e.target.value); $id('rw-val').textContent = e.target.value; updatePreview(); });
+  $id('rq-slider').addEventListener('input', e => { S.uploadQuality = parseInt(e.target.value); $id('rq-val').textContent = e.target.value; updatePreview(); });
+
+  // Format buttons
+  document.querySelectorAll('.format-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      S.uploadFormat = btn.dataset.fmt;
+      updatePreview();
+    });
+  });
+
+  $id('clear-upload-btn').addEventListener('click', () => {
+    S.uploadFiles = []; uploadOriginal = null;
+    $id('upload-preview-area').style.display = 'none';
+    inp.value = '';
+  });
+
+  $id('do-upload-btn').addEventListener('click', doUpload);
+}
+
+function handleFiles(fileList) {
+  if (!fileList.length) return;
+  S.uploadFiles = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+  if (!S.uploadFiles.length) { toast('Please select image files', 'warn'); return; }
+  const file = S.uploadFiles[0];
+  uploadFilename = file.name.replace(/\.[^.]+$/, '');
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => { uploadOriginal = img; updatePreview(); $id('upload-preview-area').style.display = 'block'; };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function updatePreview() {
+  if (!uploadOriginal) return;
+  const w = S.uploadWidth;
+  const ar = uploadOriginal.height / uploadOriginal.width;
+  const h = Math.round(w * ar);
+  uploadCanvas.width = w; uploadCanvas.height = h;
+  uploadCtx.drawImage(uploadOriginal, 0, 0, w, h);
+  const ext = { 'image/webp':'webp', 'image/jpeg':'jpg', 'image/png':'png' }[S.uploadFormat] || 'webp';
+  const dataUrl = uploadCanvas.toDataURL(S.uploadFormat, S.uploadQuality / 100);
+  const previewHtml = `
+    <div class="preview-img"><img src="${dataUrl}" alt="resized"></div>
+    <div class="preview-img"><img src="${uploadOriginal.src}" alt="original"></div>
+  `;
+  $id('upload-preview').innerHTML = previewHtml;
+  // Size estimate (rough)
+  const b64 = dataUrl.split(',')[1];
+  const bytes = Math.round(b64.length * 0.75);
+  const origBytes = Math.round(uploadOriginal.src.length * 0.75); // rough
+  $id('size-info').innerHTML = `${w}×${h}px · ~${(bytes/1024).toFixed(0)} KB <span>(output)</span> · Format: .${ext}`;
+  uploadProcessed = dataUrl;
+}
+
+async function doUpload() {
+  if (!uploadProcessed) { toast('No image to upload', 'warn'); return; }
+  const btn = $id('do-upload-btn');
+  const result = $id('upload-result');
+  btn.disabled = true; btn.textContent = 'Uploading…';
+  try {
+    const ext = { 'image/webp':'webp', 'image/jpeg':'jpg', 'image/png':'png' }[S.uploadFormat] || 'webp';
+    const blob = await (await fetch(uploadProcessed)).blob();
+    const filename = `${uploadFilename}-${S.uploadWidth}w.${ext}`;
+    const formData = new FormData();
+    formData.append('file', blob, filename);
+    const res = await fetch(`${S.apiUrl}/admin/upload`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${S.adminKey}` },
+      body: formData
+    });
+    if (!res.ok) { const d = await res.json().catch(()=>({})); throw new Error(d.error || `HTTP ${res.status}`); }
+    const { url } = await res.json();
+    result.innerHTML = `
+      <div style="background:var(--surface-2);border:1px solid var(--hairline);border-radius:var(--r-md);padding:12px;display:flex;align-items:center;gap:10px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="color:var(--success)"><polyline points="20 6 9 17 4 12"/></svg>
+        <span class="mono" style="font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${url}</span>
+        <button class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText('${url}').then(()=>toast('URL copied'))">Copy</button>
+      </div>
+    `;
+    toast('Uploaded successfully');
+  } catch (e) {
+    result.innerHTML = `<p style="color:var(--danger);font-size:12px">Upload failed: ${e.message}. Make sure /api/admin/upload is set up in your Worker.</p>`;
+    toast(e.message, 'error');
+  }
+  btn.disabled = false; btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg> Upload to R2`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   COUPONS
+═══════════════════════════════════════════════════════ */
+let couponsData = null;
+let couponsSha  = null;
+
+async function renderCoupons() {
+  $id('topbar-actions').innerHTML = `
+    <button class="btn btn-primary" id="add-coupon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add coupon</button>
+  `;
+  $id('add-coupon-btn').addEventListener('click', () => openCouponModal(null));
+  if (!S.ghToken) {
+    setContent(`<div class="empty-state"><div class="empty-state-title">GitHub not configured</div><div class="empty-state-sub">Add your GitHub token in Settings to manage coupons.</div></div>`);
+    return;
+  }
+  setContent(`<div style="color:var(--ink-subtle);padding:32px 0">Loading coupons…</div>`);
+  await loadCoupons();
+}
+
+async function loadCoupons() {
+  try {
+    const { content, sha } = await ghGetFile('data/config/coupons.json');
+    couponsData = JSON.parse(content);
+    couponsSha  = sha;
+    renderCouponList();
+  } catch (e) {
+    setContent(`<div class="empty-state"><div class="empty-state-title">Could not load coupons.json</div><div class="empty-state-sub">${e.message}</div></div>`);
+  }
+}
+
+function renderCouponList() {
+  const codes = Object.keys(couponsData.codes || {});
+  const rows = codes.map(code => {
+    const c = couponsData.codes[code];
+    const isActive = (couponsData.active || []).includes(code);
+    return `<tr>
+      <td><span class="mono" style="font-size:12px;font-weight:600">${code}</span></td>
+      <td>${c.type === 'percentage' ? `${c.value}%` : fmt$(c.value)}</td>
+      <td>${c.minOrder ? fmt$(c.minOrder) : '—'}</td>
+      <td>${c.usageLimit != null ? c.usageLimit : '∞'}</td>
+      <td>${c.expires ? fmtDate(c.expires).split(',')[0] : 'Never'}</td>
+      <td>
+        <label class="toggle">
+          <input type="checkbox" ${isActive?'checked':''} onchange="toggleCouponActive('${code}',this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </td>
+      <td>
+        <div class="td-actions">
+          <button class="btn btn-ghost btn-icon btn-sm" onclick="openCouponModal('${code}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="btn btn-ghost btn-icon btn-sm" style="color:var(--danger)" onclick="deleteCoupon('${code}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+          </button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  setContent(`
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Code</th><th>Discount</th><th>Min Order</th><th>Usage Limit</th><th>Expires</th><th>Active</th><th></th></tr></thead>
+          <tbody>${rows || `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-title">No coupons yet</div></div></td></tr>`}</tbody>
+        </table>
+      </div>
+    </div>
+  `);
+}
+
+function openCouponModal(code) {
+  $id('coupon-modal-title').textContent = code ? `Edit — ${code}` : 'Add Coupon';
+  const c = code ? (couponsData.codes[code] || {}) : {};
+  $id('coupon-modal-body').innerHTML = `
+    <div class="form-group">
+      <label class="form-label">Code</label>
+      <input class="form-input" id="coup-code" value="${code||''}" style="text-transform:uppercase" ${code?'readonly style="opacity:.5;text-transform:uppercase"':''} placeholder="WELCOME10">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Type</label>
+        <select class="form-select" id="coup-type">
+          <option value="percentage" ${c.type==='percentage'?'selected':''}>Percentage</option>
+          <option value="fixed" ${c.type==='fixed'?'selected':''}>Fixed amount</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Value</label>
+        <input class="form-input" id="coup-value" type="number" step="0.01" value="${c.value||''}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Min Order ($)</label>
+        <input class="form-input" id="coup-min" type="number" step="0.01" value="${c.minOrder||''}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Max Discount ($)</label>
+        <input class="form-input" id="coup-max" type="number" step="0.01" value="${c.maxDiscount||''}" placeholder="No cap">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Usage Limit</label>
+      <input class="form-input" id="coup-limit" type="number" value="${c.usageLimit!=null?c.usageLimit:''}" placeholder="Leave empty for unlimited">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Expires (ISO date, optional)</label>
+      <input class="form-input" id="coup-expires" type="datetime-local" value="${c.expires?c.expires.slice(0,16):''}">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <input class="form-input" id="coup-desc" value="${c.description||''}">
+    </div>
+    <div class="toggle-group">
+      <label class="toggle"><input type="checkbox" id="coup-active" ${(!code || (couponsData.active||[]).includes(code))?'checked':''}><span class="toggle-slider"></span></label>
+      <span class="toggle-label">Active</span>
+    </div>
+  `;
+  $id('coupon-save-btn').onclick = () => saveCoupon(code);
+  openModal('coupon-overlay');
+}
+
+async function saveCoupon(existingCode) {
+  const btn = $id('coupon-save-btn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const code = ($id('coup-code').value || '').toUpperCase().trim();
+  if (!code) { toast('Code is required', 'error'); btn.disabled = false; btn.textContent = 'Save coupon'; return; }
+  couponsData.codes[code] = {
+    type: $id('coup-type').value,
+    value: parseFloat($id('coup-value').value) || 0,
+    minOrder: parseFloat($id('coup-min').value) || 0,
+    maxDiscount: $id('coup-max').value ? parseFloat($id('coup-max').value) : null,
+    usageLimit: $id('coup-limit').value !== '' ? parseInt($id('coup-limit').value) : null,
+    expires: $id('coup-expires').value ? new Date($id('coup-expires').value).toISOString() : null,
+    description: $id('coup-desc').value.trim(),
+  };
+  const isActive = $id('coup-active').checked;
+  couponsData.active = (couponsData.active || []).filter(c => c !== code);
+  if (isActive) couponsData.active.push(code);
+  try {
+    const content = JSON.stringify(couponsData, null, 2);
+    await ghPutFile('data/config/coupons.json', content, couponsSha, `${existingCode?'Update':'Add'} coupon ${code}`);
+    toast(`Coupon ${code} saved`);
+    closeModal('coupon-overlay');
+    await loadCoupons();
+  } catch (e) { toast(e.message, 'error'); }
+  btn.disabled = false; btn.textContent = 'Save coupon';
+}
+
+window.toggleCouponActive = async (code, val) => {
+  couponsData.active = (couponsData.active || []).filter(c => c !== code);
+  if (val) couponsData.active.push(code);
+  try {
+    const content = JSON.stringify(couponsData, null, 2);
+    const { sha } = await ghGetFile('data/config/coupons.json');
+    await ghPutFile('data/config/coupons.json', content, sha, `Toggle coupon ${code}`);
+    couponsSha = (await ghGetFile('data/config/coupons.json')).sha;
+    toast(`Coupon ${code} ${val ? 'activated' : 'deactivated'}`);
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+window.deleteCoupon = async (code) => {
+  const ok = await confirm('Delete Coupon', `Delete coupon "${code}"? This cannot be undone.`, 'Delete');
+  if (!ok) return;
+  delete couponsData.codes[code];
+  couponsData.active = (couponsData.active || []).filter(c => c !== code);
+  try {
+    const content = JSON.stringify(couponsData, null, 2);
+    await ghPutFile('data/config/coupons.json', content, couponsSha, `Delete coupon ${code}`);
+    toast(`Coupon ${code} deleted`);
+    await loadCoupons();
+  } catch (e) { toast(e.message, 'error'); }
+};
+
+/* ═══════════════════════════════════════════════════════
+   CONFIGS
+═══════════════════════════════════════════════════════ */
+const CONFIG_FILES = [
+  { key: 'store',    label: 'store.json',    path: 'data/config/store.json' },
+  { key: 'menus',   label: 'menus.json',    path: 'data/config/menus.json' },
+  { key: 'shipping',label: 'shipping.json', path: 'data/config/shipping.json' },
+  { key: 'tax',     label: 'tax.json',      path: 'data/config/tax.json' },
+  { key: 'sale',    label: 'sale.json',     path: 'data/config/sale.json' },
+];
+let configEditors = {};
+
+function renderConfigs() {
+  if (!S.ghToken) {
+    $id('topbar-actions').innerHTML = '';
+    setContent(`<div class="empty-state"><div class="empty-state-title">GitHub not configured</div><div class="empty-state-sub">Add your GitHub token in Settings to edit configs.</div></div>`);
+    return;
+  }
+  $id('topbar-actions').innerHTML = '';
+  setContent(`
+    <div style="display:grid;grid-template-columns:180px 1fr;gap:20px;height:calc(100vh - 100px)">
+      <div>
+        <div class="card">
+          ${CONFIG_FILES.map((f,i) => `
+            <div id="cfg-tab-${f.key}" class="nav-item ${i===0?'active':''}" style="border-radius:0" onclick="loadConfigFile('${f.key}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              ${f.label}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;overflow:hidden">
+        <div class="card-header">
+          <span class="card-title" id="cfg-filename">—</span>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost btn-sm" id="cfg-reload-btn">Reload</button>
+            <button class="btn btn-primary btn-sm" id="cfg-save-btn">Save</button>
+          </div>
+        </div>
+        <div style="flex:1;overflow:auto;padding:16px">
+          <textarea id="cfg-editor"></textarea>
+        </div>
+        <div id="cfg-error" style="padding:8px 16px;font-size:12px;color:var(--danger);display:none"></div>
+      </div>
+    </div>
+  `);
+
+  const textarea = $id('cfg-editor');
+  configEditors.cm = CodeMirror.fromTextArea(textarea, {
+    mode: { name: 'javascript', json: true },
+    lineNumbers: true,
+    lineWrapping: false,
+    indentUnit: 2,
+    tabSize: 2,
+    theme: 'default',
+  });
+
+  loadConfigFile('store');
+
+  $id('cfg-save-btn').addEventListener('click', saveConfig);
+  $id('cfg-reload-btn').addEventListener('click', () => loadConfigFile(configEditors.activeKey));
+}
+
+async function loadConfigFile(key) {
+  const cfg = CONFIG_FILES.find(f => f.key === key);
+  if (!cfg) return;
+  configEditors.activeKey = key;
+  configEditors.activePath = cfg.path;
+  $id('cfg-filename').textContent = cfg.label;
+  $id('cfg-error').style.display = 'none';
+  CONFIG_FILES.forEach(f => $id(`cfg-tab-${f.key}`)?.classList.toggle('active', f.key === key));
+  try {
+    const { content, sha } = await ghGetFile(cfg.path);
+    configEditors.activeSha = sha;
+    const parsed = JSON.parse(content);
+    configEditors.cm.setValue(JSON.stringify(parsed, null, 2));
+  } catch (e) {
+    configEditors.cm.setValue(`// Error loading: ${e.message}`);
+  }
+}
+
+async function saveConfig() {
+  const btn = $id('cfg-save-btn');
+  const errEl = $id('cfg-error');
+  errEl.style.display = 'none';
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const raw = configEditors.cm.getValue();
+  try {
+    JSON.parse(raw); // validate
+  } catch (e) {
+    errEl.textContent = `JSON error: ${e.message}`;
+    errEl.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Save';
+    return;
+  }
+  try {
+    await ghPutFile(configEditors.activePath, raw, configEditors.activeSha, `Update ${configEditors.activePath.split('/').pop()}`);
+    // Refresh SHA
+    const { sha } = await ghGetFile(configEditors.activePath);
+    configEditors.activeSha = sha;
+    toast('Config saved — build will run automatically');
+  } catch (e) { toast(e.message, 'error'); }
+  btn.disabled = false; btn.textContent = 'Save';
+}
+
+/* ═══════════════════════════════════════════════════════
+   SETTINGS
+═══════════════════════════════════════════════════════ */
+function renderSettings() {
+  $id('topbar-actions').innerHTML = '';
+  setContent(`
+    <div style="max-width:540px">
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header"><span class="card-title">Connection</span></div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Worker API URL</label>
+            <input class="form-input" id="set-api-url" value="${S.apiUrl}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Admin Key</label>
+            <input class="form-input" id="set-admin-key" type="password" value="${S.adminKey}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Store / CDN URL</label>
+            <input class="form-input" id="set-store-url" value="${S.storeUrl}">
+          </div>
+          <button class="btn btn-primary" id="set-save-conn">Save connection</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header"><span class="card-title">GitHub Integration</span></div>
+        <div class="card-body">
+          <p style="font-size:13px;color:var(--ink-subtle);margin-bottom:16px;line-height:1.6">
+            Required for editing products, configs, and coupons. Create a fine-grained Personal Access Token with <strong>Contents: Read and Write</strong> on your store repo.
+          </p>
+          <div class="form-group">
+            <label class="form-label">Personal Access Token</label>
+            <input class="form-input" id="set-gh-token" type="password" value="${S.ghToken}" placeholder="github_pat_...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Repository</label>
+            <input class="form-input" id="set-gh-repo" value="${S.ghRepo}" placeholder="owner/repo-name">
+          </div>
+          <button class="btn btn-primary" id="set-save-gh">Save GitHub settings</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">Actions</span></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-size:13px;font-weight:500">Clean expired reservations</div>
+              <div style="font-size:12px;color:var(--ink-subtle)">Release stock held by abandoned checkouts</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="set-cleanup-btn">Run</button>
+          </div>
+          <hr class="divider">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--danger)">Disconnect</div>
+              <div style="font-size:12px;color:var(--ink-subtle)">Clear all stored credentials</div>
+            </div>
+            <button class="btn btn-danger btn-sm" id="set-disconnect">Disconnect</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `);
+
+  $id('set-save-conn').addEventListener('click', () => {
+    let rawApiUrl = $id('set-api-url').value.trim().replace(/\/$/, '');
+    if (rawApiUrl && !rawApiUrl.endsWith('/api')) rawApiUrl = rawApiUrl + '/api';
+    S.apiUrl   = rawApiUrl;
+    S.adminKey = $id('set-admin-key').value.trim();
+    S.storeUrl = $id('set-store-url').value.trim().replace(/\/$/, '');
+    saveConnection();
+    document.getElementById('store-url-display').textContent = S.storeUrl || S.apiUrl;
+    toast('Connection settings saved');
+  });
+
+  $id('set-save-gh').addEventListener('click', () => {
+    S.ghToken = $id('set-gh-token').value.trim();
+    S.ghRepo  = $id('set-gh-repo').value.trim();
+    saveConnection();
+    toast('GitHub settings saved');
+  });
+
+  $id('set-cleanup-btn').addEventListener('click', async () => {
+    try {
+      const r = await apiFetch('/admin/cleanup-reservations', { method: 'POST' });
+      toast(`Cleaned ${r.cleaned} expired reservations`);
+    } catch (e) { toast(e.message, 'error'); }
+  });
+
+  $id('set-disconnect').addEventListener('click', () => {
+    localStorage.removeItem('pteris_conn');
+    S.apiUrl = S.adminKey = S.storeUrl = S.ghToken = S.ghRepo = '';
+    showConnectScreen();
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOOT
+═══════════════════════════════════════════════════════ */
+boot();
+</script>
+</body>
+</html>
