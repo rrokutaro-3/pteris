@@ -12,16 +12,31 @@ binding = "DB"
 database_name = "lean-store-db"
 database_id = "your-d1-database-id"   # patched by setup.sh
 
+# ─────────────────────────────────────────────────────────────────
+# R2 asset storage — required for POST /api/admin/upload
+# Create with: npx wrangler r2 bucket create your-store-assets
+# Then set the bucket_name below and configure a public domain in the
+# Cloudflare R2 dashboard (Settings → Public Access).
+# ─────────────────────────────────────────────────────────────────
+[[r2_buckets]]
+binding = "ASSETS_BUCKET"
+bucket_name = "your-store-assets"     # set to your actual R2 bucket name
+
 [vars]
 RESEND_FROM_EMAIL = "orders@yourdomain.com"   # patched by setup.sh
 STORE_URL = "https://your-store.pages.dev"    # patched by setup.sh
-CDN_BASE_URL = "https://your-store.pages.dev" # patched by setup.sh
+CDN_BASE_URL = "https://your-store.pages.dev" # patched by setup.sh — also used as the R2 public URL base
 
 # Must stay >= 30: this value also sets the Stripe Checkout Session's
 # expires_at (see src/api/routes/checkout.js), and Stripe rejects any
 # expires_at less than 30 minutes in the future. A value below 30 makes
 # every checkout fail at Stripe session creation.
 RESERVATION_TTL_MINUTES = "30"
+
+# Optional: folder prefix for admin-uploaded assets in the R2 bucket.
+# Uploads land at: {UPLOAD_PATH_PREFIX}/{YYYY-MM}/{filename}
+# Defaults to "uploads" if not set.
+UPLOAD_PATH_PREFIX = "uploads"
 
 # ─────────────────────────────────────────────────────────────────
 # Secrets — never put real values here.
