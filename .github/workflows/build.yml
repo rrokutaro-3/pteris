@@ -86,9 +86,11 @@ jobs:
           command: pages deploy ./deploy --project-name=${{ secrets.PAGES_PROJECT_NAME }} --branch=main
 
       - name: Purge CDN cache
-        if: ${{ secrets.CLOUDFLARE_ZONE_ID != '' }}
+        if: ${{ env.CLOUDFLARE_ZONE_ID != '' }}
+        env:
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
         run: |
-          curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+          curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}/purge_cache" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             --data '{"purge_everything":true}'
