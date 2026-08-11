@@ -48,17 +48,20 @@ jobs:
       - name: Stage deploy payload
         run: |
           mkdir -p site
-          # Catalog output
-          cp data/index.json site/
-          cp -r data/products site/
-          cp -r data/batches site/
-          cp -r data/config site/
-          cp data/.version site/
+          # Catalog output (guard each — build step creates these but only if data exists)
+          [ -f data/index.json ]       && cp data/index.json site/
+          [ -d data/products ]         && cp -r data/products site/
+          [ -d data/batches ]          && cp -r data/batches site/
+          [ -d data/config ]           && cp -r data/config site/
+          [ -f data/.version ]         && cp data/.version site/
           # Storefront
           [ -f data/index.html ]       && cp data/index.html site/index.html
+          [ -f data/admin.html ]       && cp data/admin.html site/admin.html
           [ -f data/store-config.js ]  && cp data/store-config.js site/store-config.js
           [ -d data/lib ]              && cp -r data/lib site/lib
           [ -d data/spa ]              && cp -r data/spa site/spa
+          # Ensure at least one file exists so the artifact upload doesn't fail
+          ls site/ || (echo "No files staged" && exit 1)
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
