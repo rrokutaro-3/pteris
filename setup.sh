@@ -50,6 +50,7 @@ echo "── Cloudflare ──────────────────�
 prompt        CF_API_TOKEN    "Cloudflare API Token"
 prompt        CF_ACCOUNT_ID   "Cloudflare Account ID"
 prompt        PAGES_PROJECT   "Pages project name (becomes your-name.pages.dev)" "my-store"
+prompt        R2_BUCKET_NAME  "R2 bucket name for product media (leave blank to skip)" ""
 
 echo ""
 echo "── Stripe ─────────────────────────────────────────────"
@@ -104,6 +105,34 @@ fi
 
 export D1_DATABASE_ID="$D1_ID"
 
+# ── Create R2 bucket (if requested) ─────────────────────────
+R2_CDN_URL=""
+if [ -n "$R2_BUCKET_NAME" ]; then
+  info "Creating R2 bucket: ${R2_BUCKET_NAME}..."
+  R2_OUTPUT=$(npx wrangler r2 bucket create "$R2_BUCKET_NAME" 2>&1 || true)
+
+  if echo "$R2_OUTPUT" | grep -qi "created\|success"; then
+    success "R2 bucket created: ${R2_BUCKET_NAME}"
+  elif echo "$R2_OUTPUT" | grep -qi "already exists"; then
+    info "R2 bucket already exists — using it"
+  else
+    echo "$R2_OUTPUT"
+    warn "R2 bucket creation may have failed — continuing anyway. Check: npx wrangler r2 bucket list"
+  fi
+
+  # Enable public access on the bucket
+  info "Enabling public access on R2 bucket..."
+  npx wrangler r2 bucket domain add "$R2_BUCKET_NAME" --account-id "$CF_ACCOUNT_ID" 2>/dev/null || true
+  # The r2.dev public URL follows a fixed pattern: {bucket}.{accountHash}.r2.dev
+  # We can't derive the account hash here, so we print instructions instead and
+  # let the user patch CDN_BASE_URL themselves — or they can set a custom domain later.
+  R2_CDN_URL="https://pub-${CF_ACCOUNT_ID}.r2.dev"
+  warn "R2 public URL is account-specific. After setup, go to:"
+  warn "  Cloudflare dashboard → R2 → ${R2_BUCKET_NAME} → Settings → Public Access"
+  warn "  Copy the r2.dev URL and run:  sed -i 's|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"<your-r2-url>\"|' wrangler.toml"
+  warn "  Then redeploy: npm run deploy:api"
+fi
+
 # ── Patch wrangler.toml ──────────────────────────────────────
 info "Updating wrangler.toml..."
 STORE_URL="https://${PAGES_PROJECT}.pages.dev"
@@ -111,11 +140,19 @@ STORE_URL="https://${PAGES_PROJECT}.pages.dev"
 sed -i \
   -e "s|database_id = \"your-d1-database-id\"|database_id = \"${D1_ID}\"|" \
   -e "s|STORE_URL = \".*\"|STORE_URL = \"${STORE_URL}\"|" \
-  -e "s|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"${STORE_URL}\"|" \
   -e "s|RESEND_FROM_EMAIL = \".*\"|RESEND_FROM_EMAIL = \"${RESEND_EMAIL}\"|" \
   wrangler.toml
 
-success "wrangler.toml updated"
+# CDN_BASE_URL: use R2 URL if we created a bucket, otherwise fall back to Pages URL
+if [ -n "$R2_BUCKET_NAME" ]; then
+  sed -i -e "s|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"${R2_CDN_URL}\"|" wrangler.toml
+  # Patch the R2 bucket name into the [[r2_buckets]] block
+  sed -i -e "s|bucket_name = \"your-store-assets\"|bucket_name = \"${R2_BUCKET_NAME}\"|" wrangler.toml
+  success "wrangler.toml updated (R2 bucket: ${R2_BUCKET_NAME}, CDN: ${R2_CDN_URL})"
+else
+  sed -i -e "s|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"${STORE_URL}\"|" wrangler.toml
+  success "wrangler.toml updated (no R2 — CDN points to Pages)"
+fi
 
 # ── Run DB migration ─────────────────────────────────────────
 info "Running database migration..."
@@ -218,6 +255,11 @@ echo "╚═══════════════════════�
 echo ""
 echo -e "${GREEN}Your store:${NC} https://${PAGES_PROJECT}.pages.dev"
 echo -e "${GREEN}Your API:${NC}   https://lean-store-api.$(npx wrangler whoami 2>/dev/null | grep -o '[a-z0-9]*\.workers\.dev' | head -1 || echo 'yourname.workers.dev')"
+if [ -n "$R2_BUCKET_NAME" ]; then
+echo -e "${GREEN}R2 bucket:${NC} ${R2_BUCKET_NAME} (update CDN_BASE_URL in wrangler.toml once public access is enabled)"
+else
+echo -e "${YELLOW}R2 bucket:${NC} not configured — re-run setup or add manually to wrangler.toml to enable media uploads"
+fi
 echo ""
 echo -e "${YELLOW}Add these secrets to GitHub (repo → Settings → Secrets → Actions):${NC}"
 echo ""
