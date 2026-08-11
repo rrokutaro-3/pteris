@@ -52,6 +52,22 @@ prompt        CF_ACCOUNT_ID   "Cloudflare Account ID"
 prompt        PAGES_PROJECT   "Pages project name (becomes your-name.pages.dev)" "my-store"
 prompt        R2_BUCKET_NAME  "R2 bucket name for product media (leave blank to skip)" ""
 
+# If they gave a bucket name, ask for the public URL.
+# Cloudflare's r2.dev public URL is only visible in the dashboard after enabling
+# public access — we cannot derive it from the account ID alone. Users paste it here.
+# It can also be set later by re-running: npx wrangler vars put CDN_BASE_URL https://...
+R2_PUBLIC_URL=""
+if [ -n "$R2_BUCKET_NAME" ]; then
+  echo ""
+  echo -e "  ${YELLOW}R2 public URL — where to find it:${NC}"
+  echo "  1. Cloudflare dashboard → R2 → your bucket → Settings → Public Access"
+  echo "  2. Click 'Allow Access' to enable the r2.dev subdomain"
+  echo "  3. Copy the URL that appears (looks like https://pub-xxxx.r2.dev)"
+  echo "  Leave blank now and re-run the one-liner in SETUP.md later if you haven't done this yet."
+  echo ""
+  prompt R2_PUBLIC_URL "R2 public URL (https://pub-xxxx.r2.dev or your custom domain)" ""
+fi
+
 echo ""
 echo "── Stripe ─────────────────────────────────────────────"
 prompt_secret STRIPE_SECRET   "Stripe Secret Key (sk_test_...)"
@@ -106,7 +122,6 @@ fi
 export D1_DATABASE_ID="$D1_ID"
 
 # ── Create R2 bucket (if requested) ─────────────────────────
-R2_CDN_URL=""
 if [ -n "$R2_BUCKET_NAME" ]; then
   info "Creating R2 bucket: ${R2_BUCKET_NAME}..."
   R2_OUTPUT=$(npx wrangler r2 bucket create "$R2_BUCKET_NAME" 2>&1 || true)
@@ -119,21 +134,14 @@ if [ -n "$R2_BUCKET_NAME" ]; then
     echo "$R2_OUTPUT"
     warn "R2 bucket creation may have failed — continuing anyway. Check: npx wrangler r2 bucket list"
   fi
-
-  # Enable public access on the bucket
-  info "Enabling public access on R2 bucket..."
-  npx wrangler r2 bucket domain add "$R2_BUCKET_NAME" --account-id "$CF_ACCOUNT_ID" 2>/dev/null || true
-  # The r2.dev public URL follows a fixed pattern: {bucket}.{accountHash}.r2.dev
-  # We can't derive the account hash here, so we print instructions instead and
-  # let the user patch CDN_BASE_URL themselves — or they can set a custom domain later.
-  R2_CDN_URL="https://pub-${CF_ACCOUNT_ID}.r2.dev"
-  warn "R2 public URL is account-specific. After setup, go to:"
-  warn "  Cloudflare dashboard → R2 → ${R2_BUCKET_NAME} → Settings → Public Access"
-  warn "  Copy the r2.dev URL and run:  sed -i 's|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"<your-r2-url>\"|' wrangler.toml"
-  warn "  Then redeploy: npm run deploy:api"
 fi
 
 # ── Patch wrangler.toml ──────────────────────────────────────
+# Note: R2 bucket bindings cannot be set via env vars or secrets — the bucket_name
+# in [[r2_buckets]] must be hardcoded in wrangler.toml. This is a Cloudflare requirement.
+# CDN_BASE_URL (the public URL for serving assets) is a regular [vars] entry and CAN
+# be updated at any time without redeploying by running:
+#   npx wrangler vars put CDN_BASE_URL https://your-r2-url
 info "Updating wrangler.toml..."
 STORE_URL="https://${PAGES_PROJECT}.pages.dev"
 
@@ -143,12 +151,24 @@ sed -i \
   -e "s|RESEND_FROM_EMAIL = \".*\"|RESEND_FROM_EMAIL = \"${RESEND_EMAIL}\"|" \
   wrangler.toml
 
-# CDN_BASE_URL: use R2 URL if we created a bucket, otherwise fall back to Pages URL
 if [ -n "$R2_BUCKET_NAME" ]; then
-  sed -i -e "s|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"${R2_CDN_URL}\"|" wrangler.toml
-  # Patch the R2 bucket name into the [[r2_buckets]] block
+  # Patch the bucket name into [[r2_buckets]] — this is unavoidable, it's a binding not a var
   sed -i -e "s|bucket_name = \"your-store-assets\"|bucket_name = \"${R2_BUCKET_NAME}\"|" wrangler.toml
-  success "wrangler.toml updated (R2 bucket: ${R2_BUCKET_NAME}, CDN: ${R2_CDN_URL})"
+
+  if [ -n "$R2_PUBLIC_URL" ]; then
+    # User provided the public URL — wire it up now
+    R2_PUBLIC_URL="${R2_PUBLIC_URL%/}"   # strip trailing slash
+    sed -i -e "s|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"${R2_PUBLIC_URL}\"|" wrangler.toml
+    success "wrangler.toml updated (R2 bucket: ${R2_BUCKET_NAME}, CDN: ${R2_PUBLIC_URL})"
+  else
+    # No public URL yet — leave CDN_BASE_URL pointing to Pages for now
+    # and remind the user to set it once they enable public access in the dashboard
+    sed -i -e "s|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"${STORE_URL}\"|" wrangler.toml
+    success "wrangler.toml updated (R2 bucket: ${R2_BUCKET_NAME}, CDN: pending — see below)"
+    warn "CDN_BASE_URL not set yet. Once you enable public access on the R2 bucket:"
+    warn "  Run: npx wrangler vars put CDN_BASE_URL https://pub-xxxx.r2.dev"
+    warn "  Then redeploy: npm run deploy:api"
+  fi
 else
   sed -i -e "s|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"${STORE_URL}\"|" wrangler.toml
   success "wrangler.toml updated (no R2 — CDN points to Pages)"
@@ -255,10 +275,16 @@ echo "╚═══════════════════════�
 echo ""
 echo -e "${GREEN}Your store:${NC} https://${PAGES_PROJECT}.pages.dev"
 echo -e "${GREEN}Your API:${NC}   https://lean-store-api.$(npx wrangler whoami 2>/dev/null | grep -o '[a-z0-9]*\.workers\.dev' | head -1 || echo 'yourname.workers.dev')"
-if [ -n "$R2_BUCKET_NAME" ]; then
-echo -e "${GREEN}R2 bucket:${NC} ${R2_BUCKET_NAME} (update CDN_BASE_URL in wrangler.toml once public access is enabled)"
+if [ -n "$R2_BUCKET_NAME" ] && [ -n "$R2_PUBLIC_URL" ]; then
+echo -e "${GREEN}R2 bucket:${NC} ${R2_BUCKET_NAME} → ${R2_PUBLIC_URL}"
+elif [ -n "$R2_BUCKET_NAME" ]; then
+echo -e "${YELLOW}R2 bucket:${NC} ${R2_BUCKET_NAME} (public URL not set yet)"
+echo -e "  → Enable public access in the Cloudflare dashboard, then run:"
+echo -e "    ${BLUE}npx wrangler vars put CDN_BASE_URL https://pub-xxxx.r2.dev${NC}"
+echo -e "    ${BLUE}npm run deploy:api${NC}"
 else
-echo -e "${YELLOW}R2 bucket:${NC} not configured — re-run setup or add manually to wrangler.toml to enable media uploads"
+echo -e "${YELLOW}R2 bucket:${NC} not configured — uploads disabled"
+echo -e "  → To add R2 later, see the R2 section in SETUP.md"
 fi
 echo ""
 echo -e "${YELLOW}Add these secrets to GitHub (repo → Settings → Secrets → Actions):${NC}"
