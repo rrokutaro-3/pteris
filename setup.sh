@@ -108,10 +108,15 @@ if echo "$D1_OUTPUT" | grep -q "database_id"; then
   success "D1 database created: $D1_ID"
 elif echo "$D1_OUTPUT" | grep -qi "already exists\|already created"; then
   info "Database already exists, fetching ID..."
-  LIST_OUTPUT=$(npx wrangler d1 list 2>&1)
-  D1_ID=$(echo "$LIST_OUTPUT" | grep 'lean-store-db' | awk '{print $NF}' | tr -d '[:space:]')
+  # Use --json for reliable parsing — plain text table output is not safe to awk
+  D1_ID=$(npx wrangler d1 list --json 2>/dev/null | python3 -c "
+import sys, json
+dbs = json.load(sys.stdin)
+match = [d for d in dbs if d.get('name') == 'lean-store-db']
+print(match[0]['uuid'] if match else '')
+" 2>/dev/null | tr -d '[:space:]')
   if [ -z "$D1_ID" ]; then
-    error "Could not determine D1 database ID. Check: npx wrangler d1 list"
+    error "Could not determine D1 database ID. Run: npx wrangler d1 list --json"
   fi
   success "Using existing D1 database: $D1_ID"
 else
