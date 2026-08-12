@@ -48,7 +48,7 @@
       "stock": 12,
       "lowStockThreshold": 3,
       "backorder": false,
-      "image": "https://cdn.yourbrand.com/products/p-8392/blk.webp"
+      "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp"
     },
     {
       "id": "v-8392-blk-m",
@@ -80,7 +80,15 @@
     }
   ],
   "media": {
-    "images": [],
+    "images": [
+      {
+        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
+        "alt": "",
+        "type": "image",
+        "order": 1,
+        "variant": null
+      }
+    ],
     "videos": []
   },
   "ugc": [],
@@ -101,6 +109,6 @@
     "ogImage": "https://cdn.yourbrand.com/products/p-8392/og.webp"
   },
   "meta": {
-    "updatedAt": "2026-08-12T07:36:48.733Z"
+    "updatedAt": "2026-08-12T07:37:33.162Z"
   }
 }
