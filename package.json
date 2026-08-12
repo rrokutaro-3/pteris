@@ -11,6 +11,7 @@
     "sync:stock": "node src/build/sync-stock.js",
     "sync:prices": "node src/build/sync-prices.js",
     "dev:api": "wrangler dev src/api/index.js",
+    "predeploy:api": "node -e \"const t=require('fs').readFileSync('wrangler.toml','utf8'); if(t.includes('your-d1-database-id')||t.includes('your-store.pages.dev')||t.includes('your-store-assets')) { console.error('\\x1b[31m✗ wrangler.toml still has placeholder values — run bash setup.sh first\\x1b[0m'); process.exit(1); }\"",
     "deploy:api": "wrangler deploy src/api/index.js",
     "db:migrate": "wrangler d1 execute lean-store-db --file=src/schema/d1-schema.sql",
     "migrate:assets": "node scripts/migrate-assets-to-hf.js"
