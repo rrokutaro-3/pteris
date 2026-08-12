@@ -39,18 +39,21 @@ Dashboard → left sidebar → **Compute (Workers)** → **Overview** → your A
 
 Add these permissions:
 
-| Category | Permission | Level |
-|---|---|---|
-| Developer Platform | Workers Scripts | Edit |
-| Developer Platform | Workers D1 | Edit |
-| Developer Platform | Pages | Edit |
-| Account & Billing | Account Settings | Read |
+| Category | Permission | Level | Required? |
+|---|---|---|---|
+| Developer Platform | Workers Scripts | Edit | Always |
+| Developer Platform | Workers D1 | Edit | Always |
+| Developer Platform | Pages | Edit | Always |
+| Developer Platform | Workers R2 Storage | Edit | Only if using R2 for media uploads |
+| Account & Billing | Account Settings | Read | Always |
 
 Set **Account Resources** to your account. Click **Continue to summary → Create Token**.
 
 **Copy the token immediately** — you only see it once.
 
 > **Critical:** The token needs D1 Edit specifically. If you use the "Edit Cloudflare Workers" template it won't include D1 and everything will fail with auth errors.
+
+> **R2 note:** `Workers R2 Storage: Edit` is only needed if you're using R2 for product media uploads (the admin panel's Media tab). If you skip R2 during setup, you can leave this permission out. You can always create a new token with it added later if you decide to enable R2. At runtime, the deployed Worker accesses R2 via its binding — your API token is never used by the live store, only during setup and deploys.
 
 ---
 
