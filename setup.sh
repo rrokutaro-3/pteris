@@ -184,7 +184,7 @@ if [ -n "$R2_BUCKET_NAME" ]; then
     sed -i -e "s|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"${STORE_URL}\"|" wrangler.toml
     success "wrangler.toml updated (R2 bucket: ${R2_BUCKET_NAME}, CDN: pending — see below)"
     warn "CDN_BASE_URL not set yet. Once you enable public access on the R2 bucket:"
-    warn "  Run: npx wrangler vars put CDN_BASE_URL https://pub-xxxx.r2.dev"
+    warn "  Run: sed -i 's|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"https://pub-xxxx.r2.dev\"|' wrangler.toml"
     warn "  Then redeploy: npm run deploy:api"
   fi
 else
@@ -363,7 +363,7 @@ echo -e "${GREEN}R2 bucket:${NC} ${R2_BUCKET_NAME} → ${R2_PUBLIC_URL}"
 elif [ -n "$R2_BUCKET_NAME" ]; then
 echo -e "${YELLOW}R2 bucket:${NC} ${R2_BUCKET_NAME} (public URL not set yet)"
 echo -e "  → Enable public access in the Cloudflare dashboard, then run:"
-echo -e "    ${BLUE}npx wrangler vars put CDN_BASE_URL https://pub-xxxx.r2.dev${NC}"
+echo -e "    ${BLUE}sed -i 's|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"https://pub-xxxx.r2.dev\"|' wrangler.toml${NC}"
 echo -e "    ${BLUE}npm run deploy:api${NC}"
 else
 echo -e "${YELLOW}R2 bucket:${NC} not configured — uploads disabled"
