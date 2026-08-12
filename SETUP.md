@@ -142,15 +142,13 @@ A URL will appear — it looks like `https://pub-abcdef1234567890.r2.dev`. Copy 
 Run this from your Codespace (no file editing required):
 
 ```bash
-export CLOUDFLARE_API_TOKEN="your-token"
-export CLOUDFLARE_ACCOUNT_ID="your-account-id"
-npx wrangler vars put CDN_BASE_URL https://pub-xxxx.r2.dev
+sed -i 's|CDN_BASE_URL = ".*"|CDN_BASE_URL = "https://pub-xxxx.r2.dev"|' wrangler.toml
 npm run deploy:api
 ```
 
 Replace `https://pub-xxxx.r2.dev` with the URL you copied. That's it — uploads in the admin panel will now return usable public URLs.
 
-> **Why can't this be a secret?** R2 bucket bindings are structural — the bucket name has to be declared in `wrangler.toml` so Cloudflare knows which bucket to attach to the Worker. `setup.sh` already patches that for you. `CDN_BASE_URL` (the public-facing URL) is a regular var and doesn't need to be in any file — the `wrangler vars put` command above sets it directly on the deployed Worker.
+> **Note:** `CDN_BASE_URL` lives in `wrangler.toml` under `[vars]`. Always update it there and redeploy — `wrangler vars put` no longer exists in modern wrangler versions.
 
 ### Using a custom domain instead of r2.dev
 
@@ -159,9 +157,9 @@ If you'd rather serve images from `cdn.yourdomain.com` instead of the r2.dev sub
 1. R2 dashboard → your bucket → **Settings → Custom Domains → Connect Domain**
 2. Enter your subdomain (e.g. `cdn.yourdomain.com`)
 3. Cloudflare adds the DNS record automatically (domain must be on Cloudflare)
-4. Once active, run the same command with your custom domain:
+4. Once active, update `wrangler.toml` and redeploy:
    ```bash
-   npx wrangler vars put CDN_BASE_URL https://cdn.yourdomain.com
+   sed -i 's|CDN_BASE_URL = ".*"|CDN_BASE_URL = "https://cdn.yourdomain.com"|' wrangler.toml
    npm run deploy:api
    ```
 
@@ -182,7 +180,7 @@ npx wrangler r2 bucket create your-bucket-name
 #    bucket_name = "your-bucket-name"   ← put your actual name here
 
 # 3. Enable public access in the dashboard (see above), then:
-npx wrangler vars put CDN_BASE_URL https://pub-xxxx.r2.dev
+sed -i 's|CDN_BASE_URL = ".*"|CDN_BASE_URL = "https://pub-xxxx.r2.dev"|' wrangler.toml
 npm run deploy:api
 ```
 
