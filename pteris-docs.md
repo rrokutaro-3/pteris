@@ -71,8 +71,22 @@ The D1 database (SQLite) is only touched by the Worker — never directly from t
 | GitHub | Repo + CI/CD (Actions) | Free |
 
 Optional:
-- **Cloudflare R2** — asset storage (10 GB free), for product images
+- **Cloudflare R2** — asset storage (10 GB free), for product images and admin media uploads
 - **Hugging Face** — overflow asset storage (free) when R2 approaches limit
+
+### Cloudflare API token permissions
+
+When creating your API token (`My Profile → API Tokens → Create Custom Token`):
+
+| Permission | Required? |
+|---|---|
+| Workers Scripts: Edit | Always |
+| Workers D1: Edit | Always |
+| Pages: Edit | Always |
+| Account Settings: Read | Always |
+| Workers R2 Storage: Edit | Only if using R2 for media uploads |
+
+> `setup.sh` uses this token to provision infrastructure (create D1, deploy Worker, deploy Pages, create R2 bucket). At runtime, the live Worker accesses R2 via its binding — your API token is never used by the deployed store itself.
 
 ### How they connect
 
@@ -1579,13 +1593,17 @@ bash setup.sh
 #    → Endpoint URL: https://store2-api.yourname.workers.dev/api/webhook/stripe
 #    → Events: checkout.session.completed, checkout.session.expired
 
-# 5. Set secrets for the new worker
+# 5. Set secrets for the new worker (setup.sh handles these automatically,
+#    but if setting them manually after the fact:)
 npx wrangler secret put STRIPE_SECRET_KEY      # same or different Stripe account
 npx wrangler secret put STRIPE_WEBHOOK_SECRET  # NEW secret from new webhook endpoint
 npx wrangler secret put RESEND_API_KEY
 npx wrangler secret put ADMIN_API_KEY          # generate a new one
 
 # 6. Deploy the worker
+# NOTE: npm run deploy:api will refuse to deploy if wrangler.toml still has
+# placeholder values. setup.sh patches these automatically. If running manually,
+# ensure STORE_URL, CDN_BASE_URL, and database_id are set in wrangler.toml first.
 npm run deploy:api
 
 # 7. Deploy the site
@@ -1658,10 +1676,13 @@ After migration, the script writes `data/config/asset-migration.json` with a URL
 
 ### Uploading assets
 
-Currently no built-in upload UI. Options:
-- Upload directly via the Cloudflare R2 dashboard (web UI)
-- Use `rclone` or the AWS CLI (R2 is S3-compatible) for bulk uploads
-- Build it into the admin dashboard (planned)
+The admin panel (`/admin`) has a built-in **Media** tab for uploading assets directly to R2 from the browser — no CLI needed after initial R2 setup. It auto-generates CDN URLs you can paste directly into product JSON.
+
+For bulk uploads or automation:
+- Use `rclone` or the AWS CLI (R2 is S3-compatible)
+- Upload directly via the Cloudflare R2 dashboard
+
+The `POST /api/admin/upload` endpoint backs the admin UI. Requires R2 to be configured (`ASSETS_BUCKET` binding in `wrangler.toml` and `CDN_BASE_URL` set).
 
 Recommended folder structure in R2:
 ```
@@ -1853,6 +1874,8 @@ Replace `data/index.html` with your SPA file. Push to GitHub. The build deploys 
 
 If your SPA has separate CSS or JS files, put them in `data/` and reference them with absolute paths from root (e.g. `/styles.css`, `/app.js`). They'll be deployed alongside the catalog.
 
+> **Important:** `store-config.js` must exist in `data/` before deploying. It sets `window.__STORE_URL__` and `window.__API_URL__` so the SPA talks to the correct Worker. `setup.sh` generates this file automatically. If it's missing (the Pages SPA catch-all will serve HTML instead of JS), the store will fall back to hardcoded defaults in `index.html` — which may work, but is fragile. Verify it's present and contains your real URLs before going live.
+
 ---
 
 ## Appendix — Environment Variables & Secrets
@@ -1863,9 +1886,18 @@ If your SPA has separate CSS or JS files, put them in `data/` and reference them
 [vars]
 RESEND_FROM_EMAIL = "orders@yourdomain.com"
 STORE_URL = "https://your-store.pages.dev"
-CDN_BASE_URL = "https://your-store.pages.dev"
+CDN_BASE_URL = "https://your-store.pages.dev"   # points to Pages if no R2; set to R2 public URL if using R2
 RESERVATION_TTL_MINUTES = "30"   # minimum 30
 ```
+
+`setup.sh` patches `STORE_URL` and `CDN_BASE_URL` automatically. To update them later (e.g. when adding R2):
+
+```bash
+sed -i 's|CDN_BASE_URL = ".*"|CDN_BASE_URL = "https://pub-xxxx.r2.dev"|' wrangler.toml
+npm run deploy:api
+```
+
+> **Note:** `wrangler vars put` does not exist in modern wrangler versions. Always update vars in `wrangler.toml` directly and redeploy. `npm run deploy:api` includes a pre-flight check that refuses to deploy if placeholder values are still present.
 
 ### Secrets (set via wrangler CLI)
 
