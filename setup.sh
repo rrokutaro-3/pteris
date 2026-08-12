@@ -52,10 +52,6 @@ prompt        CF_ACCOUNT_ID   "Cloudflare Account ID"
 prompt        PAGES_PROJECT   "Pages project name (becomes your-name.pages.dev)" "my-store"
 prompt        R2_BUCKET_NAME  "R2 bucket name for product media (leave blank to skip)" ""
 
-# If they gave a bucket name, ask for the public URL.
-# Cloudflare's r2.dev public URL is only visible in the dashboard after enabling
-# public access — we cannot derive it from the account ID alone. Users paste it here.
-# It can also be set later by re-running: npx wrangler vars put CDN_BASE_URL https://...
 R2_PUBLIC_URL=""
 if [ -n "$R2_BUCKET_NAME" ]; then
   echo ""
@@ -90,7 +86,7 @@ fi
 echo ""
 echo "── Running setup ───────────────────────────────────────"
 
-# Export for wrangler
+# Export for wrangler AND all child node processes (build pipeline, seed script)
 export CLOUDFLARE_API_TOKEN="$CF_API_TOKEN"
 export CLOUDFLARE_ACCOUNT_ID="$CF_ACCOUNT_ID"
 
@@ -108,7 +104,6 @@ if echo "$D1_OUTPUT" | grep -q "database_id"; then
   success "D1 database created: $D1_ID"
 elif echo "$D1_OUTPUT" | grep -qi "already exists\|already created"; then
   info "Database already exists, fetching ID..."
-  # Use --json for reliable parsing — plain text table output is not safe to awk
   D1_ID=$(npx wrangler d1 list --json 2>/dev/null | python3 -c "
 import sys, json
 dbs = json.load(sys.stdin)
@@ -126,6 +121,33 @@ fi
 
 export D1_DATABASE_ID="$D1_ID"
 
+# ── Resolve Worker subdomain early ──────────────────────────
+# wrangler whoami must succeed before we write store-config.js or
+# print "Your API" — if we can't get it here, fail loudly rather than
+# silently writing a broken placeholder URL that causes 500s on checkout.
+info "Resolving Worker subdomain..."
+WHOAMI_OUTPUT=$(npx wrangler whoami 2>&1 || true)
+WORKER_SUBDOMAIN=$(echo "$WHOAMI_OUTPUT" | grep -o '[a-z0-9-]*\.workers\.dev' | head -1 || true)
+
+if [ -z "$WORKER_SUBDOMAIN" ]; then
+  echo ""
+  echo -e "${RED}✗ Could not detect your Workers subdomain from 'wrangler whoami'.${NC}"
+  echo ""
+  echo "  This usually means your API token doesn't have the right permissions."
+  echo "  Your token needs: Workers Scripts:Edit, D1:Edit, Pages:Edit"
+  echo ""
+  echo "  Alternatively, enter your subdomain manually."
+  echo "  Find it at: Cloudflare dashboard → Workers → Overview (shown as 'yourname.workers.dev')"
+  echo ""
+  prompt WORKER_SUBDOMAIN "Your workers.dev subdomain (e.g. 'rrokutaro-3.workers.dev')"
+  # Strip any https:// or trailing slashes they may have pasted
+  WORKER_SUBDOMAIN="${WORKER_SUBDOMAIN#https://}"
+  WORKER_SUBDOMAIN="${WORKER_SUBDOMAIN%/}"
+fi
+
+success "Worker subdomain: ${WORKER_SUBDOMAIN}"
+API_URL="https://lean-store-api.${WORKER_SUBDOMAIN}/api"
+
 # ── Create R2 bucket (if requested) ─────────────────────────
 if [ -n "$R2_BUCKET_NAME" ]; then
   info "Creating R2 bucket: ${R2_BUCKET_NAME}..."
@@ -142,11 +164,6 @@ if [ -n "$R2_BUCKET_NAME" ]; then
 fi
 
 # ── Patch wrangler.toml ──────────────────────────────────────
-# Note: R2 bucket bindings cannot be set via env vars or secrets — the bucket_name
-# in [[r2_buckets]] must be hardcoded in wrangler.toml. This is a Cloudflare requirement.
-# CDN_BASE_URL (the public URL for serving assets) is a regular [vars] entry and CAN
-# be updated at any time without redeploying by running:
-#   npx wrangler vars put CDN_BASE_URL https://your-r2-url
 info "Updating wrangler.toml..."
 STORE_URL="https://${PAGES_PROJECT}.pages.dev"
 
@@ -157,17 +174,13 @@ sed -i \
   wrangler.toml
 
 if [ -n "$R2_BUCKET_NAME" ]; then
-  # Patch the bucket name into [[r2_buckets]] — this is unavoidable, it's a binding not a var
   sed -i -e "s|bucket_name = \"your-store-assets\"|bucket_name = \"${R2_BUCKET_NAME}\"|" wrangler.toml
 
   if [ -n "$R2_PUBLIC_URL" ]; then
-    # User provided the public URL — wire it up now
-    R2_PUBLIC_URL="${R2_PUBLIC_URL%/}"   # strip trailing slash
+    R2_PUBLIC_URL="${R2_PUBLIC_URL%/}"
     sed -i -e "s|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"${R2_PUBLIC_URL}\"|" wrangler.toml
     success "wrangler.toml updated (R2 bucket: ${R2_BUCKET_NAME}, CDN: ${R2_PUBLIC_URL})"
   else
-    # No public URL yet — leave CDN_BASE_URL pointing to Pages for now
-    # and remind the user to set it once they enable public access in the dashboard
     sed -i -e "s|CDN_BASE_URL = \".*\"|CDN_BASE_URL = \"${STORE_URL}\"|" wrangler.toml
     success "wrangler.toml updated (R2 bucket: ${R2_BUCKET_NAME}, CDN: pending — see below)"
     warn "CDN_BASE_URL not set yet. Once you enable public access on the R2 bucket:"
@@ -266,20 +279,85 @@ info "Creating Pages project (${PAGES_PROJECT})..."
 echo "main" | npx wrangler pages project create "$PAGES_PROJECT" 2>/dev/null || warn "Pages project may already exist"
 success "Pages project ready"
 
-# ── Build & deploy catalog ───────────────────────────────────
-info "Building and deploying catalog..."
-npm run build
-npx wrangler pages deploy data --project-name="$PAGES_PROJECT" --commit-dirty=true 2>/dev/null
-success "Catalog deployed"
+# ── Write store-config.js before build so catalog deploy picks it up ──
+# This must happen BEFORE npm run build + pages deploy so the correct
+# API_URL is baked into the deployed static files. The original script
+# wrote it AFTER the deploy, meaning every first setup shipped a broken
+# store-config.js (or none at all if whoami failed).
+info "Writing store-config.js..."
+mkdir -p data
+cat > data/store-config.js << CONFIGEOF
+// Auto-generated by setup.sh — do not edit manually.
+// Re-run setup.sh or update these values if your URLs change.
+window.__STORE_URL__ = '${STORE_URL}';
+window.__API_URL__   = '${API_URL}';
+CONFIGEOF
+success "store-config.js written (API: ${API_URL})"
 
-# ── Print GitHub secrets needed ──────────────────────────────
+# ── Build catalog & sync prices to D1 ───────────────────────
+# npm run build runs the full pipeline:
+#   1. sync-stock  — pull live stock from D1 into source files
+#   2. build-products — compile source → data/products/
+#   3. sync-prices — push prices from data/products/ to D1   ← critical for checkout
+#   4. build-index — generate index.json + batches
+#   5. build-configs — validate & stamp configs
+#
+# CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID, and D1_DATABASE_ID must
+# be exported before this runs or sync-stock and sync-prices silently
+# skip (they log a warning and return early), leaving the D1 prices table
+# empty and breaking checkout with "Invalid product or variant" errors.
+# All three are exported above — verified here as a safety net.
+if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ] || [ -z "${D1_DATABASE_ID:-}" ]; then
+  error "Missing required env vars before build. This is a bug in setup.sh — please report it."
+fi
+
+info "Building catalog and syncing prices to D1..."
+npm run build
+success "Catalog built and prices synced to D1"
+
+# ── Verify prices were actually written ─────────────────────
+# If sync-prices silently skipped (e.g. data/products/ was empty because
+# build-products failed), checkout will 500 on every request. Catch it here
+# while the user is still watching, not after they deploy and wonder why
+# nothing works.
+info "Verifying D1 prices table..."
+PRICE_COUNT=$(npx wrangler d1 execute lean-store-db --remote \
+  --command="SELECT COUNT(*) as c FROM prices" --json 2>/dev/null \
+  | python3 -c "
+import sys, json
+try:
+  data = json.load(sys.stdin)
+  # wrangler --json wraps results in an array
+  results = data[0].get('results', []) if isinstance(data, list) else data.get('results', [])
+  print(results[0].get('c', 0) if results else 0)
+except Exception:
+  print(0)
+" 2>/dev/null || echo "0")
+
+if [ "$PRICE_COUNT" -eq 0 ] 2>/dev/null; then
+  echo ""
+  error "Prices table is empty after build. sync-prices did not run or data/products/ is empty.
+  Run manually:
+    npm run build:products
+    npm run sync:prices
+  Then redeploy:
+    npx wrangler pages deploy data --project-name=\"${PAGES_PROJECT}\" --commit-dirty=true"
+fi
+success "Prices table OK (${PRICE_COUNT} rows)"
+
+# ── Deploy Pages ─────────────────────────────────────────────
+info "Deploying to Cloudflare Pages..."
+npx wrangler pages deploy data --project-name="$PAGES_PROJECT" --commit-dirty=true 2>/dev/null
+success "Catalog deployed to Pages"
+
+# ── Print summary ────────────────────────────────────────────
 echo ""
 echo "╔══════════════════════════════════════════════════════════╗"
 echo "║              Setup Complete!                             ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
-echo -e "${GREEN}Your store:${NC} https://${PAGES_PROJECT}.pages.dev"
-echo -e "${GREEN}Your API:${NC}   https://lean-store-api.$(npx wrangler whoami 2>/dev/null | grep -o '[a-z0-9]*\.workers\.dev' | head -1 || echo 'yourname.workers.dev')"
+echo -e "${GREEN}Your store:${NC} ${STORE_URL}"
+echo -e "${GREEN}Your API:${NC}   ${API_URL}"
 if [ -n "$R2_BUCKET_NAME" ] && [ -n "$R2_PUBLIC_URL" ]; then
 echo -e "${GREEN}R2 bucket:${NC} ${R2_BUCKET_NAME} → ${R2_PUBLIC_URL}"
 elif [ -n "$R2_BUCKET_NAME" ]; then
@@ -301,21 +379,3 @@ echo "  PAGES_PROJECT_NAME    = $PAGES_PROJECT"
 echo ""
 echo -e "${YELLOW}Save your admin key:${NC} $ADMIN_KEY"
 echo ""
-
-# ── Generate store-config.js ─────────────────────────────────
-info "Generating store-config.js..."
-WORKER_SUBDOMAIN=$(npx wrangler whoami 2>/dev/null | grep -o '[a-z0-9]*\.workers\.dev' | head -1 || echo "")
-if [ -n "$WORKER_SUBDOMAIN" ]; then
-  API_URL="https://lean-store-api.${WORKER_SUBDOMAIN}/api"
-else
-  API_URL="https://lean-store-api.workers.dev/api"
-  warn "Could not detect Worker subdomain — update API_URL in data/store-config.js manually"
-fi
-
-cat > data/store-config.js << CONFIGEOF
-// Auto-generated by setup.sh — do not edit manually.
-// Re-run setup.sh or update these values if your URLs change.
-window.__STORE_URL__ = '${STORE_URL}';
-window.__API_URL__   = '${API_URL}';
-CONFIGEOF
-success "store-config.js written to data/store-config.js"
