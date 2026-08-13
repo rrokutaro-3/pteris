@@ -191,6 +191,7 @@ Each product is a single JSON file named `{product-id}.json` (e.g. `p-8392.json`
       "id": "v-8392-blk-s",
       "sku": "8392-BLK-S",
       "options": { "Color": "Black", "Size": "S" },
+      "variantGroup": "black",
       "price": 89.00,
       "weight": 0.3,
       "image": "https://cdn.yourbrand.com/products/p-8392/blk.webp",
@@ -199,9 +200,22 @@ Each product is a single JSON file named `{product-id}.json` (e.g. `p-8392.json`
       "backorder": false
     },
     {
+      "id": "v-8392-blk-m",
+      "sku": "8392-BLK-M",
+      "options": { "Color": "Black", "Size": "M" },
+      "variantGroup": "black",
+      "price": 89.00,
+      "weight": 0.3,
+      "image": "https://cdn.yourbrand.com/products/p-8392/blk.webp",
+      "stock": 8,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
       "id": "v-8392-red-s",
       "sku": "8392-RED-S",
       "options": { "Color": "Red", "Size": "S" },
+      "variantGroup": "red",
       "price": 89.00,
       "weight": 0.3,
       "image": "https://cdn.yourbrand.com/products/p-8392/red.webp",
@@ -213,8 +227,11 @@ Each product is a single JSON file named `{product-id}.json` (e.g. `p-8392.json`
 
   "media": {
     "images": [
-      { "url": "https://cdn.../1.webp", "alt": "Front view", "type": "image", "order": 1, "variant": null },
-      { "url": "https://cdn.../blk.webp", "alt": "Black variant", "order": 2, "variant": "v-8392-blk-s" }
+      { "url": "https://cdn.../front.webp", "alt": "Front view", "type": "image", "order": 1, "variantGroup": null },
+      { "url": "https://cdn.../blk-1.webp", "alt": "Black — front", "type": "image", "order": 1, "variantGroup": "black" },
+      { "url": "https://cdn.../blk-2.webp", "alt": "Black — back",  "type": "image", "order": 2, "variantGroup": "black" },
+      { "url": "https://cdn.../red-1.webp", "alt": "Red — front",   "type": "image", "order": 1, "variantGroup": "red" },
+      { "url": "https://cdn.../red-2.webp", "alt": "Red — back",    "type": "image", "order": 2, "variantGroup": "red" }
     ],
     "videos": [
       { "url": "https://cdn.../vid-1.mp4", "thumbnail": "https://cdn.../vid-1-thumb.webp", "order": 1 }
@@ -270,6 +287,8 @@ Each product is a single JSON file named `{product-id}.json` (e.g. `p-8392.json`
 ```
 
 **`variants`** — at least one required. The `options` object defines which dimension each variant represents. Option key names become the UI selectors (Color, Size, etc.). All variants at the same product `id` must share the same option keys.
+
+**`variantGroup`** — optional string on each variant. Groups variants that share the same colour (or other primary dimension) so media images can reference the group rather than individual variant IDs. For example, Black XS, Black S, Black M, and Black L would all carry `"variantGroup": "black"`, and media images tagged `"variantGroup": "black"` apply to all of them. Set to `null` (or omit) for shared/neutral images shown regardless of selection. Use `client.getVariantGroups(product)` to enumerate groups and `client.getMediaForGroup(product, groupId)` to retrieve the correct images when the customer switches colour.
 
 **`weight`** — in kilograms. Used for shipping calculation server-side. The client cannot override this — the server pulls weight from D1 (synced from your product files at build time).
 
@@ -749,6 +768,30 @@ const collBatch = await client.getCollection('new-arrivals', 1);
 - `"bestsellers"` — placeholder (populate via admin/data tools)
 - `"sale"` — products with `pricing.sale.active === true`
 
+**Custom collections** — define any collection you need in `data/config/collections.json`. The build merges them alongside the three built-in ones. Use any ID string as the key; it becomes the `collectionId` you pass to `client.getCollection()`.
+
+```json
+// data/config/collections.json
+{
+  "lookbook-summer-26": {
+    "name": "Summer Lookbook",
+    "description": "Our summer 2026 editorial picks.",
+    "heroImage": "https://cdn.yourbrand.com/lookbook/summer-hero.webp",
+    "productIds": ["p-8392", "p-pp-001", "p-gia-001"]
+  },
+  "staff-picks": {
+    "name": "Staff Picks",
+    "productIds": ["p-pp-003", "p-8392"]
+  }
+}
+```
+
+Product IDs that don't exist in the built catalog (draft, archived, or missing) are silently filtered out at build time. The collection is then available exactly like any built-in one:
+
+```js
+const batch = await client.getCollection('lookbook-summer-26', 1);
+```
+
 ---
 
 ### Search
@@ -866,6 +909,41 @@ optionKeys.forEach(key => {
     renderOptionButton(key, val, isAvailable);
   });
 });
+```
+
+---
+
+### Variant Groups
+
+When variants share a primary dimension (e.g. colour), `variantGroup` lets you retrieve the correct media images without duplicating them across every size. See [Key fields explained](#key-fields-explained) for how to set `variantGroup` on variants and media images.
+
+```js
+// Get a map of groupId → variant[] for building a colour-swatch UI
+const groups = client.getVariantGroups(product);
+// groups → {
+//   "black": [{ id: "v-8392-blk-s", ... }, { id: "v-8392-blk-m", ... }],
+//   "red":   [{ id: "v-8392-red-s", ... }],
+//   null:    [...]  // variants with no variantGroup, if any
+// }
+
+// Render colour swatches
+Object.entries(groups).forEach(([groupId, variants]) => {
+  if (!groupId) return; // skip ungrouped
+  const swatch = renderColorSwatch(groupId, variants[0].image);
+  swatch.addEventListener('click', () => onGroupSelect(groupId));
+});
+
+// When a colour swatch is selected, get the correct images
+function onGroupSelect(groupId) {
+  // Returns images tagged for this group + all shared images (variantGroup: null), sorted by order
+  const images = client.getMediaForGroup(product, groupId);
+  renderGallery(images);
+
+  // Also pre-select the first available size within this group
+  const group = groups[groupId];
+  const firstAvailable = group.find(v => (v.stock || 0) > 0 || v.backorder);
+  if (firstAvailable) onOptionSelect('Size', firstAvailable.options['Size']);
+}
 ```
 
 ---
