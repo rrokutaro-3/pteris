@@ -1,0 +1,39 @@
+{
+  "main": [
+    { "id": "shop", "label": "Shop All", "url": "/category/all" },
+    { "id": "dresses", "label": "Dresses", "url": "/category/dresses" },
+    { "id": "tops", "label": "Tops", "url": "/category/tops" },
+    { "id": "bottoms", "label": "Bottoms", "url": "/category/bottoms" },
+    { "id": "new-in", "label": "New Arrivals", "url": "/collection/new-arrivals" },
+    { "id": "sale", "label": "Sale", "url": "/collection/sale", "highlight": true }
+  ],
+  "footer": [
+    {
+      "title": "Shop",
+      "links": [
+        { "label": "New Arrivals", "url": "/collection/new-arrivals" },
+        { "label": "Dresses", "url": "/category/dresses" },
+        { "label": "Sale", "url": "/collection/sale" }
+      ]
+    },
+    {
+      "title": "Help",
+      "links": [
+        { "label": "Shipping Info", "url": "/page/shipping" },
+        { "label": "FAQ", "url": "/page/faq" }
+      ]
+    },
+    {
+      "title": "Company",
+      "links": [
+        { "label": "About Us", "url": "/page/about" },
+        { "label": "Privacy Policy", "url": "/page/privacy" },
+        { "label": "Terms of Service", "url": "/page/terms" }
+      ]
+    }
+  ],
+  "social": [
+    { "platform": "Instagram", "url": "https://instagram.com/yourbrand" },
+    { "platform": "TikTok", "url": "https://tiktok.com/@yourbrand" }
+  ]
+}

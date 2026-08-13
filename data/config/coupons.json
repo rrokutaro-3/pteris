@@ -1,0 +1,32 @@
+{
+  "active": ["WELCOME10", "FREESHIP", "VIP20"],
+  "codes": {
+    "WELCOME10": {
+      "type": "percentage",
+      "value": 10,
+      "minOrder": 0.00,
+      "usageLimit": null,
+      "maxDiscount": 50.00,
+      "expires": null,
+      "description": "10% off your first order"
+    },
+    "FREESHIP": {
+      "type": "fixed",
+      "value": 7.99,
+      "minOrder": 50.00,
+      "usageLimit": null,
+      "maxDiscount": null,
+      "expires": null,
+      "description": "Free standard shipping on orders over $50"
+    },
+    "VIP20": {
+      "type": "percentage",
+      "value": 20,
+      "minOrder": 100.00,
+      "usageLimit": 500,
+      "maxDiscount": 100.00,
+      "expires": "2027-12-31T23:59:59Z",
+      "description": "VIP 20% discount on orders over $100"
+    }
+  }
+}

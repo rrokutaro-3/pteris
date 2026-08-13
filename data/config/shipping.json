@@ -1,0 +1,97 @@
+{
+  "profiles": [
+    {
+      "id": "standard",
+      "name": "Standard Shipping",
+      "deliveryTime": "3-5 business days",
+      "freeThreshold": 75.00,
+      "rates": [
+        {
+          "name": "Lightweight (US & CA)",
+          "minWeight": 0.0,
+          "maxWeight": 0.5,
+          "price": 4.99,
+          "countries": ["US", "CA"]
+        },
+        {
+          "name": "Standard (US & CA)",
+          "minWeight": 0.5,
+          "maxWeight": 2.0,
+          "price": 7.99,
+          "countries": ["US", "CA"]
+        },
+        {
+          "name": "Heavyweight (US & CA)",
+          "minWeight": 2.0,
+          "maxWeight": 10.0,
+          "price": 12.99,
+          "countries": ["US", "CA"]
+        }
+      ]
+    },
+    {
+      "id": "express",
+      "name": "Express Shipping",
+      "deliveryTime": "1-2 business days",
+      "freeThreshold": null,
+      "rates": [
+        {
+          "name": "Express Overnight / Expedited",
+          "minWeight": 0.0,
+          "maxWeight": 5.0,
+          "price": 19.99,
+          "countries": ["US"]
+        }
+      ]
+    },
+    {
+      "id": "europe-uk",
+      "name": "Europe & UK International",
+      "deliveryTime": "7-12 business days",
+      "freeThreshold": 150.00,
+      "rates": [
+        {
+          "name": "Europe Standard Light",
+          "minWeight": 0.0,
+          "maxWeight": 1.0,
+          "price": 14.99,
+          "countries": ["GB", "DE", "FR", "IT", "ES", "NL", "BE", "AT", "IE", "SE", "DK", "FI", "PT", "PL", "CZ", "GR", "CH", "NO"]
+        },
+        {
+          "name": "Europe Standard Heavy",
+          "minWeight": 1.0,
+          "maxWeight": 5.0,
+          "price": 24.99,
+          "countries": ["GB", "DE", "FR", "IT", "ES", "NL", "BE", "AT", "IE", "SE", "DK", "FI", "PT", "PL", "CZ", "GR", "CH", "NO"]
+        }
+      ]
+    },
+    {
+      "id": "apac",
+      "name": "Asia-Pacific International",
+      "deliveryTime": "8-14 business days",
+      "freeThreshold": 200.00,
+      "rates": [
+        {
+          "name": "APAC Standard Light",
+          "minWeight": 0.0,
+          "maxWeight": 1.0,
+          "price": 18.99,
+          "countries": ["AU", "NZ", "JP", "KR", "SG", "HK", "TW"]
+        },
+        {
+          "name": "APAC Standard Heavy",
+          "minWeight": 1.0,
+          "maxWeight": 5.0,
+          "price": 29.99,
+          "countries": ["AU", "NZ", "JP", "KR", "SG", "HK", "TW"]
+        }
+      ]
+    }
+  ],
+  "defaultProfile": "standard",
+  "origin": {
+    "country": "US",
+    "zip": "10001"
+  }
+}
