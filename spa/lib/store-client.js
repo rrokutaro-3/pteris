@@ -11,9 +11,16 @@
 
 export class StoreClient {
   constructor(baseUrl, options = {}) {
+    // Strip trailing slashes
     this.baseUrl = baseUrl.replace(/\/$/, '');
-    this.apiUrl = options.apiUrl || baseUrl.replace('/data', '/api');
+    this.apiUrl = (options.apiUrl || baseUrl.replace('/data', '/api')).replace(/\/$/, '');
+    
+    // Default config directory is 'config', but can be overridden via options
+    // Strips leading/trailing slashes for clean URL joining
+    this.configDir = (options.configDir || 'config').replace(/^\/|\/$/g, '');
+    
     this.cache = new Map();
+    this.configCache = {};
     this.index = null;
     this.version = null;
     this.options = {
@@ -22,6 +29,16 @@ export class StoreClient {
       productCacheDuration: 1000 * 60 * 60,
       ...options
     };
+  }
+
+  /**
+   * Set or update the config directory path dynamically at runtime
+   * e.g., client.setConfigDir('other/jewelry-store-spa/config');
+   */
+  setConfigDir(path) {
+    this.configDir = (path || 'config').replace(/^\/|\/$/g, '');
+    // Clear cache so it fetches fresh configs from the new directory
+    this.configCache = {};
   }
 
   // ─── Initialization ───
@@ -166,15 +183,25 @@ export class StoreClient {
   }
 
   // ─── Configs ───
+  /**
+   * Fetches a configuration file by name from the configured directory
+   */
   async getConfig(name) {
-    if (this.cache.has(`config_${name}`)) return this.cache.get(`config_${name}`);
+    if (this.configCache[name]) {
+      return this.configCache[name];
+    }
 
-    const res = await fetch(`${this.baseUrl}/config/${name}.json?v=${this.version}`);
-    if (!res.ok) throw new Error(`Config not found: ${name}`);
+    // Constructs the URL dynamically using the configured configDir
+    const url = `${this.baseUrl}/${this.configDir}/${name}.json`;
+    
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`Failed to load config '${name}' from ${url} (HTTP ${res.status})`);
+    }
 
-    const config = await res.json();
-    this.cache.set(`config_${name}`, config);
-    return config;
+    const data = await res.json();
+    this.configCache[name] = data;
+    return data;
   }
 
   // ─── Live Stock ───
