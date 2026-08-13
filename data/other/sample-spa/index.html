@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Store</title>
+  <title>Sample Store</title>
   <meta name="description" content="Welcome to our store">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -476,7 +476,7 @@
     }
     const STORE_URL = window.__STORE_URL__ || window.location.origin;
     const API_URL   = window.__API_URL__   || null;
-    const client    = new StoreClient(STORE_URL, { apiUrl: API_URL });
+    const client    = new StoreClient(STORE_URL, { apiUrl: API_URL, configDir: 'other/sample-spa/config' });
 
     function requireApi() {
       if (!API_URL) {
@@ -485,6 +485,12 @@
       }
       return true;
     }
+
+    // Helper Extractor for Ref/Product Objects
+    const getName = p => p?.name || p?.identity?.name || '';
+    const getPrice = p => p?.price ?? p?.pricing?.price ?? 0;
+    const getComparePrice = p => p?.compareAtPrice ?? p?.pricing?.compareAtPrice;
+    const getImage = p => p?.image || p?.media?.images?.[0]?.url || '';
 
     // --- State Management ---
     const appState = {
@@ -613,7 +619,6 @@
       setMeta('property', 'og:image', image || '');
       setMeta('property', 'og:url', window.location.href);
 
-      // Clean up old JSON-LD
       const oldLd = document.getElementById('json-ld');
       if (oldLd) oldLd.remove();
 
@@ -622,7 +627,6 @@
         setMeta('property', 'product:price:amount', product.pricing.price);
         setMeta('property', 'product:price:currency', product.pricing.currency);
         
-        // Inject JSON-LD
         const schema = product.seo?.structuredData || {
           "@context": "https://schema.org",
           "@type": "Product",
@@ -684,25 +688,30 @@
       const tpl = document.getElementById('tpl-product-card').content.cloneNode(true);
       const a = tpl.querySelector('a.product-card-link');
       a.href = `/product/${id}`;
-      tpl.querySelector('img').src = ref.image || '';
-      tpl.querySelector('img').alt = ref.name;
-      tpl.querySelector('.product-card-title').textContent = ref.name;
       
-      const priceHtml = ref.compareAtPrice 
-        ? `<span class="price-sale">$${(ref.price||0).toFixed(2)}</span><span class="price-compare">$${(ref.compareAtPrice||0).toFixed(2)}</span>`
-        : `$${(ref.price||0).toFixed(2)}`;
+      const pName = getName(ref);
+      const pPrice = getPrice(ref);
+      const pCompare = getComparePrice(ref);
+      const pImg = getImage(ref);
+
+      tpl.querySelector('img').src = pImg;
+      tpl.querySelector('img').alt = pName;
+      tpl.querySelector('.product-card-title').textContent = pName;
+      
+      const priceHtml = pCompare 
+        ? `<span class="price-sale">$${pPrice.toFixed(2)}</span><span class="price-compare">$${pCompare.toFixed(2)}</span>`
+        : `$${pPrice.toFixed(2)}`;
       tpl.querySelector('.product-card-price').innerHTML = priceHtml;
 
       // Wishlist Feature
       const wlBtn = tpl.querySelector('.wishlist-toggle');
-      if (!appState.state.configs.store.features.wishlist) {
+      if (!appState.state.configs.store?.features?.wishlist) {
         wlBtn.remove();
       } else {
         const inWl = appState.state.wishlist.some(w => w.id === id);
         if (inWl) wlBtn.classList.add('active');
         wlBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
+          e.preventDefault(); e.stopPropagation();
           toggleWishlist(id, ref);
           wlBtn.classList.toggle('active');
         });
@@ -710,7 +719,7 @@
 
       // Quick View Feature Flag
       const qvBtn = tpl.querySelector('.quickview-btn');
-      if (!appState.state.configs.store.features.quickView) {
+      if (!appState.state.configs.store?.features?.quickView) {
         qvBtn.remove();
       } else {
         qvBtn.style.display = 'block';
@@ -727,10 +736,10 @@
       const modal = document.getElementById('simple-modal-content');
       modal.innerHTML = `
         <div style="display:flex; gap: 20px; flex-wrap: wrap;">
-          <img src="${ref.image || ''}" style="width: 150px; border-radius:var(--radius); object-fit: cover;">
+          <img src="${getImage(ref)}" style="width: 150px; border-radius:var(--radius); object-fit: cover;">
           <div style="flex: 1; min-width: 200px;">
-            <h2 style="font-size: 20px; margin-bottom: 10px;">${ref.name}</h2>
-            <div style="font-weight: 600; margin-bottom: 20px; font-size: 18px;">$${(ref.price || 0).toFixed(2)}</div>
+            <h2 style="font-size: 20px; margin-bottom: 10px;">${getName(ref)}</h2>
+            <div style="font-weight: 600; margin-bottom: 20px; font-size: 18px;">$${getPrice(ref).toFixed(2)}</div>
             <button class="btn btn-primary" onclick="appState.set('ui',{modalOpen:false}); navigate('/product/${id}')">View Full Details</button>
           </div>
         </div>
@@ -830,7 +839,7 @@
           });
           
           updateFilterOptions();
-          window.applyFilters(); // Renders the grid based on active sort/filter
+          window.applyFilters();
         }
 
         spinner.style.display = 'none';
@@ -840,7 +849,6 @@
           loadBtn.style.display = 'inline-flex';
           loadBtn.onclick = () => renderCatalog(type, id, page + 1, true);
           
-          // IntersectionObserver for Infinite Scroll
           if (window.catalogObserver) window.catalogObserver.disconnect();
           window.catalogObserver = new IntersectionObserver((entries) => {
             if(entries[0].isIntersecting) loadBtn.click();
@@ -857,13 +865,15 @@
       }
     }
 
-    // Catalog Filter & Sort Logic
     function updateFilterOptions() {
       const filterSelect = document.getElementById('catalog-filter');
       const container = document.getElementById('filter-container');
       
       const allTags = new Set();
-      currentCatalogProducts.forEach(p => p.tags?.forEach(t => allTags.add(t)));
+      currentCatalogProducts.forEach(p => {
+        p.tags?.forEach(t => allTags.add(t));
+        p.categories?.forEach(c => allTags.add(c));
+      });
       
       if (allTags.size > 0) {
         container.style.display = 'block';
@@ -881,18 +891,15 @@
       const sortType = document.getElementById('catalog-sort').value;
       const filterTag = document.getElementById('catalog-filter').value;
       
-      // Filter
       let processed = currentCatalogProducts.filter(p => {
         if (filterTag === 'all') return true;
         return p.tags?.includes(filterTag) || p.categories?.includes(filterTag);
       });
 
-      // Sort
-      if (sortType === 'price_asc') processed.sort((a, b) => a.price - b.price);
-      if (sortType === 'price_desc') processed.sort((a, b) => b.price - a.price);
-      if (sortType === 'name_asc') processed.sort((a, b) => a.name.localeCompare(b.name));
+      if (sortType === 'price_asc') processed.sort((a, b) => getPrice(a) - getPrice(b));
+      if (sortType === 'price_desc') processed.sort((a, b) => getPrice(b) - getPrice(a));
+      if (sortType === 'name_asc') processed.sort((a, b) => getName(a).localeCompare(getName(b)));
 
-      // Render
       const grid = document.getElementById('catalog-grid');
       grid.innerHTML = '';
       if (processed.length === 0) {
@@ -969,7 +976,7 @@
         
         // Wishlist Feature
         const wlBtn = document.getElementById('pd-wishlist-btn');
-        if (!appState.state.configs.store.features.wishlist) {
+        if (!appState.state.configs.store?.features?.wishlist) {
           wlBtn.style.display = 'none';
         } else {
           wlBtn.style.display = 'inline-flex';
@@ -982,11 +989,11 @@
 
         // Size Guide Feature
         const sgBtn = document.getElementById('pd-sizeguide-btn');
-        if (appState.state.configs.store.features.sizeGuide) {
+        if (appState.state.configs.store?.features?.sizeGuide) {
           sgBtn.style.display = 'block';
           sgBtn.onclick = () => {
             const modal = document.getElementById('simple-modal-content');
-            modal.innerHTML = `<h2>Size Guide</h2><p>Here is where your sizing chart content would load.</p>`;
+            modal.innerHTML = `<h2>Size Guide</h2><p>Standard fit guidelines apply to this item.</p>`;
             appState.set('ui', { modalOpen: true });
           };
         } else {
@@ -995,7 +1002,7 @@
 
         // Reviews Feature
         const revSec = document.getElementById('pd-reviews-section');
-        if (appState.state.configs.store.features.reviews) {
+        if (appState.state.configs.store?.features?.reviews) {
           revSec.style.display = 'block';
         } else {
           revSec.style.display = 'none';
@@ -1078,7 +1085,6 @@
       container.innerHTML = '';
       const { optionKeys } = client.buildVariantMatrix(pdState.product);
       
-      // Swatches (if variant groups are active)
       if (groupIds.length > 1) {
         const grpEl = document.createElement('div');
         grpEl.className = 'option-group';
@@ -1087,7 +1093,6 @@
         
         const swContainer = grpEl.querySelector('#pd-swatches');
         groupIds.forEach(gid => {
-          // FIX: Use Pteris getMediaForGroup to reliably find the swatch image
           const groupImages = client.getMediaForGroup(pdState.product, gid);
           const img = groups[gid][0].image || (groupImages.length > 0 ? groupImages[0].url : '');
           
@@ -1095,10 +1100,7 @@
           btn.className = `color-swatch ${Object.values(pdState.options).includes(gid) ? 'selected' : ''}`;
           btn.innerHTML = `<img src="${img}" alt="${gid}">`;
           btn.onclick = () => {
-            // Re-render gallery specifically for this color group
             renderGallery(client.getMediaForGroup(pdState.product, gid));
-            
-            // Try to keep other options (like size) the same if available, else pick first available
             const currentSize = pdState.options['Size']; 
             let newVar = groups[gid].find(v => v.options['Size'] === currentSize && (v.stock > 0 || v.backorder));
             if(!newVar) newVar = groups[gid].find(v => v.stock > 0 || v.backorder) || groups[gid][0];
@@ -1111,7 +1113,6 @@
         });
       }
 
-      // Option Buttons (Size, etc)
       const available = client.getAvailableOptions(pdState.product, pdState.options);
       optionKeys.forEach(key => {
         if (groupIds.length > 1 && key.toLowerCase() === 'color') return;
@@ -1304,16 +1305,89 @@
       updateMeta('Order Confirmed');
     }
 
+    // --- Wishlist & Cart Helpers ---
+    function toggleWishlist(id, ref) {
+      let wl = [...appState.state.wishlist];
+      if (wl.some(w => w.id === id)) wl = wl.filter(w => w.id !== id);
+      else wl.push({ id, name: getName(ref), price: getPrice(ref), image: getImage(ref) });
+      appState.set('wishlist', wl);
+    }
+
+    function renderWishlist(wl) {
+      const body = document.getElementById('wishlist-body');
+      if (wl.length === 0) {
+        body.innerHTML = '<p style="text-align:center; padding: 40px 0; color: var(--text-muted);">Wishlist empty.</p>';
+        return;
+      }
+      body.innerHTML = wl.map(w => `
+        <div class="cart-item">
+          <img src="${w.image}" alt="${w.name}">
+          <div class="cart-item-info">
+            <h4>${w.name}</h4>
+            <div style="font-weight:600; margin-bottom: 10px;">$${(w.price||0).toFixed(2)}</div>
+            <button class="btn btn-outline" style="padding: 6px 12px; font-size:12px;" onclick="appState.set('ui', {wishlistOpen: false}); navigate('/product/${w.id}')">View</button>
+          </div>
+          <button class="cart-remove" onclick="toggleWishlist('${w.id}', null)">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    window.updateCartQty = function(vid, delta) {
+      const cart = [...appState.state.cart];
+      const idx = cart.findIndex(i => i.variantId === vid);
+      if (idx > -1) {
+        cart[idx].qty += delta;
+        if (cart[idx].qty < 1) cart.splice(idx, 1);
+        appState.set('cart', cart);
+      }
+    };
+    
+    window.removeCartItem = function(vid) {
+      appState.set('cart', appState.state.cart.filter(i => i.variantId !== vid));
+    };
+
+    function renderCart(cart) {
+      const body = document.getElementById('cart-body');
+      if (cart.length === 0) {
+        body.innerHTML = '<p style="text-align:center; padding: 40px 0; color: var(--text-muted);">Your cart is empty.</p>';
+        document.getElementById('cart-subtotal').textContent = '$0.00';
+        document.getElementById('cart-checkout-btn').disabled = true;
+        return;
+      }
+      
+      let subtotal = 0;
+      body.innerHTML = cart.map(i => {
+        subtotal += (i.price * i.qty);
+        return `
+          <div class="cart-item">
+            <img src="${i.image}" alt="${i.name}">
+            <div class="cart-item-info">
+              <h4>${i.name}</h4>
+              <p>${i.variantLabel}</p>
+              <div style="font-weight:600;">$${(i.price * i.qty).toFixed(2)}</div>
+              <div class="cart-qty-ctrl">
+                <button onclick="updateCartQty('${i.variantId}', -1)">−</button>
+                <span>${i.qty}</span>
+                <button onclick="updateCartQty('${i.variantId}', 1)">+</button>
+              </div>
+            </div>
+            <button class="cart-remove" onclick="removeCartItem('${i.variantId}')">Remove</button>
+          </div>
+        `;
+      }).join('');
+      
+      document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('cart-checkout-btn').disabled = false;
+    }
+
     // --- Boot Sequence (P5) ---
     async function boot() {
       try {
-        // Must complete fully before anything else
         await client.init();
         
         const initialPath = window.location.pathname || '/';
         const isHome = initialPath === '/';
 
-        // Fetch needed configs (Home config fetches concurrently if landing on /)
         const [store, menus, home] = await Promise.all([
           client.getConfig('store'),
           client.getConfig('menus'),
@@ -1332,7 +1406,7 @@
           handleRoute(initialPath);
         }
 
-        // Remove loading overlay smoothly (solves FOUC)
+        // Hide loading overlay smoothly (FOUC fix)
         const overlay = document.getElementById('app-loading-overlay');
         overlay.style.opacity = '0';
         setTimeout(() => overlay.style.display = 'none', 400);
