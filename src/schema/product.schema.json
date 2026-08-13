@@ -75,6 +75,7 @@
             }
           },
           "image": { "type": "string" },
+          "variantGroup": { "type": ["string", "null"] },
           "stock": { "type": "integer", "minimum": 0 },
           "lowStockThreshold": { "type": "integer", "minimum": 0 },
           "backorder": { "type": "boolean" }
@@ -94,7 +95,8 @@
               "alt": { "type": "string" },
               "type": { "type": "string", "enum": ["image", "360", "zoom"] },
               "order": { "type": "integer" },
-              "variant": { "type": ["string", "null"] }
+              "variant": { "type": ["string", "null"] },
+              "variantGroup": { "type": ["string", "null"] }
             }
           }
         },
