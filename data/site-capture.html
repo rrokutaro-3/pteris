@@ -171,34 +171,6 @@ body {
 .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r2); padding: 12px; text-align: center; }
 .stat-val { font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.5px; line-height: 1; margin-bottom: 4px; }
 .stat-key { font-size: 10px; color: var(--mute); letter-spacing: 0.8px; text-transform: uppercase; font-weight: 500; }
-
-/* ── Console Panel ── */
-.console-fab { position: fixed; bottom: 20px; right: 16px; z-index: 100001; width: 36px; height: 36px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--line2); color: var(--mute); cursor: pointer; display: none; align-items: center; justify-content: center; transition: color 0.15s, border-color 0.15s, background 0.15s; box-shadow: 0 4px 12px rgba(0,0,0,0.5); font-family: var(--font); }
-.console-fab:hover { color: var(--ink); border-color: var(--mid); background: var(--surface3); }
-.console-fab.has-error { border-color: #ee1d36; color: #ff4d5e; background: #1a0608; }
-.console-fab.visible { display: flex; }
-.console-panel { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100000; height: 32vh; min-height: 160px; max-height: 320px; background: #0a0a0a; border-top: 1px solid var(--line2); display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.25s ease; pointer-events: none; }
-.console-panel.open { transform: translateY(0); pointer-events: all; }
-.console-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid var(--line); flex-shrink: 0; }
-.console-title { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--mute); display: flex; align-items: center; gap: 8px; }
-.console-badge { font-size: 10px; font-weight: 600; background: #ee1d36; color: #fff; border-radius: 8px; padding: 1px 6px; display: none; }
-.console-badge.visible { display: inline-block; }
-.console-actions { display: flex; gap: 6px; align-items: center; }
-.console-clear { font-size: 10px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: var(--mute); background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: var(--r); font-family: var(--font); transition: color 0.15s; }
-.console-clear:hover { color: var(--ink); }
-.console-close { width: 24px; height: 24px; border-radius: 50%; background: none; border: none; color: var(--mute); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: color 0.15s; font-family: var(--font); }
-.console-close:hover { color: var(--ink); }
-.console-body { flex: 1; overflow-y: auto; padding: 8px 0; scrollbar-width: thin; scrollbar-color: var(--line2) transparent; }
-.console-body::-webkit-scrollbar { width: 4px; }
-.console-body::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 2px; }
-.console-entry { display: flex; gap: 10px; padding: 3px 12px; font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; line-height: 1.5; border-left: 2px solid transparent; }
-.console-entry.log { color: var(--body); }
-.console-entry.info { color: #60a0ff; border-left-color: #60a0ff22; }
-.console-entry.warn { color: #f5a623; border-left-color: #f5a62322; background: rgba(245,166,35,0.04); }
-.console-entry.error { color: #ff4d5e; border-left-color: #ee1d36; background: rgba(238,29,54,0.06); }
-.console-entry.success { color: #4caf7d; border-left-color: #4caf7d22; }
-.console-time { color: var(--mute); flex-shrink: 0; font-size: 10px; margin-top: 1px; }
-.console-msg { flex: 1; word-break: break-word; white-space: pre-wrap; }
 </style>
 </head>
 <body>
@@ -263,26 +235,6 @@ body {
   </div>
 
   <div class="viewer-iframe-wrap" id="viewerIframeWrap"></div>
-</div>
-
-<!-- Console FAB -->
-<button class="console-fab" id="consoleFab" onclick="toggleConsole()" title="Toggle console">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-</button>
-
-<!-- Console Panel -->
-<div class="console-panel" id="consolePanel">
-  <div class="console-header">
-    <div class="console-title">
-      Console
-      <span class="console-badge" id="consoleBadge">0</span>
-    </div>
-    <div class="console-actions">
-      <button class="console-clear" onclick="clearConsole()">Clear</button>
-      <button class="console-close" onclick="toggleConsole()">✕</button>
-    </div>
-  </div>
-  <div class="console-body" id="consoleBody"></div>
 </div>
 
 <div class="shell" id="appShell">
@@ -410,50 +362,6 @@ function toast(msg, err=false, keepAlive=false) {
   t.className = 'toast' + (err ? ' err' : '') + ' show';
   clearTimeout(toastTimer);
   if (!keepAlive) toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
-}
-
-// ── Console Panel ──
-let consoleErrorCount = 0;
-let consoleOpen = false;
-
-function clog(msg, type = 'log') {
-  const body = document.getElementById('consoleBody');
-  const fab  = document.getElementById('consoleFab');
-  const badge = document.getElementById('consoleBadge');
-  if (!body) return;
-
-  fab.classList.add('visible');
-
-  if (type === 'error') {
-    consoleErrorCount++;
-    fab.classList.add('has-error');
-    badge.textContent = consoleErrorCount;
-    badge.classList.add('visible');
-  }
-
-  const now = new Date();
-  const time = now.toTimeString().slice(0, 8);
-
-  const entry = document.createElement('div');
-  entry.className = 'console-entry ' + type;
-  entry.innerHTML = `<span class="console-time">${time}</span><span class="console-msg">${escHtml(String(msg))}</span>`;
-  body.appendChild(entry);
-  body.scrollTop = body.scrollHeight;
-}
-
-function toggleConsole() {
-  consoleOpen = !consoleOpen;
-  document.getElementById('consolePanel').classList.toggle('open', consoleOpen);
-  if (consoleOpen) {
-    document.getElementById('consoleBody').scrollTop = document.getElementById('consoleBody').scrollHeight;
-  }
-}
-
-function clearConsole() {
-  document.getElementById('consoleBody').innerHTML = '';
-  consoleErrorCount = 0;
-  document.getElementById('consoleBadge').classList.remove('visible');
-  document.getElementById('consoleFab').classList.remove('has-error');
 }
 
 // ── Settings ──
@@ -1037,12 +945,9 @@ function applyViewport() {
 function openViewer() {
   if (!S.viewHtml) return toast('No page content available', true);
   document.getElementById('viewerOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; applyViewport();
-  document.getElementById('consoleFab').classList.add('visible');
 }
 function closeViewer() {
   document.getElementById('viewerOverlay').classList.remove('active'); document.getElementById('viewerIframeWrap').innerHTML = ''; document.body.style.overflow = '';
-  document.getElementById('consolePanel').classList.remove('open'); consoleOpen = false;
-  document.getElementById('consoleFab').classList.remove('visible');
 }
 window.addEventListener('resize', () => { if (document.getElementById('viewerOverlay').classList.contains('active')) applyViewport(); });
 
@@ -1056,37 +961,27 @@ async function takeScreenshot() {
   const ngrokUrl = localStorage.getItem('ngrok_url');
   if (ngrokUrl) {
     try {
-      clog('Pinging Colab server: ' + ngrokUrl, 'info');
       toast('Pinging Colab server...', false, true);
-      try {
-        const pingRes = await fetch(ngrokUrl + '/ping', { headers: { 'ngrok-skip-browser-warning': '1' } });
-        clog('Ping response: ' + pingRes.status + ' ' + pingRes.statusText, pingRes.ok ? 'success' : 'warn');
-        if (!pingRes.ok) throw new Error('Ping returned ' + pingRes.status);
-      } catch(e) {
-        clog('Ping failed: ' + e.message, 'error');
-        throw new Error('Colab server not reachable. Is the notebook running?');
-      }
+      try { await fetch(ngrokUrl + '/ping'); } catch(e) { throw new Error('Colab server not reachable. Is the notebook running?'); }
+      toast('Pinging Colab server...', false, true);
+      try { await fetch(ngrokUrl + '/ping', { headers: { 'ngrok-skip-browser-warning': '1' } }); } catch(e) { throw new Error('Colab server not reachable. Is the notebook running?'); }
       toast('Capturing high-res screenshot...', false, true);
       const devConfig = DEVICES[S.viewport.device][S.viewport.orientation];
       const isMobile = S.viewport.device !== 'desktop';
-      clog(`POST /screenshot — ${devConfig.w}x${devConfig.h} | mobile:${isMobile}`, 'info');
       const reqRes = await fetch(ngrokUrl + '/screenshot', {
         method: 'POST', headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
         body: JSON.stringify({ html: S.viewHtml, width: devConfig.w, height: devConfig.h, deviceScaleFactor: 2, isMobile })
       });
-      clog('Screenshot response: ' + reqRes.status + ' ' + reqRes.statusText + ' | content-type: ' + reqRes.headers.get('content-type'), reqRes.ok ? 'success' : 'error');
-      if (!reqRes.ok) { const errText = await reqRes.text(); clog('Response body: ' + errText.slice(0, 300), 'error'); throw new Error(errText.slice(0, 120) || 'Puppeteer capture failed'); }
+      if (!reqRes.ok) { const errText = await reqRes.text(); throw new Error(errText || 'Puppeteer capture failed'); }
       const mimeType = (reqRes.headers.get('content-type') || 'image/jpeg').split(';')[0].trim().toLowerCase();
       const extMap = { 'image/jpeg':'jpg','image/jpg':'jpg','image/png':'png','image/webp':'webp','image/avif':'avif' };
       const ext = extMap[mimeType] || 'img';
       const blob = await reqRes.blob(); const buffer = await blob.arrayBuffer();
       const filename = `screenshot-${S.viewport.device}-${S.viewport.orientation}-${Date.now()}.${ext}`;
       S.outputs[filename] = { content: new Uint8Array(buffer), type: mimeType, binary: true };
-      clog('Screenshot saved: ' + filename + ' (' + Math.round(buffer.byteLength/1024) + ' KB)', 'success');
       toast('Screenshot saved successfully!', false);
       renderCoreList();
     } catch(e) {
-      clog('takeScreenshot error: ' + e.message, 'error');
       console.error(e); toast('Failed: ' + e.message, true);
     } finally {
       btn.disabled = false;
@@ -1318,7 +1213,7 @@ function reset() {
   document.getElementById('dropZone').querySelector('.drop-title').textContent = 'Tap to select file';
   document.getElementById('dropZone').querySelector('.drop-sub').textContent = '.html or .zip · any size';
   goStep(1);
-} 
+}
 
 function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function formatBytes(b) { if (b < 1024) return b + ' B'; if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB'; return (b/1024/1024).toFixed(1) + ' MB'; }
