@@ -65,7 +65,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pp-013-blk-us2",
@@ -79,7 +80,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
       "stock": 7,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pp-013-blk-us4",
@@ -93,7 +95,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
       "stock": 11,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pp-013-blk-us6",
@@ -107,7 +110,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
       "stock": 14,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pp-013-blk-us8",
@@ -121,7 +125,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
       "stock": 9,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pp-013-blk-us10",
@@ -135,7 +140,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
       "stock": 5,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pp-013-blk-us12",
@@ -149,206 +155,53 @@
       "image": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
       "stock": 8,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     }
   ],
   "media": {
     "images": [
       {
         "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 1",
+        "alt": "Bold Move Mini Skirt Black - black variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-pp-013-blk-us0"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-sarah-us4_63f7d47b-ae40-4d54-8295-cce3bc32b587.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 2",
+        "alt": "Bold Move Mini Skirt Black - black variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-pp-013-blk-us0"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-sarah-us4_bf7472d0-314d-4a4b-8755-25ba0affc925.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 3",
+        "alt": "Bold Move Mini Skirt Black - black variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-pp-013-blk-us0"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/products/4-modelinfo-sarah-us4_9c3f0bfd-935c-4361-b500-82a3ba34ef56.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 4",
+        "alt": "Bold Move Mini Skirt Black - black variant image 4",
         "type": "image",
         "order": 4,
-        "variant": "v-pp-013-blk-us0"
+        "variantGroup": "black"
       },
       {
-        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 1",
+        "url": "https://us.princesspolly.com/cdn/shop/files/4-modelinfo-tokaya-us2_7759e62d-e948-4943-b22e-6ed5cad781ae.jpg?v=1712556233",
+        "alt": "Bold Move Mini Skirt Black - black variant image 5",
         "type": "image",
-        "order": 1,
-        "variant": "v-pp-013-blk-us2"
+        "order": 5,
+        "variantGroup": "black"
       },
       {
-        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-sarah-us4_63f7d47b-ae40-4d54-8295-cce3bc32b587.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 2",
+        "url": "https://us.princesspolly.com/cdn/shop/files/5-modelinfo-tokaya-us2_e57cdea9-128b-43cc-b441-209f1794efc8.jpg?v=1712556233",
+        "alt": "Bold Move Mini Skirt Black - black variant image 6",
         "type": "image",
-        "order": 2,
-        "variant": "v-pp-013-blk-us2"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-sarah-us4_bf7472d0-314d-4a4b-8755-25ba0affc925.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-013-blk-us2"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/4-modelinfo-sarah-us4_9c3f0bfd-935c-4361-b500-82a3ba34ef56.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-013-blk-us2"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-013-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-sarah-us4_63f7d47b-ae40-4d54-8295-cce3bc32b587.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-013-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-sarah-us4_bf7472d0-314d-4a4b-8755-25ba0affc925.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-013-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/4-modelinfo-sarah-us4_9c3f0bfd-935c-4361-b500-82a3ba34ef56.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-013-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-013-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-sarah-us4_63f7d47b-ae40-4d54-8295-cce3bc32b587.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-013-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-sarah-us4_bf7472d0-314d-4a4b-8755-25ba0affc925.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-013-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/4-modelinfo-sarah-us4_9c3f0bfd-935c-4361-b500-82a3ba34ef56.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-013-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-013-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-sarah-us4_63f7d47b-ae40-4d54-8295-cce3bc32b587.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-013-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-sarah-us4_bf7472d0-314d-4a4b-8755-25ba0affc925.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-013-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/4-modelinfo-sarah-us4_9c3f0bfd-935c-4361-b500-82a3ba34ef56.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-013-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-013-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-sarah-us4_63f7d47b-ae40-4d54-8295-cce3bc32b587.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-013-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-sarah-us4_bf7472d0-314d-4a4b-8755-25ba0affc925.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-013-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/4-modelinfo-sarah-us4_9c3f0bfd-935c-4361-b500-82a3ba34ef56.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-013-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-sarah-us4_e82c50eb-9078-4e4c-b1a9-c01e7846e0da.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-013-blk-us12"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-sarah-us4_63f7d47b-ae40-4d54-8295-cce3bc32b587.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-013-blk-us12"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-sarah-us4_bf7472d0-314d-4a4b-8755-25ba0affc925.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-013-blk-us12"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/products/4-modelinfo-sarah-us4_9c3f0bfd-935c-4361-b500-82a3ba34ef56.jpg?v=1717997949",
-        "alt": "Bold Move Mini Skirt Black media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-013-blk-us12"
+        "order": 6,
+        "variantGroup": "black"
       }
     ],
     "videos": []

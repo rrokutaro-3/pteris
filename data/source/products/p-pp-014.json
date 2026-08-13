@@ -65,38 +65,53 @@
       "image": "https://us.princesspolly.com/cdn/shop/products/0_e12262e8-1ab8-4498-9fb6-fb1803c9a2fe.jpg?v=1681240087",
       "stock": 12,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     }
   ],
   "media": {
     "images": [
       {
         "url": "https://us.princesspolly.com/cdn/shop/products/0_e12262e8-1ab8-4498-9fb6-fb1803c9a2fe.jpg?v=1681240087",
-        "alt": "Marano Bag Black media 1",
+        "alt": "Marano Bag Black - black variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-pp-014-onesize"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/products/1_3ed69f47-6624-491c-92ac-9e430ce4aef6.jpg?v=1681240087",
-        "alt": "Marano Bag Black media 2",
+        "alt": "Marano Bag Black - black variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-pp-014-onesize"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/products/2_84164497-66d7-4f4d-93d9-e0f60a206e20.jpg?v=1681240087",
-        "alt": "Marano Bag Black media 3",
+        "alt": "Marano Bag Black - black variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-pp-014-onesize"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/products/3_521da867-f49f-4fc7-8f38-f9530dfbd04b.jpg?v=1681240087",
-        "alt": "Marano Bag Black media 4",
+        "alt": "Marano Bag Black - black variant image 4",
         "type": "image",
         "order": 4,
-        "variant": "v-pp-014-onesize"
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1_215c1489-4e90-449d-8662-1648b5d1418f.jpg?v=1752722073",
+        "alt": "Marano Bag Black - black variant image 5",
+        "type": "image",
+        "order": 5,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2_03f56f53-7b2a-42b9-a267-fb6e1a30adbb.jpg?v=1752722073",
+        "alt": "Marano Bag Black - black variant image 6",
+        "type": "image",
+        "order": 6,
+        "variantGroup": "black"
       }
     ],
     "videos": []

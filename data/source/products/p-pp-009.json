@@ -65,7 +65,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "ivory"
     },
     {
       "id": "v-pp-009-blk-us2",
@@ -79,7 +80,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
       "stock": 7,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "ivory"
     },
     {
       "id": "v-pp-009-blk-us4",
@@ -93,7 +95,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
       "stock": 11,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "ivory"
     },
     {
       "id": "v-pp-009-blk-us6",
@@ -107,7 +110,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
       "stock": 14,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "ivory"
     },
     {
       "id": "v-pp-009-blk-us8",
@@ -121,7 +125,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
       "stock": 9,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "ivory"
     },
     {
       "id": "v-pp-009-blk-us10",
@@ -135,7 +140,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
       "stock": 5,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "ivory"
     },
     {
       "id": "v-pp-009-blk-us12",
@@ -149,206 +155,53 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
       "stock": 8,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "ivory"
     }
   ],
   "media": {
     "images": [
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 1",
+        "alt": "Projecting Button Up Top Ivory - ivory variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-pp-009-blk-us0"
+        "variantGroup": "ivory"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ella-us2_877329a7-ba56-4f07-bc40-b300cbc1ca49.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 2",
+        "alt": "Projecting Button Up Top Ivory - ivory variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-pp-009-blk-us0"
+        "variantGroup": "ivory"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ella-us2_46e76018-8bbb-412b-9223-868e6b77890e.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 3",
+        "alt": "Projecting Button Up Top Ivory - ivory variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-pp-009-blk-us0"
+        "variantGroup": "ivory"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ella-us2_110c4937-3b95-48ad-a32e-6d3b46acb6a0.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 4",
+        "alt": "Projecting Button Up Top Ivory - ivory variant image 4",
         "type": "image",
         "order": 4,
-        "variant": "v-pp-009-blk-us0"
+        "variantGroup": "ivory"
       },
       {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 1",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-rafaela-us2_de52ce88-1ade-4fe0-9b3d-e46b0b1abac1.jpg?v=1771300686",
+        "alt": "Projecting Button Up Top Ivory - ivory variant image 5",
         "type": "image",
-        "order": 1,
-        "variant": "v-pp-009-blk-us2"
+        "order": 5,
+        "variantGroup": "ivory"
       },
       {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ella-us2_877329a7-ba56-4f07-bc40-b300cbc1ca49.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 2",
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-rafaela-us2_be9c31c6-f6a1-4038-96f7-e51346ea1b17.jpg?v=1771300687",
+        "alt": "Projecting Button Up Top Ivory - ivory variant image 6",
         "type": "image",
-        "order": 2,
-        "variant": "v-pp-009-blk-us2"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ella-us2_46e76018-8bbb-412b-9223-868e6b77890e.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-009-blk-us2"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ella-us2_110c4937-3b95-48ad-a32e-6d3b46acb6a0.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-009-blk-us2"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-009-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ella-us2_877329a7-ba56-4f07-bc40-b300cbc1ca49.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-009-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ella-us2_46e76018-8bbb-412b-9223-868e6b77890e.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-009-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ella-us2_110c4937-3b95-48ad-a32e-6d3b46acb6a0.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-009-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-009-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ella-us2_877329a7-ba56-4f07-bc40-b300cbc1ca49.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-009-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ella-us2_46e76018-8bbb-412b-9223-868e6b77890e.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-009-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ella-us2_110c4937-3b95-48ad-a32e-6d3b46acb6a0.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-009-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-009-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ella-us2_877329a7-ba56-4f07-bc40-b300cbc1ca49.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-009-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ella-us2_46e76018-8bbb-412b-9223-868e6b77890e.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-009-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ella-us2_110c4937-3b95-48ad-a32e-6d3b46acb6a0.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-009-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-009-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ella-us2_877329a7-ba56-4f07-bc40-b300cbc1ca49.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-009-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ella-us2_46e76018-8bbb-412b-9223-868e6b77890e.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-009-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ella-us2_110c4937-3b95-48ad-a32e-6d3b46acb6a0.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-009-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ella-us2_79ac623e-fcaa-448a-a72f-60213f40942d.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-009-blk-us12"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ella-us2_877329a7-ba56-4f07-bc40-b300cbc1ca49.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-009-blk-us12"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ella-us2_46e76018-8bbb-412b-9223-868e6b77890e.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-009-blk-us12"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ella-us2_110c4937-3b95-48ad-a32e-6d3b46acb6a0.jpg?v=1752115220",
-        "alt": "Projecting Button Up Top Ivory media 4",
-        "type": "image",
-        "order": 4,
-        "variant": "v-pp-009-blk-us12"
+        "order": 6,
+        "variantGroup": "ivory"
       }
     ],
     "videos": []

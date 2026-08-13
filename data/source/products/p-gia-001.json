@@ -17,12 +17,15 @@
     "taxClass": "standard"
   },
   "description": {
-    "short": "Signature strapless Blare tube top.",
-    "full": "The iconic Blare Boob Tube – soft stretch fabric, strapless silhouette and the perfect layering piece or standalone top. Current product-page research was used to expand fit, material, sizing, and merchandising fields.\n\n### Highlights\n\n- Strapless\n- Signature Blare\n- Soft stretch",
+    "short": "Bodycon cropped boob tube with sporty princess seams, contrast stitching and a centre-front GIA logo.",
+    "full": "The Blare Boob Tube is a cropped, bodycon strapless top in I.AM.GIA's soft bamboo fabrication. It features contrast stitching, sporty princess seams and a centre-front GIA logo print. The fabric is stretchy and not sheer.\n\n### Highlights\n\n- Strapless boob-tube silhouette\n- Cropped length\n- Bodycon fit\n- Sporty princess seams\n- Contrast stitching\n- 93% viscose / 7% elastane\n- Not sheer",
     "highlights": [
-      "Strapless",
-      "Signature Blare",
-      "Soft stretch"
+      "Strapless silhouette",
+      "Cropped length",
+      "Bodycon fit",
+      "Sporty princess seams",
+      "Contrast stitching",
+      "93% viscose / 7% elastane"
     ]
   },
   "categories": [
@@ -34,12 +37,14 @@
     "blare",
     "boob-tube",
     "strapless",
-    "i-am-gia"
+    "i-am-gia",
+    "bamboo",
+    "bodycon"
   ],
   "attributes": [
     {
       "name": "Material",
-      "value": "Soft stretch jersey",
+      "value": "93% viscose 7% elastane (bamboo-derived viscose)",
       "group": "fabric",
       "visible": true,
       "filterable": true
@@ -65,7 +70,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 6,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia001-blk-xs",
@@ -79,7 +85,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 11,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia001-blk-s",
@@ -93,7 +100,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 15,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia001-blk-m",
@@ -107,7 +115,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 12,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia001-blk-l",
@@ -121,7 +130,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 7,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia001-blk-xl",
@@ -135,7 +145,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia-001-white-xxs",
@@ -149,7 +160,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 6,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-001-white-xs",
@@ -163,7 +175,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 9,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-001-white-s",
@@ -177,7 +190,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 12,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-001-white-m",
@@ -191,7 +205,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 7,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-001-white-l",
@@ -205,7 +220,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-001-white-xl",
@@ -219,262 +235,95 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 10,
       "lowStockThreshold": 3,
-      "backorder": true
+      "backorder": true,
+      "variantGroup": "white"
     }
   ],
   "media": {
     "images": [
       {
         "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black XXS view 1",
+        "alt": "Blare Boob Tube - black variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-gia001-blk-xxs"
+        "variantGroup": "black"
       },
       {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black XXS view 2",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-rafaela-us2_de52ce88-1ade-4fe0-9b3d-e46b0b1abac1.jpg?v=1771300686",
+        "alt": "Blare Boob Tube - black variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-gia001-blk-xxs"
+        "variantGroup": "black"
       },
       {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black XXS view 3",
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-rafaela-us2_be9c31c6-f6a1-4038-96f7-e51346ea1b17.jpg?v=1771300687",
+        "alt": "Blare Boob Tube - black variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-gia001-blk-xxs"
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-elly-us2_9079c79b-3dba-470f-85ed-1c66fe744337.jpg?v=1724900874",
+        "alt": "Blare Boob Tube - black variant image 4",
+        "type": "image",
+        "order": 4,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-elly-us2_59bc2925-5734-4235-9f79-f330d27dc0b1.jpg?v=1724900874",
+        "alt": "Blare Boob Tube - black variant image 5",
+        "type": "image",
+        "order": 5,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-elise-us2_f3174ea7-b513-4e5e-bd3d-9c59739fb0f8.jpg",
+        "alt": "Blare Boob Tube - black variant image 6",
+        "type": "image",
+        "order": 6,
+        "variantGroup": "black"
       },
       {
         "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black XS view 1",
+        "alt": "Blare Boob Tube - white variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-gia001-blk-xs"
+        "variantGroup": "white"
       },
       {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black XS view 2",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-rafaela-us2_de52ce88-1ade-4fe0-9b3d-e46b0b1abac1.jpg?v=1771300686",
+        "alt": "Blare Boob Tube - white variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-gia001-blk-xs"
+        "variantGroup": "white"
       },
       {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black XS view 3",
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-rafaela-us2_be9c31c6-f6a1-4038-96f7-e51346ea1b17.jpg?v=1771300687",
+        "alt": "Blare Boob Tube - white variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-gia001-blk-xs"
+        "variantGroup": "white"
       },
       {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black S view 1",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-elly-us2_9079c79b-3dba-470f-85ed-1c66fe744337.jpg?v=1724900874",
+        "alt": "Blare Boob Tube - white variant image 4",
         "type": "image",
-        "order": 1,
-        "variant": "v-gia001-blk-s"
+        "order": 4,
+        "variantGroup": "white"
       },
       {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black S view 2",
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-elly-us2_59bc2925-5734-4235-9f79-f330d27dc0b1.jpg?v=1724900874",
+        "alt": "Blare Boob Tube - white variant image 5",
         "type": "image",
-        "order": 2,
-        "variant": "v-gia001-blk-s"
+        "order": 5,
+        "variantGroup": "white"
       },
       {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black S view 3",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-elise-us2_f3174ea7-b513-4e5e-bd3d-9c59739fb0f8.jpg",
+        "alt": "Blare Boob Tube - white variant image 6",
         "type": "image",
-        "order": 3,
-        "variant": "v-gia001-blk-s"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black M view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia001-blk-m"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black M view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia001-blk-m"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black M view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia001-blk-m"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black L view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia001-blk-l"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black L view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia001-blk-l"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black L view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia001-blk-l"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black XL view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia001-blk-xl"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black XL view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia001-blk-xl"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube Black XL view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia001-blk-xl"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White XXS view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-001-white-xxs"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White XXS view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-001-white-xxs"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White XXS view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-001-white-xxs"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White XS view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-001-white-xs"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White XS view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-001-white-xs"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White XS view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-001-white-xs"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White S view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-001-white-s"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White S view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-001-white-s"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White S view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-001-white-s"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White M view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-001-white-m"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White M view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-001-white-m"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White M view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-001-white-m"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White L view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-001-white-l"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White L view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-001-white-l"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White L view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-001-white-l"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White XL view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-001-white-xl"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White XL view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-001-white-xl"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Blare Boob Tube White XL view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-001-white-xl"
+        "order": 6,
+        "variantGroup": "white"
       }
     ],
     "videos": []

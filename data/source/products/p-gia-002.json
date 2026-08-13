@@ -18,11 +18,12 @@
   },
   "description": {
     "short": "Low-rise flared Blare trackpant.",
-    "full": "The matching Blare Trackpant – low rise, flared leg and the same buttery soft fabric as the Boob Tube. Designed to mix and match. Current product-page research was used to expand fit, material, sizing, and merchandising fields.\n\n### Highlights\n\n- Low rise\n- Flared leg\n- Matching set",
+    "full": "The Blare Trackpant is a relaxed everyday track pant from the I.AM.GIA Blare collection. The style is offered in multiple colourways and is designed to mix and match with other Blare pieces.\n\n### Highlights\n\n- Blare collection style\n- Relaxed trackpant silhouette\n- Multiple colourways\n- Designed for mix-and-match styling",
     "highlights": [
-      "Low rise",
-      "Flared leg",
-      "Matching set"
+      "Blare collection style",
+      "Relaxed trackpant silhouette",
+      "Multiple colourways",
+      "Mix-and-match styling"
     ]
   },
   "categories": [
@@ -35,7 +36,8 @@
     "blare",
     "trackpant",
     "low-rise",
-    "i-am-gia"
+    "i-am-gia",
+    "loungewear"
   ],
   "attributes": [
     {
@@ -66,7 +68,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 5,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia002-blk-xs",
@@ -80,7 +83,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 9,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia002-blk-s",
@@ -94,7 +98,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 13,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia002-blk-m",
@@ -108,7 +113,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 10,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia002-blk-l",
@@ -122,7 +128,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 6,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia002-blk-xl",
@@ -136,7 +143,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 3,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia-002-white-xxs",
@@ -150,7 +158,8 @@
       "image": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
       "stock": 6,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-002-white-xs",
@@ -164,7 +173,8 @@
       "image": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
       "stock": 9,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-002-white-s",
@@ -178,7 +188,8 @@
       "image": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
       "stock": 12,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-002-white-m",
@@ -192,7 +203,8 @@
       "image": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
       "stock": 7,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-002-white-l",
@@ -206,7 +218,8 @@
       "image": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-002-white-xl",
@@ -220,262 +233,95 @@
       "image": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
       "stock": 10,
       "lowStockThreshold": 3,
-      "backorder": true
+      "backorder": true,
+      "variantGroup": "white"
     }
   ],
   "media": {
     "images": [
       {
         "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant Black XXS view 1",
+        "alt": "Blare Trackpant - black variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-gia002-blk-xxs"
+        "variantGroup": "black"
       },
       {
         "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant Black XXS view 2",
+        "alt": "Blare Trackpant - black variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-gia002-blk-xxs"
+        "variantGroup": "black"
       },
       {
         "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant Black XXS view 3",
+        "alt": "Blare Trackpant - black variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-gia002-blk-xxs"
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-kali-us2_6e3438bb-07dc-46ec-b1e0-a1daf629b838.jpg?v=1785217046",
+        "alt": "Blare Trackpant - black variant image 4",
+        "type": "image",
+        "order": 4,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-kali-us2_36a7c2de-9acd-4a8a-b31e-f9b86e519b6c.jpg?v=1785217051",
+        "alt": "Blare Trackpant - black variant image 5",
+        "type": "image",
+        "order": 5,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-kali-us2_c0763349-8382-483d-b3d4-1ade64eb177e.jpg",
+        "alt": "Blare Trackpant - black variant image 6",
+        "type": "image",
+        "order": 6,
+        "variantGroup": "black"
       },
       {
         "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant Black XS view 1",
+        "alt": "Blare Trackpant - white variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-gia002-blk-xs"
+        "variantGroup": "white"
       },
       {
         "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant Black XS view 2",
+        "alt": "Blare Trackpant - white variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-gia002-blk-xs"
+        "variantGroup": "white"
       },
       {
         "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant Black XS view 3",
+        "alt": "Blare Trackpant - white variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-gia002-blk-xs"
+        "variantGroup": "white"
       },
       {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant Black S view 1",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-kali-us2_6e3438bb-07dc-46ec-b1e0-a1daf629b838.jpg?v=1785217046",
+        "alt": "Blare Trackpant - white variant image 4",
         "type": "image",
-        "order": 1,
-        "variant": "v-gia002-blk-s"
+        "order": 4,
+        "variantGroup": "white"
       },
       {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant Black S view 2",
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-kali-us2_36a7c2de-9acd-4a8a-b31e-f9b86e519b6c.jpg?v=1785217051",
+        "alt": "Blare Trackpant - white variant image 5",
         "type": "image",
-        "order": 2,
-        "variant": "v-gia002-blk-s"
+        "order": 5,
+        "variantGroup": "white"
       },
       {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant Black S view 3",
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-kali-us2_c0763349-8382-483d-b3d4-1ade64eb177e.jpg",
+        "alt": "Blare Trackpant - white variant image 6",
         "type": "image",
-        "order": 3,
-        "variant": "v-gia002-blk-s"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant Black M view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia002-blk-m"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant Black M view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia002-blk-m"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant Black M view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia002-blk-m"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant Black L view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia002-blk-l"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant Black L view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia002-blk-l"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant Black L view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia002-blk-l"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant Black XL view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia002-blk-xl"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant Black XL view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia002-blk-xl"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant Black XL view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia002-blk-xl"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant White XXS view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-002-white-xxs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant White XXS view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-002-white-xxs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant White XXS view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-002-white-xxs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant White XS view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-002-white-xs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant White XS view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-002-white-xs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant White XS view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-002-white-xs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant White S view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-002-white-s"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant White S view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-002-white-s"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant White S view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-002-white-s"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant White M view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-002-white-m"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant White M view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-002-white-m"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant White M view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-002-white-m"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant White L view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-002-white-l"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant White L view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-002-white-l"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant White L view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-002-white-l"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_01.webp",
-        "alt": "Blare Trackpant White XL view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-002-white-xl"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_02.webp",
-        "alt": "Blare Trackpant White XL view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-002-white-xl"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/BLARE_TRACKPANT_RED_03.webp",
-        "alt": "Blare Trackpant White XL view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-002-white-xl"
+        "order": 6,
+        "variantGroup": "white"
       }
     ],
     "videos": []

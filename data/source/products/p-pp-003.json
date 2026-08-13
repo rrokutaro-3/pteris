@@ -65,7 +65,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
       "stock": 10,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp003-wht-us2",
@@ -79,7 +80,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
       "stock": 16,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp003-wht-us4",
@@ -93,7 +95,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
       "stock": 13,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp003-wht-us6",
@@ -107,7 +110,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
       "stock": 8,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp003-wht-us8",
@@ -121,7 +125,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
       "stock": 6,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp003-wht-us10",
@@ -135,7 +140,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pv-003-black-us0",
@@ -149,7 +155,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
       "stock": 6,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pv-003-black-us2",
@@ -163,7 +170,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
       "stock": 9,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pv-003-black-us4",
@@ -177,7 +185,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
       "stock": 12,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pv-003-black-us6",
@@ -191,7 +200,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
       "stock": 7,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pv-003-black-us8",
@@ -205,7 +215,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-pv-003-black-us10",
@@ -219,262 +230,95 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
       "stock": 10,
       "lowStockThreshold": 3,
-      "backorder": true
+      "backorder": true,
+      "variantGroup": "black"
     }
   ],
   "media": {
     "images": [
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top White US 0 view 1",
+        "alt": "Kasper Cinched Longline Tank Top - black variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-pp003-wht-us0"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top White US 0 view 2",
+        "alt": "Kasper Cinched Longline Tank Top - black variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-pp003-wht-us0"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top White US 0 view 3",
+        "alt": "Kasper Cinched Longline Tank Top - black variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-pp003-wht-us0"
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-rafaela-us2_de52ce88-1ade-4fe0-9b3d-e46b0b1abac1.jpg?v=1771300686",
+        "alt": "Kasper Cinched Longline Tank Top - black variant image 4",
+        "type": "image",
+        "order": 4,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-rafaela-us2_be9c31c6-f6a1-4038-96f7-e51346ea1b17.jpg?v=1771300687",
+        "alt": "Kasper Cinched Longline Tank Top - black variant image 5",
+        "type": "image",
+        "order": 5,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-elly-us2_9079c79b-3dba-470f-85ed-1c66fe744337.jpg?v=1724900874",
+        "alt": "Kasper Cinched Longline Tank Top - black variant image 6",
+        "type": "image",
+        "order": 6,
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top White US 2 view 1",
+        "alt": "Kasper Cinched Longline Tank Top - white variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-pp003-wht-us2"
+        "variantGroup": "white"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top White US 2 view 2",
+        "alt": "Kasper Cinched Longline Tank Top - white variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-pp003-wht-us2"
+        "variantGroup": "white"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top White US 2 view 3",
+        "alt": "Kasper Cinched Longline Tank Top - white variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-pp003-wht-us2"
+        "variantGroup": "white"
       },
       {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top White US 4 view 1",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-rafaela-us2_de52ce88-1ade-4fe0-9b3d-e46b0b1abac1.jpg?v=1771300686",
+        "alt": "Kasper Cinched Longline Tank Top - white variant image 4",
         "type": "image",
-        "order": 1,
-        "variant": "v-pp003-wht-us4"
+        "order": 4,
+        "variantGroup": "white"
       },
       {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top White US 4 view 2",
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-rafaela-us2_be9c31c6-f6a1-4038-96f7-e51346ea1b17.jpg?v=1771300687",
+        "alt": "Kasper Cinched Longline Tank Top - white variant image 5",
         "type": "image",
-        "order": 2,
-        "variant": "v-pp003-wht-us4"
+        "order": 5,
+        "variantGroup": "white"
       },
       {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top White US 4 view 3",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-elly-us2_9079c79b-3dba-470f-85ed-1c66fe744337.jpg?v=1724900874",
+        "alt": "Kasper Cinched Longline Tank Top - white variant image 6",
         "type": "image",
-        "order": 3,
-        "variant": "v-pp003-wht-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top White US 6 view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp003-wht-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top White US 6 view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp003-wht-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top White US 6 view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp003-wht-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top White US 8 view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp003-wht-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top White US 8 view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp003-wht-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top White US 8 view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp003-wht-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top White US 10 view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp003-wht-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top White US 10 view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp003-wht-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top White US 10 view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp003-wht-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top Black US 0 view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pv-003-black-us0"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top Black US 0 view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pv-003-black-us0"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top Black US 0 view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pv-003-black-us0"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top Black US 2 view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pv-003-black-us2"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top Black US 2 view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pv-003-black-us2"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top Black US 2 view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pv-003-black-us2"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top Black US 4 view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pv-003-black-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top Black US 4 view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pv-003-black-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top Black US 4 view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pv-003-black-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top Black US 6 view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pv-003-black-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top Black US 6 view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pv-003-black-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top Black US 6 view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pv-003-black-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top Black US 8 view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pv-003-black-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top Black US 8 view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pv-003-black-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top Black US 8 view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pv-003-black-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902",
-        "alt": "Kasper Cinched Longline Tank Top Black US 10 view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pv-003-black-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1800",
-        "alt": "Kasper Cinched Longline Tank Top Black US 10 view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pv-003-black-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=2400",
-        "alt": "Kasper Cinched Longline Tank Top Black US 10 view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pv-003-black-us10"
+        "order": 6,
+        "variantGroup": "white"
       }
     ],
     "videos": []

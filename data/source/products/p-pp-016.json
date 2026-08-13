@@ -65,38 +65,53 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/Rave-On-Sunglasses-Black_beb5f5fe-499d-499f-a379-460346bc8a91.jpg?v=1764805573",
       "stock": 12,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     }
   ],
   "media": {
     "images": [
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/Rave-On-Sunglasses-Black_beb5f5fe-499d-499f-a379-460346bc8a91.jpg?v=1764805573",
-        "alt": "Rave On Sunglasses Black media 1",
+        "alt": "Rave On Sunglasses Black - black variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-pp-016-onesize"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/Rave-On-Sunglasses-Black_beb5f5fe-499d-499f-a379-460346bc8a91_large.jpg?v=1764805573",
-        "alt": "Rave On Sunglasses Black media 2",
+        "alt": "Rave On Sunglasses Black - black variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-pp-016-onesize"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/products/2_51e404c1-bef3-4585-bae9-291711b644fb.jpg?v=1775795017",
-        "alt": "Rave On Sunglasses Black media 3",
+        "alt": "Rave On Sunglasses Black - black variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-pp-016-onesize"
+        "variantGroup": "black"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/products/1_54cd8300-3824-4896-9d3b-89e442387fcb.jpg?v=1775795017",
-        "alt": "Rave On Sunglasses Black media 4",
+        "alt": "Rave On Sunglasses Black - black variant image 4",
         "type": "image",
         "order": 4,
-        "variant": "v-pp-016-onesize"
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1_8fad2e0b-bcb0-436f-ac1a-587d7bd34af0.jpg?v=1715730387",
+        "alt": "Rave On Sunglasses Black - black variant image 5",
+        "type": "image",
+        "order": 5,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2_58085988-86ab-4be1-b2b0-007104895ae4.jpg?v=1715730387",
+        "alt": "Rave On Sunglasses Black - black variant image 6",
+        "type": "image",
+        "order": 6,
+        "variantGroup": "black"
       }
     ],
     "videos": []

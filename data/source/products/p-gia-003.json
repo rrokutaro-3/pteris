@@ -17,12 +17,15 @@
     "taxClass": "standard"
   },
   "description": {
-    "short": "Sculpting bandage mini dress.",
-    "full": "The Aiden Bandage Mini Dress – high-stretch bandage construction that sculpts and supports. Statement evening piece. Current product-page research was used to expand fit, material, sizing, and merchandising fields.\n\n### Highlights\n\n- Bandage construction\n- Sculpting fit\n- Mini length",
+    "short": "Bodycon bandage mini dress with a halter neckline, horizontal paneling and centre-back zipper.",
+    "full": "The Aiden Bandage Mini Dress is a fitted bodycon mini made from a stretchy heavyweight knit. It features a halter strap, straight neckline, horizontal bandage-style paneling, centre-back zipper and an unlined finish.\n\n### Highlights\n\n- Bodycon fit\n- Halter neckline\n- Horizontal bandage paneling\n- Centre-back zipper\n- Mini length\n- 95% polyester / 5% elastane\n- Not sheer",
     "highlights": [
-      "Bandage construction",
-      "Sculpting fit",
-      "Mini length"
+      "Bodycon fit",
+      "Halter neckline",
+      "Horizontal bandage paneling",
+      "Centre-back zipper",
+      "Mini length",
+      "95% polyester / 5% elastane"
     ]
   },
   "categories": [
@@ -34,20 +37,28 @@
     "bandage",
     "mini-dress",
     "i-am-gia",
-    "glam"
+    "glam",
+    "bodycon"
   ],
   "attributes": [
     {
       "name": "Material",
-      "value": "Bandage knit",
+      "value": "95% polyester 5% elastane",
       "group": "fabric",
       "visible": true,
       "filterable": true
     },
     {
       "name": "Fit",
-      "value": "Bodycon / Sculpting",
+      "value": "Bodycon",
       "group": "fit",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Length",
+      "value": "Mini",
+      "group": "length",
       "visible": true,
       "filterable": true
     }
@@ -65,7 +76,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia003-blk-xs",
@@ -79,7 +91,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 8,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia003-blk-s",
@@ -93,7 +106,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 11,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia003-blk-m",
@@ -107,7 +121,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 7,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia003-blk-l",
@@ -121,7 +136,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "black"
     },
     {
       "id": "v-gia-003-white-xxs",
@@ -135,7 +151,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 6,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-003-white-xs",
@@ -149,7 +166,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 9,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-003-white-s",
@@ -163,7 +181,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 12,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-003-white-m",
@@ -177,7 +196,8 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 7,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-gia-003-white-l",
@@ -191,220 +211,95 @@
       "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     }
   ],
   "media": {
     "images": [
       {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Aiden Bandage Mini Dress Black XXS view 1",
+        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
+        "alt": "Aiden Bandage Mini Dress - black variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-gia003-blk-xxs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
-        "alt": "Aiden Bandage Mini Dress Black XXS view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia003-blk-xxs"
+        "variantGroup": "black"
       },
       {
         "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_03.webp",
-        "alt": "Aiden Bandage Mini Dress Black XXS view 3",
+        "alt": "Aiden Bandage Mini Dress - black variant image 2",
         "type": "image",
-        "order": 3,
-        "variant": "v-gia003-blk-xxs"
+        "order": 2,
+        "variantGroup": "black"
       },
       {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Aiden Bandage Mini Dress Black XS view 1",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-leona-us2_2408a4df-b78d-4033-94ba-bbcfc2e8764a.jpg?v=1724126512",
+        "alt": "Aiden Bandage Mini Dress - black variant image 3",
         "type": "image",
-        "order": 1,
-        "variant": "v-gia003-blk-xs"
+        "order": 3,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-elly-us2_06c6c84c-5389-4bc4-b1b0-526489775cf5.jpg?v=1739505833",
+        "alt": "Aiden Bandage Mini Dress - black variant image 4",
+        "type": "image",
+        "order": 4,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ella-us2_64ed3e4d-6ee5-446b-96c7-21f3c7cd9f1f.jpg?v=1757368415",
+        "alt": "Aiden Bandage Mini Dress - black variant image 5",
+        "type": "image",
+        "order": 5,
+        "variantGroup": "black"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-olivia-us2_6a79a777-b43a-49dc-8351-652c69046e34.jpg?v=1701232688",
+        "alt": "Aiden Bandage Mini Dress - black variant image 6",
+        "type": "image",
+        "order": 6,
+        "variantGroup": "black"
       },
       {
         "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
-        "alt": "Aiden Bandage Mini Dress Black XS view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia003-blk-xs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_03.webp",
-        "alt": "Aiden Bandage Mini Dress Black XS view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia003-blk-xs"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Aiden Bandage Mini Dress Black S view 1",
+        "alt": "Aiden Bandage Mini Dress - white variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-gia003-blk-s"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
-        "alt": "Aiden Bandage Mini Dress Black S view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia003-blk-s"
+        "variantGroup": "white"
       },
       {
         "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_03.webp",
-        "alt": "Aiden Bandage Mini Dress Black S view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia003-blk-s"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Aiden Bandage Mini Dress Black M view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia003-blk-m"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
-        "alt": "Aiden Bandage Mini Dress Black M view 2",
+        "alt": "Aiden Bandage Mini Dress - white variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-gia003-blk-m"
+        "variantGroup": "white"
       },
       {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_03.webp",
-        "alt": "Aiden Bandage Mini Dress Black M view 3",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-leona-us2_2408a4df-b78d-4033-94ba-bbcfc2e8764a.jpg?v=1724126512",
+        "alt": "Aiden Bandage Mini Dress - white variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-gia003-blk-m"
+        "variantGroup": "white"
       },
       {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Aiden Bandage Mini Dress Black L view 1",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-elly-us2_06c6c84c-5389-4bc4-b1b0-526489775cf5.jpg?v=1739505833",
+        "alt": "Aiden Bandage Mini Dress - white variant image 4",
         "type": "image",
-        "order": 1,
-        "variant": "v-gia003-blk-l"
+        "order": 4,
+        "variantGroup": "white"
       },
       {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
-        "alt": "Aiden Bandage Mini Dress Black L view 2",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ella-us2_64ed3e4d-6ee5-446b-96c7-21f3c7cd9f1f.jpg?v=1757368415",
+        "alt": "Aiden Bandage Mini Dress - white variant image 5",
         "type": "image",
-        "order": 2,
-        "variant": "v-gia003-blk-l"
+        "order": 5,
+        "variantGroup": "white"
       },
       {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_03.webp",
-        "alt": "Aiden Bandage Mini Dress Black L view 3",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-olivia-us2_6a79a777-b43a-49dc-8351-652c69046e34.jpg?v=1701232688",
+        "alt": "Aiden Bandage Mini Dress - white variant image 6",
         "type": "image",
-        "order": 3,
-        "variant": "v-gia003-blk-l"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Aiden Bandage Mini Dress White XXS view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-003-white-xxs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
-        "alt": "Aiden Bandage Mini Dress White XXS view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-003-white-xxs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_03.webp",
-        "alt": "Aiden Bandage Mini Dress White XXS view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-003-white-xxs"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Aiden Bandage Mini Dress White XS view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-003-white-xs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
-        "alt": "Aiden Bandage Mini Dress White XS view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-003-white-xs"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_03.webp",
-        "alt": "Aiden Bandage Mini Dress White XS view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-003-white-xs"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Aiden Bandage Mini Dress White S view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-003-white-s"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
-        "alt": "Aiden Bandage Mini Dress White S view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-003-white-s"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_03.webp",
-        "alt": "Aiden Bandage Mini Dress White S view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-003-white-s"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Aiden Bandage Mini Dress White M view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-003-white-m"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
-        "alt": "Aiden Bandage Mini Dress White M view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-003-white-m"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_03.webp",
-        "alt": "Aiden Bandage Mini Dress White M view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-003-white-m"
-      },
-      {
-        "url": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp",
-        "alt": "Aiden Bandage Mini Dress White L view 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-gia-003-white-l"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_02.webp",
-        "alt": "Aiden Bandage Mini Dress White L view 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-gia-003-white-l"
-      },
-      {
-        "url": "https://iamgia.com/cdn/shop/files/AIDEN_BANDAGE_MINI_DRESS_BLUE_03.webp",
-        "alt": "Aiden Bandage Mini Dress White L view 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-gia-003-white-l"
+        "order": 6,
+        "variantGroup": "white"
       }
     ],
     "videos": []

@@ -65,7 +65,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
       "stock": 4,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp-011-blk-us2",
@@ -79,7 +80,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
       "stock": 7,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp-011-blk-us4",
@@ -93,7 +95,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
       "stock": 11,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp-011-blk-us6",
@@ -107,7 +110,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
       "stock": 14,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp-011-blk-us8",
@@ -121,7 +125,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
       "stock": 9,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp-011-blk-us10",
@@ -135,7 +140,8 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
       "stock": 5,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     },
     {
       "id": "v-pp-011-blk-us12",
@@ -149,157 +155,53 @@
       "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
       "stock": 8,
       "lowStockThreshold": 3,
-      "backorder": false
+      "backorder": false,
+      "variantGroup": "white"
     }
   ],
   "media": {
     "images": [
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 1",
+        "alt": "Swing Mini Dress White - white variant image 1",
         "type": "image",
         "order": 1,
-        "variant": "v-pp-011-blk-us0"
+        "variantGroup": "white"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 2",
+        "alt": "Swing Mini Dress White - white variant image 2",
         "type": "image",
         "order": 2,
-        "variant": "v-pp-011-blk-us0"
+        "variantGroup": "white"
       },
       {
         "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 3",
+        "alt": "Swing Mini Dress White - white variant image 3",
         "type": "image",
         "order": 3,
-        "variant": "v-pp-011-blk-us0"
+        "variantGroup": "white"
       },
       {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 1",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-Laura-us2_f55282d0-cac0-4aaf-aadf-3d62fcd81ecc.jpg?v=1690928371",
+        "alt": "Swing Mini Dress White - white variant image 4",
         "type": "image",
-        "order": 1,
-        "variant": "v-pp-011-blk-us2"
+        "order": 4,
+        "variantGroup": "white"
       },
       {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 2",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-laura-us2_940fc23a-2999-4ea0-b80b-37fc8ac004fc.jpg?v=1690869621",
+        "alt": "Swing Mini Dress White - white variant image 5",
         "type": "image",
-        "order": 2,
-        "variant": "v-pp-011-blk-us2"
+        "order": 5,
+        "variantGroup": "white"
       },
       {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 3",
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-natalia-us4.jpg?v=1711430627",
+        "alt": "Swing Mini Dress White - white variant image 6",
         "type": "image",
-        "order": 3,
-        "variant": "v-pp-011-blk-us2"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-011-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-011-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-011-blk-us4"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-011-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-011-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-011-blk-us6"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-011-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-011-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-011-blk-us8"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-011-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-011-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-011-blk-us10"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 1",
-        "type": "image",
-        "order": 1,
-        "variant": "v-pp-011-blk-us12"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 2",
-        "type": "image",
-        "order": 2,
-        "variant": "v-pp-011-blk-us12"
-      },
-      {
-        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
-        "alt": "Swing Mini Dress White media 3",
-        "type": "image",
-        "order": 3,
-        "variant": "v-pp-011-blk-us12"
+        "order": 6,
+        "variantGroup": "white"
       }
     ],
     "videos": []
