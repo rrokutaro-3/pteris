@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- DOMPurify (for User-Generated Content like Reviews) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+
   <style>
     :root {
       --bg: #ffffff; --text: #111111; --text-muted: #666666;
@@ -322,7 +325,7 @@
           
           <div id="pd-reviews-section" style="margin-top: 60px; display: none;">
             <h3 style="font-size: 18px; margin-bottom: 20px;">Customer Reviews</h3>
-            <div style="background: var(--surface); padding: 20px; border-radius: var(--radius); text-align: center; color: var(--text-muted);">
+            <div style="background: var(--surface); padding: 20px; border-radius: var(--radius); text-align: center; color: var(--text-muted);" id="pd-reviews-list">
               No reviews yet. Be the first to write one!
             </div>
           </div>
@@ -371,6 +374,14 @@
             <div class="input-group"><input type="text" id="co-state" placeholder="State/Province" required></div>
           </div>
           <div class="input-group"><input type="text" id="co-zip" placeholder="ZIP / Postal Code" required></div>
+          
+          <div class="input-group">
+            <label>Shipping Method (Optional)</label>
+            <select id="co-shipping-method">
+              <option value="">Auto-select based on country</option>
+              <!-- Dynamically populated from shipping.json at boot -->
+            </select>
+          </div>
           
           <h3 style="margin: 24px 0 16px;">Discount</h3>
           <div class="input-group"><input type="text" id="co-coupon" placeholder="Gift card or discount code (Optional)"></div>
@@ -476,7 +487,7 @@
     }
     const STORE_URL = window.__STORE_URL__ || window.location.origin;
     const API_URL   = window.__API_URL__   || null;
-    const client    = new StoreClient(STORE_URL, { apiUrl: API_URL /*, configDir: 'other/sample-spa/config' */ });
+    const client    = new StoreClient(STORE_URL, { apiUrl: API_URL });
 
     function requireApi() {
       if (!API_URL) {
@@ -491,6 +502,14 @@
     const getPrice = p => p?.price ?? p?.pricing?.price ?? 0;
     const getComparePrice = p => p?.compareAtPrice ?? p?.pricing?.compareAtPrice;
     const getImage = p => p?.image || p?.media?.images?.[0]?.url || '';
+
+    // HTML Escaper for rendering plain text blocks in custom html
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+      });
+    }
 
     // --- State Management ---
     const appState = {
@@ -559,13 +578,11 @@
 
     // --- Routing (P11) ---
     window.navigate = function(path, { replace = false } = {}) {
-      const current = window.location.pathname + window.location.search;
+      const current = window.location.pathname + window.location.search + window.location.hash;
       if (path !== current) {
         replace ? history.replaceState(null, '', path) : history.pushState(null, '', path);
       }
-      handleRoute(window.location.pathname);
-      appState.set('ui', { cartOpen: false, searchOpen: false, wishlistOpen: false, modalOpen: false });
-      window.scrollTo(0,0);
+      handleRoute();
     };
 
     document.addEventListener('click', e => {
@@ -577,12 +594,13 @@
       const url = new URL(link.href, window.location.origin);
       if (e.metaKey || e.ctrlKey || url.origin !== window.location.origin || link.target === '_blank') return;
       e.preventDefault();
-      navigate(url.pathname + url.search);
+      navigate(url.pathname + url.search + url.hash);
     });
 
-    window.addEventListener('popstate', () => handleRoute(window.location.pathname));
+    window.addEventListener('popstate', () => handleRoute());
 
-    async function handleRoute(path) {
+    async function handleRoute() {
+      const path = window.location.pathname;
       document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
       
       document.querySelectorAll('.nav-link').forEach(el => {
@@ -590,16 +608,29 @@
         if (new URL(el.href).pathname === path) el.setAttribute('aria-current', 'page');
       });
 
-      if (path === '/') return renderHome();
-      if (path.startsWith('/category/')) return renderCatalog('category', path.split('/')[2]);
-      if (path.startsWith('/collection/')) return renderCatalog('collection', path.split('/')[2]);
-      if (path.startsWith('/product/')) return renderProduct(path.split('/')[2]);
-      if (path.startsWith('/page/')) return renderStaticPage(path.split('/')[2]);
-      if (path.startsWith('/search')) return renderSearchView();
-      if (path === '/checkout') return renderCheckout();
-      if (path === '/checkout/success') return renderSuccess();
-      
-      navigate('/', { replace: true });
+      if (path === '/') await renderHome();
+      else if (path.startsWith('/category/')) await renderCatalog('category', path.split('/')[2]);
+      else if (path.startsWith('/collection/')) await renderCatalog('collection', path.split('/')[2]);
+      else if (path.startsWith('/product/')) await renderProduct(path.split('/')[2]);
+      else if (path.startsWith('/page/')) await renderStaticPage(path.split('/')[2]);
+      else if (path.startsWith('/search')) await renderSearchView();
+      else if (path === '/checkout') await renderCheckout();
+      else if (path === '/checkout/success') await renderSuccess();
+      else {
+        // Fallback for unknown routes
+        history.replaceState(null, '', '/');
+        await renderHome();
+      }
+
+      // Handle anchor hash scrolling after render
+      if (window.location.hash) {
+        setTimeout(() => {
+          const el = document.getElementById(window.location.hash.substring(1));
+          if (el) el.scrollIntoView();
+        }, 0);
+      } else {
+        window.scrollTo(0,0);
+      }
     }
 
     // --- SEO & Structured Data (P11 / Section 6) ---
@@ -662,23 +693,23 @@
         bar.style.display = 'block';
         bar.style.backgroundColor = store.notifications.banner.bgColor;
         bar.style.color = store.notifications.banner.textColor;
-        bar.innerHTML = `<a href="${store.notifications.banner.link}">${store.notifications.banner.text}</a>`;
+        bar.innerHTML = `<a href="${store.notifications.banner.link}">${escapeHtml(store.notifications.banner.text)}</a>`;
       }
 
       const navEl = document.getElementById('main-nav');
-      navEl.innerHTML = menus.main.map(m => `<a href="${m.url}" class="nav-link">${m.label}</a>`).join('');
+      navEl.innerHTML = menus.main.map(m => `<a href="${m.url}" class="nav-link ${m.highlight?'highlight':''}">${escapeHtml(m.label)}</a>`).join('');
 
       const footEl = document.getElementById('footer-grid');
       footEl.innerHTML = menus.footer.map(col => `
         <div class="footer-col">
-          <h3>${col.title}</h3>
-          <ul>${col.links.map(l => `<li><a href="${l.url}">${l.label}</a></li>`).join('')}</ul>
+          <h3>${escapeHtml(col.title)}</h3>
+          <ul>${col.links.map(l => `<li><a href="${l.url}">${escapeHtml(l.label)}</a></li>`).join('')}</ul>
         </div>
       `).join('');
 
       if (menus.social) {
         document.getElementById('footer-social').innerHTML = menus.social.map(s => `
-          <a href="${s.url}" target="_blank" rel="noopener">${s.platform}</a>
+          <a href="${s.url}" target="_blank" rel="noopener">${escapeHtml(s.platform)}</a>
         `).join('');
       }
     }
@@ -738,7 +769,7 @@
         <div style="display:flex; gap: 20px; flex-wrap: wrap;">
           <img src="${getImage(ref)}" style="width: 150px; border-radius:var(--radius); object-fit: cover;">
           <div style="flex: 1; min-width: 200px;">
-            <h2 style="font-size: 20px; margin-bottom: 10px;">${getName(ref)}</h2>
+            <h2 style="font-size: 20px; margin-bottom: 10px;">${escapeHtml(getName(ref))}</h2>
             <div style="font-weight: 600; margin-bottom: 20px; font-size: 18px;">$${getPrice(ref).toFixed(2)}</div>
             <button class="btn btn-primary" onclick="appState.set('ui',{modalOpen:false}); navigate('/product/${id}')">View Full Details</button>
           </div>
@@ -755,7 +786,7 @@
       let homeConf = appState.state.configs.home;
       if (!homeConf) {
         homeConf = await client.getConfig('home');
-        appState.set('configs', { home: homeConf });
+        appState.set('configs', { ...appState.state.configs, home: homeConf });
       }
       
       updateMeta(homeConf.hero.title, homeConf.hero.subtitle, homeConf.hero.image);
@@ -786,7 +817,7 @@
         const a = document.createElement('a');
         a.className = 'collection-card';
         a.href = `/${c.type}/${c.id}`;
-        a.innerHTML = `<img src="${c.image}" loading="lazy" alt="${c.label}"><div class="collection-card-label">${c.label}</div>`;
+        a.innerHTML = `<img src="${c.image}" loading="lazy" alt="${escapeHtml(c.label)}"><div class="collection-card-label">${escapeHtml(c.label)}</div>`;
         collGrid.appendChild(a);
       });
     }
@@ -880,7 +911,7 @@
         document.getElementById('catalog-controls').style.display = 'flex';
         const currentFilter = filterSelect.value;
         filterSelect.innerHTML = '<option value="all">All</option>' + 
-          Array.from(allTags).map(t => `<option value="${t}">${t.replace(/-/g, ' ')}</option>`).join('');
+          Array.from(allTags).map(t => `<option value="${t}">${escapeHtml(t.replace(/-/g, ' '))}</option>`).join('');
         filterSelect.value = allTags.has(currentFilter) ? currentFilter : 'all';
       }
     }
@@ -923,8 +954,19 @@
         const page = pagesConfig ? pagesConfig[slug] : null;
 
         if (page) {
-          updateMeta(page.title);
-          container.innerHTML = `<h1>${page.title}</h1>${client.sanitizeHtml(page.content)}`;
+          updateMeta(page.title, page.subtitle);
+          let html = `<h1>${escapeHtml(page.title)}</h1>`;
+          if (page.subtitle) {
+             html += `<p style="color: var(--text-muted); font-size: 1.1em; margin-top: -20px; margin-bottom: 30px;">${escapeHtml(page.subtitle)}</p>`;
+          }
+          if (page.sections && Array.isArray(page.sections)) {
+            page.sections.forEach(sec => {
+              html += `<h2>${escapeHtml(sec.heading)}</h2><p>${escapeHtml(sec.text)}</p>`;
+            });
+          } else if (page.content) {
+            html += client.sanitizeHtml(page.content); // Fallback to HTML config
+          }
+          container.innerHTML = html;
         } else {
           updateMeta('Page Not Found');
           container.innerHTML = `<h1>404</h1><p>Page not found.</p>`;
@@ -970,7 +1012,7 @@
         if (product.attributes && product.attributes.length > 0) {
           attrContainer.style.display = 'block';
           attrContainer.innerHTML = product.attributes.map(a => 
-            `<div><dt>${a.name}:</dt><dd>${a.value}</dd></div>`
+            `<div><dt>${escapeHtml(a.name)}:</dt><dd>${escapeHtml(a.value)}</dd></div>`
           ).join('');
         }
         
@@ -1000,7 +1042,7 @@
           sgBtn.style.display = 'none';
         }
 
-        // Reviews Feature
+        // Reviews Feature (Uses DOMPurify as fallback UGC)
         const revSec = document.getElementById('pd-reviews-section');
         if (appState.state.configs.store?.features?.reviews) {
           revSec.style.display = 'block';
@@ -1010,7 +1052,7 @@
 
         // Swatches & Options
         const variantGroups = client.getVariantGroups(product);
-        const groupIds = Object.keys(variantGroups).filter(g => g !== 'null');
+        const groupIds = Object.keys(variantGroups).filter(g => g !== 'null' && g !== null);
         
         let initialGroup = null;
         if (groupIds.length > 0) {
@@ -1028,7 +1070,7 @@
         renderPdOptions(variantGroups, groupIds);
         refreshPdVariantState();
 
-        // Qty bindings
+        // Qty bindings (Cap to 100 per checkout requirements)
         document.getElementById('pd-qty-minus').onclick = () => {
           if (pdState.currentQty > 1) {
             pdState.currentQty--;
@@ -1069,7 +1111,7 @@
         main.src = ''; return;
       }
       main.src = images[0].url;
-      thumbs.innerHTML = images.map((img, i) => `<img src="${img.url}" class="thumb-img ${i===0?'active':''}" data-idx="${i}" loading="lazy">`).join('');
+      thumbs.innerHTML = images.map((img, i) => `<img src="${img.url}" class="thumb-img ${i===0?'active':''}" data-idx="${i}" loading="lazy" alt="${escapeHtml(img.alt)}">`).join('');
       
       thumbs.querySelectorAll('.thumb-img').forEach(el => {
         el.onclick = () => {
@@ -1098,12 +1140,23 @@
           
           const btn = document.createElement('button');
           btn.className = `color-swatch ${Object.values(pdState.options).includes(gid) ? 'selected' : ''}`;
-          btn.innerHTML = `<img src="${img}" alt="${gid}">`;
+          btn.innerHTML = `<img src="${img}" alt="${escapeHtml(gid)}">`;
           btn.onclick = () => {
-            renderGallery(client.getMediaForGroup(pdState.product, gid));
-            const currentSize = pdState.options['Size']; 
-            let newVar = groups[gid].find(v => v.options['Size'] === currentSize && (v.stock > 0 || v.backorder));
-            if(!newVar) newVar = groups[gid].find(v => v.stock > 0 || v.backorder) || groups[gid][0];
+            const images = client.getMediaForGroup(pdState.product, gid);
+            renderGallery(images);
+            
+            const group = groups[gid];
+            const currentOptions = { ...pdState.options };
+            
+            // Try to match non-color selections on the new color swatch
+            let newVar = group.find(v => {
+              const matchesOtherAxes = Object.entries(currentOptions)
+                .every(([k, val]) => k === 'Color' || v.options[k] === val);
+              return matchesOtherAxes && ((v.stock || 0) > 0 || v.backorder);
+            });
+            
+            // Fallback to first available if exact match doesn't exist
+            if (!newVar) newVar = group.find(v => (v.stock || 0) > 0 || v.backorder) || group[0];
             
             pdState.options = { ...newVar.options };
             renderPdOptions(groups, groupIds);
@@ -1115,16 +1168,17 @@
 
       const available = client.getAvailableOptions(pdState.product, pdState.options);
       optionKeys.forEach(key => {
+        // Hide color buttons if using swatches and 'Color' is the key
         if (groupIds.length > 1 && key.toLowerCase() === 'color') return;
         
         const values = [...new Set(pdState.product.variants.map(v => v.options[key]))];
         const grp = document.createElement('div');
         grp.className = 'option-group';
-        grp.innerHTML = `<div class="option-label">${key}</div><div class="option-buttons">
+        grp.innerHTML = `<div class="option-label">${escapeHtml(key)}</div><div class="option-buttons">
           ${values.map(val => {
             const isSel = pdState.options[key] === val;
             const isAvail = available[key]?.includes(val);
-            return `<button class="opt-btn ${isSel ? 'selected' : ''} ${!isAvail ? 'disabled' : ''}" data-key="${key}" data-val="${val}">${val}</button>`;
+            return `<button class="opt-btn ${isSel ? 'selected' : ''} ${!isAvail ? 'disabled' : ''}" data-key="${escapeHtml(key)}" data-val="${escapeHtml(val)}">${escapeHtml(val)}</button>`;
           }).join('')}
         </div>`;
         container.appendChild(grp);
@@ -1188,6 +1242,12 @@
       }
 
       btn.onclick = () => {
+        let resolvedImage = variant.image;
+        if (!resolvedImage && variant.variantGroup) {
+          const groupMedia = client.getMediaForGroup(p, variant.variantGroup);
+          if (groupMedia && groupMedia.length > 0) resolvedImage = groupMedia[0].url;
+        }
+
         const item = {
           productId: p.id,
           variantId: variant.id,
@@ -1195,11 +1255,18 @@
           price: variant.price,
           name: p.identity.name,
           variantLabel: Object.entries(variant.options).map(([k,v]) => `${k}: ${v}`).join(', '),
-          image: variant.image || p.media.images[0]?.url
+          image: resolvedImage || p.media.images[0]?.url || null
         };
-        const cart = [...appState.state.cart];
-        const ex = cart.find(i => i.variantId === item.variantId);
-        if (ex) ex.qty += item.qty; else cart.push(item);
+        
+        // Use immutable updates for state
+        const cart = appState.state.cart.map(i => 
+          i.variantId === item.variantId 
+            ? { ...i, qty: Math.min(100, i.qty + item.qty) } 
+            : i
+        );
+        if (!cart.some(i => i.variantId === item.variantId)) {
+          cart.push(item);
+        }
         appState.set('cart', cart);
         appState.set('ui', { cartOpen: true });
       };
@@ -1221,6 +1288,13 @@
       
       if (results.length > 0) { viewAllBtn.style.display = 'inline-flex'; } 
       else { viewAllBtn.style.display = 'none'; resContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No results found.</p>'; }
+    });
+
+    document.getElementById('search-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        window.submitFullSearch();
+      }
     });
 
     window.submitFullSearch = function() {
@@ -1247,10 +1321,33 @@
     }
 
     // 6. Checkout
-    function renderCheckout() {
+    async function renderCheckout() {
       if (appState.state.cart.length === 0) return navigate('/', { replace: true });
       document.getElementById('view-checkout').classList.add('active');
       updateMeta('Checkout');
+
+      // Lazy-load shipping options ONLY when the user reaches checkout
+      try {
+        const shippingSelect = document.getElementById('co-shipping-method');
+        
+        // Only fetch if we haven't already populated it
+        if (shippingSelect.children.length <= 1) {
+          const shipping = await client.getConfig('shipping');
+          
+          shippingSelect.innerHTML = '<option value="">Auto-select based on country</option>';
+          if (shipping && shipping.profiles) {
+            shipping.profiles.forEach(profile => {
+              const opt = document.createElement('option');
+              opt.value = profile.id;
+              opt.textContent = `${escapeHtml(profile.name)} ${profile.deliveryTime ? `(${escapeHtml(profile.deliveryTime)})` : ''}`;
+              shippingSelect.appendChild(opt);
+            });
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load shipping methods:", err);
+        // Let it fail gracefully; the backend will just use auto-select fallback
+      }
     }
 
     document.getElementById('checkout-form').addEventListener('submit', async (e) => {
@@ -1269,13 +1366,15 @@
         name: `${document.getElementById('co-fname').value} ${document.getElementById('co-lname').value}`
       };
 
+      const shippingMethod = document.getElementById('co-shipping-method').value;
       const shipping = {
         country: document.getElementById('co-country').value,
         state: document.getElementById('co-state').value,
         address1: document.getElementById('co-address1').value,
         address2: document.getElementById('co-address2').value,
         city: document.getElementById('co-city').value,
-        zip: document.getElementById('co-zip').value
+        zip: document.getElementById('co-zip').value,
+        ...(shippingMethod && { method: shippingMethod })
       };
 
       const coupon = document.getElementById('co-coupon').value || null;
@@ -1293,7 +1392,14 @@
         const res = await client.createCheckout(cartPayload, customer, shipping, coupon);
         window.location.href = res.checkoutUrl;
       } catch (err) {
-        errEl.textContent = err.message || 'Checkout failed. Please check your details or cart stock.';
+        const msg = err.message || '';
+        if (err.status === 409 || msg.includes('Out of stock')) {
+          errEl.textContent = 'Some items are out of stock. Please adjust your cart.';
+        } else if (err.status === 400 || msg.includes('Price mismatch')) {
+          errEl.textContent = 'A price has changed. Please refresh the page.';
+        } else {
+          errEl.textContent = msg || 'Checkout failed. Please check your details or cart stock.';
+        }
         errEl.style.display = 'block';
         btn.disabled = false; btn.textContent = 'Proceed to Payment';
       }
@@ -1321,9 +1427,9 @@
       }
       body.innerHTML = wl.map(w => `
         <div class="cart-item">
-          <img src="${w.image}" alt="${w.name}">
+          <img src="${w.image}" alt="${escapeHtml(w.name)}">
           <div class="cart-item-info">
-            <h4>${w.name}</h4>
+            <h4>${escapeHtml(w.name)}</h4>
             <div style="font-weight:600; margin-bottom: 10px;">$${(w.price||0).toFixed(2)}</div>
             <button class="btn btn-outline" style="padding: 6px 12px; font-size:12px;" onclick="appState.set('ui', {wishlistOpen: false}); navigate('/product/${w.id}')">View</button>
           </div>
@@ -1333,13 +1439,13 @@
     }
 
     window.updateCartQty = function(vid, delta) {
-      const cart = [...appState.state.cart];
-      const idx = cart.findIndex(i => i.variantId === vid);
-      if (idx > -1) {
-        cart[idx].qty += delta;
-        if (cart[idx].qty < 1) cart.splice(idx, 1);
-        appState.set('cart', cart);
-      }
+      let cart = appState.state.cart.map(i => 
+        i.variantId === vid 
+          ? { ...i, qty: Math.max(0, Math.min(100, i.qty + delta)) } 
+          : i
+      );
+      cart = cart.filter(i => i.qty > 0);
+      appState.set('cart', cart);
     };
     
     window.removeCartItem = function(vid) {
@@ -1360,10 +1466,10 @@
         subtotal += (i.price * i.qty);
         return `
           <div class="cart-item">
-            <img src="${i.image}" alt="${i.name}">
+            <img src="${i.image}" alt="${escapeHtml(i.name)}">
             <div class="cart-item-info">
-              <h4>${i.name}</h4>
-              <p>${i.variantLabel}</p>
+              <h4>${escapeHtml(i.name)}</h4>
+              <p>${escapeHtml(i.variantLabel)}</p>
               <div style="font-weight:600;">$${(i.price * i.qty).toFixed(2)}</div>
               <div class="cart-qty-ctrl">
                 <button onclick="updateCartQty('${i.variantId}', -1)">−</button>
@@ -1386,15 +1492,19 @@
         await client.init();
         
         const initialPath = window.location.pathname || '/';
-        const isHome = initialPath === '/';
+        const isHomeInitial = initialPath === '/';
 
         const [store, menus, home] = await Promise.all([
           client.getConfig('store'),
           client.getConfig('menus'),
-          isHome ? client.getConfig('home') : Promise.resolve(null)
+          isHomeInitial ? client.getConfig('home') : Promise.resolve(null)
         ]);
 
-        appState.set('configs', { store, menus, ...(home && { home }) });
+        if (home) {
+          appState.set('configs', { ...appState.state.configs, home });
+        }
+        appState.set('configs', { ...appState.state.configs, store, menus });
+        
         renderShell(store, menus);
 
         // Handle Stripe Success Redirect
@@ -1403,7 +1513,7 @@
           appState.set('cart', []);
           navigate('/checkout/success', { replace: true });
         } else {
-          handleRoute(initialPath);
+          handleRoute();
         }
 
         // Hide loading overlay smoothly (FOUC fix)
