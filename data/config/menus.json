@@ -1,164 +1,39 @@
 {
   "main": [
-    {
-      "id": "shop",
-      "label": "Shop",
-      "url": "/category/all",
-      "children": [
-        {
-          "id": "dresses",
-          "label": "Dresses",
-          "url": "/category/dresses",
-          "image": "https://cdn.yourbrand.com/nav/dresses.webp"
-        },
-        {
-          "id": "tops",
-          "label": "Tops",
-          "url": "/category/tops",
-          "image": "https://cdn.yourbrand.com/nav/tops.webp"
-        },
-        {
-          "id": "bottoms",
-          "label": "Bottoms",
-          "url": "/category/bottoms",
-          "image": "https://cdn.yourbrand.com/nav/bottoms.webp"
-        },
-        {
-          "id": "sale",
-          "label": "Sale",
-          "url": "/collection/sale",
-          "badge": "Up to 50% Off",
-          "highlight": true
-        }
-      ]
-    },
-    {
-      "id": "new-in",
-      "label": "New In",
-      "url": "/collection/new-arrivals"
-    },
-    {
-      "id": "bestsellers",
-      "label": "Bestsellers",
-      "url": "/collection/bestsellers"
-    },
-    {
-      "id": "about",
-      "label": "About",
-      "url": "/page/about"
-    }
+    { "id": "shop", "label": "Shop All", "url": "/category/all" },
+    { "id": "dresses", "label": "Dresses", "url": "/category/dresses" },
+    { "id": "tops", "label": "Tops", "url": "/category/tops" },
+    { "id": "bottoms", "label": "Bottoms", "url": "/category/bottoms" },
+    { "id": "new-in", "label": "New Arrivals", "url": "/collection/new-arrivals" },
+    { "id": "sale", "label": "Sale", "url": "/collection/sale", "highlight": true }
   ],
   "footer": [
     {
       "title": "Shop",
       "links": [
-        {
-          "label": "New Arrivals",
-          "url": "/collection/new-arrivals"
-        },
-        {
-          "label": "Dresses",
-          "url": "/category/dresses"
-        },
-        {
-          "label": "Sale",
-          "url": "/collection/sale"
-        }
+        { "label": "New Arrivals", "url": "/collection/new-arrivals" },
+        { "label": "Dresses", "url": "/category/dresses" },
+        { "label": "Sale", "url": "/collection/sale" }
       ]
     },
     {
       "title": "Help",
       "links": [
-        {
-          "label": "Shipping Info",
-          "url": "/page/shipping"
-        },
-        {
-          "label": "Returns & Exchanges",
-          "url": "mailto:returns@yourbrand.com"
-        },
-        {
-          "label": "Size Guide",
-          "url": "/page/size-guide"
-        },
-        {
-          "label": "FAQ",
-          "url": "/page/faq"
-        }
+        { "label": "Shipping Info", "url": "/page/shipping" },
+        { "label": "FAQ", "url": "/page/faq" }
       ]
     },
     {
       "title": "Company",
       "links": [
-        {
-          "label": "About Us",
-          "url": "/page/about"
-        },
-        {
-          "label": "Careers",
-          "url": "/page/careers"
-        },
-        {
-          "label": "Privacy Policy",
-          "url": "/page/privacy"
-        },
-        {
-          "label": "Terms of Service",
-          "url": "/page/terms"
-        }
+        { "label": "About Us", "url": "/page/about" },
+        { "label": "Privacy Policy", "url": "/page/privacy" },
+        { "label": "Terms of Service", "url": "/page/terms" }
       ]
     }
   ],
-  "mobile": [
-    {
-      "id": "home",
-      "label": "Home",
-      "url": "/",
-      "icon": "home"
-    },
-    {
-      "id": "shop",
-      "label": "Shop",
-      "url": "/category/all",
-      "icon": "grid"
-    },
-    {
-      "id": "search",
-      "label": "Search",
-      "url": "/search",
-      "icon": "search"
-    },
-    {
-      "id": "wishlist",
-      "label": "Wishlist",
-      "url": "/wishlist",
-      "icon": "heart"
-    },
-    {
-      "id": "cart",
-      "label": "Cart",
-      "url": "/cart",
-      "icon": "bag",
-      "badge": "cart-count"
-    }
-  ],
   "social": [
-    {
-      "platform": "instagram",
-      "url": "https://instagram.com/yourbrand",
-      "icon": "instagram"
-    },
-    {
-      "platform": "tiktok",
-      "url": "https://tiktok.com/@yourbrand",
-      "icon": "tiktok"
-    },
-    {
-      "platform": "pinterest",
-      "url": "https://pinterest.com/yourbrand",
-      "icon": "pinterest"
-    }
-  ],
-  "_version": "2026-08-09T02-11-10-403Z",
-  "_updatedAt": "2026-08-09T02:11:10.472Z"
+    { "platform": "Instagram", "url": "https://instagram.com/yourbrand" },
+    { "platform": "TikTok", "url": "https://tiktok.com/@yourbrand" }
+  ]
 }

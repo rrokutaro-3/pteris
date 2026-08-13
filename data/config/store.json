@@ -1,5 +1,5 @@
 {
-  "name": "Your Brand",
+  "name": "Pteris Fashion",
   "url": "https://yourbrand.pages.dev",
   "currency": "USD",
   "language": "en",
@@ -8,7 +8,7 @@
     "reviews": true,
     "wishlist": true,
     "guestCheckout": true,
-    "backorders": false,
+    "backorders": true,
     "quickView": true,
     "sizeGuide": true
   },
@@ -32,9 +32,6 @@
   "social": {
     "instagram": "https://instagram.com/yourbrand",
     "tiktok": "https://tiktok.com/@yourbrand",
-    "pinterest": "https://pinterest.com/yourbrand",
-    "youtube": "https://youtube.com/@yourbrand"
-  },
-  "_version": "2026-08-09T02-11-10-403Z",
-  "_updatedAt": "2026-08-09T02:11:10.471Z"
+    "pinterest": "https://pinterest.com/yourbrand"
+  }
 }
