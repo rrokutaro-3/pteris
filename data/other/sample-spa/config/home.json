@@ -1,0 +1,15 @@
+{
+  "hero": {
+    "title": "Summer '26 Collection",
+    "subtitle": "Discover our latest arrivals and refresh your wardrobe.",
+    "cta": "Shop New In",
+    "ctaUrl": "/collection/new-arrivals",
+    "image": "https://pub-55ece01908454f79ab74acefa10b55a4.r2.dev/uploads/2026-08/gia17128-blare-boob-tube-wild-side-04-1200w.webp"
+  },
+  "featuredCollections": [
+    { "type": "collection", "id": "new-arrivals", "label": "New Arrivals", "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg" },
+    { "type": "category", "id": "dresses", "label": "Dresses", "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg" },
+    { "type": "category", "id": "tops", "label": "Tops", "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg" },
+    { "type": "collection", "id": "sale", "label": "Sale", "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg" }
+  ]
+}
