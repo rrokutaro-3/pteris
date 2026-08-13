@@ -285,6 +285,47 @@ export class StoreClient {
     return result;
   }
 
+  // ─── Variant Groups ───
+
+  /**
+   * Returns a map of variantGroup → variant[] for a product.
+   * Variants without a variantGroup are collected under the key null.
+   *
+   * Example output for a product with Color × Size variants:
+   *   {
+   *     "black": [{ id: "v-blk-s", options: { Color: "Black", Size: "S" }, ... }, ...],
+   *     "white": [{ id: "v-wht-s", options: { Color: "White", Size: "S" }, ... }, ...],
+   *     null:    [{ id: "v-ungrouped", ... }]  // only if any variant lacks variantGroup
+   *   }
+   */
+  getVariantGroups(product) {
+    const groups = {};
+    for (const v of product.variants || []) {
+      const key = v.variantGroup ?? null;
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(v);
+    }
+    return groups;
+  }
+
+  /**
+   * Returns the media images for a given variantGroup.
+   * Also includes images where variantGroup is null/undefined (shared images
+   * shown regardless of which colour/group is selected).
+   *
+   * Pass groupId = null to get only the shared (unattached) images.
+   *
+   * Example:
+   *   const images = client.getMediaForGroup(product, 'black');
+   *   // → all images tagged variantGroup: "black" + all with variantGroup: null
+   */
+  getMediaForGroup(product, groupId) {
+    const images = product.media?.images || [];
+    return images
+      .filter(img => img.variantGroup === groupId || img.variantGroup == null)
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  }
+
   // ─── HTML Sanitization ───
   /**
    * Sanitizer for product description HTML.
