@@ -3,6 +3,12 @@
     "name": "Summer Lookbook",
     "description": "Our summer 2026 editorial picks.",
     "heroImage": null,
-    "productIds": []
+    "productIds": ["p-ed-001", "p-gia-001", "p-pp-001"]
+  },
+  "bestsellers": {
+    "name": "Bestsellers",
+    "description": "Our most popular items.",
+    "heroImage": null,
+    "productIds": ["p-pp-001", "p-gia-001", "p-pp-004", "p-pp-015"]
   }
 }
