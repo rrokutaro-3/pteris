@@ -1,0 +1,451 @@
+{
+  "id": "p-pp-004",
+  "type": "physical",
+  "identity": {
+    "name": "Gigi Skort",
+    "slug": "gigi-skort",
+    "sku": "GIGI-PP004",
+    "barcode": "8123456789007",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 49.0,
+    "compareAtPrice": 49.0,
+    "costPrice": 20.0,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Tennis-inspired skort with built-in shorts.",
+    "full": "Gigi Skort – clean tennis look with soft stretch fabric and built-in shorts for comfort and coverage. Current product-page research was used to expand fit, material, sizing, and merchandising fields.\n\n### Highlights\n\n- Built-in shorts\n- Tennis inspired\n- Stretch fabric",
+    "highlights": [
+      "Built-in shorts",
+      "Tennis inspired",
+      "Stretch fabric"
+    ]
+  },
+  "categories": [
+    "bottoms",
+    "bottoms/skirts",
+    "active"
+  ],
+  "tags": [
+    "skort",
+    "tennis",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "Stretch fabric",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Regular",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp004-wht-us0",
+      "sku": "PP004-WHT-US0",
+      "options": {
+        "Color": "White",
+        "Size": "US 0"
+      },
+      "price": 49.0,
+      "weight": 0.25,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
+      "stock": 8,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp004-wht-us2",
+      "sku": "PP004-WHT-US2",
+      "options": {
+        "Color": "White",
+        "Size": "US 2"
+      },
+      "price": 49.0,
+      "weight": 0.25,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
+      "stock": 12,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp004-wht-us4",
+      "sku": "PP004-WHT-US4",
+      "options": {
+        "Color": "White",
+        "Size": "US 4"
+      },
+      "price": 49.0,
+      "weight": 0.25,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
+      "stock": 10,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp004-wht-us6",
+      "sku": "PP004-WHT-US6",
+      "options": {
+        "Color": "White",
+        "Size": "US 6"
+      },
+      "price": 49.0,
+      "weight": 0.25,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp004-wht-us8",
+      "sku": "PP004-WHT-US8",
+      "options": {
+        "Color": "White",
+        "Size": "US 8"
+      },
+      "price": 49.0,
+      "weight": 0.25,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-chiara-us4_55d936d5-d044-4cb2-9283-474c7c0ea927.jpg?v=1781674902&width=1200",
+      "stock": 5,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-004-black-us0",
+      "sku": "GIGI-PP004-BLAC-01",
+      "options": {
+        "Color": "Black",
+        "Size": "US 0"
+      },
+      "price": 49.0,
+      "weight": 0.25,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+      "stock": 6,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-004-black-us2",
+      "sku": "GIGI-PP004-BLAC-02",
+      "options": {
+        "Color": "Black",
+        "Size": "US 2"
+      },
+      "price": 49.0,
+      "weight": 0.25,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-004-black-us4",
+      "sku": "GIGI-PP004-BLAC-03",
+      "options": {
+        "Color": "Black",
+        "Size": "US 4"
+      },
+      "price": 49.0,
+      "weight": 0.25,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+      "stock": 12,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-004-black-us6",
+      "sku": "GIGI-PP004-BLAC-04",
+      "options": {
+        "Color": "Black",
+        "Size": "US 6"
+      },
+      "price": 49.0,
+      "weight": 0.25,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-004-black-us8",
+      "sku": "GIGI-PP004-BLAC-05",
+      "options": {
+        "Color": "Black",
+        "Size": "US 8"
+      },
+      "price": 49.0,
+      "weight": 0.25,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+        "alt": "Gigi Skort White US 0 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp004-wht-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_4a57178b-1d5e-49fb-aaff-8257266578ee.jpg?v=1780982879",
+        "alt": "Gigi Skort White US 0 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp004-wht-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us14_9aa8508a-33c3-4b01-ace3-ca52d9fb85eb.jpg",
+        "alt": "Gigi Skort White US 0 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp004-wht-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+        "alt": "Gigi Skort White US 2 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp004-wht-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_4a57178b-1d5e-49fb-aaff-8257266578ee.jpg?v=1780982879",
+        "alt": "Gigi Skort White US 2 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp004-wht-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us14_9aa8508a-33c3-4b01-ace3-ca52d9fb85eb.jpg",
+        "alt": "Gigi Skort White US 2 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp004-wht-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+        "alt": "Gigi Skort White US 4 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp004-wht-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_4a57178b-1d5e-49fb-aaff-8257266578ee.jpg?v=1780982879",
+        "alt": "Gigi Skort White US 4 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp004-wht-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us14_9aa8508a-33c3-4b01-ace3-ca52d9fb85eb.jpg",
+        "alt": "Gigi Skort White US 4 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp004-wht-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+        "alt": "Gigi Skort White US 6 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp004-wht-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_4a57178b-1d5e-49fb-aaff-8257266578ee.jpg?v=1780982879",
+        "alt": "Gigi Skort White US 6 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp004-wht-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us14_9aa8508a-33c3-4b01-ace3-ca52d9fb85eb.jpg",
+        "alt": "Gigi Skort White US 6 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp004-wht-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+        "alt": "Gigi Skort White US 8 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp004-wht-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_4a57178b-1d5e-49fb-aaff-8257266578ee.jpg?v=1780982879",
+        "alt": "Gigi Skort White US 8 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp004-wht-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us14_9aa8508a-33c3-4b01-ace3-ca52d9fb85eb.jpg",
+        "alt": "Gigi Skort White US 8 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp004-wht-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+        "alt": "Gigi Skort Black US 0 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-004-black-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_4a57178b-1d5e-49fb-aaff-8257266578ee.jpg?v=1780982879",
+        "alt": "Gigi Skort Black US 0 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-004-black-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us14_9aa8508a-33c3-4b01-ace3-ca52d9fb85eb.jpg",
+        "alt": "Gigi Skort Black US 0 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-004-black-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+        "alt": "Gigi Skort Black US 2 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-004-black-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_4a57178b-1d5e-49fb-aaff-8257266578ee.jpg?v=1780982879",
+        "alt": "Gigi Skort Black US 2 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-004-black-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us14_9aa8508a-33c3-4b01-ace3-ca52d9fb85eb.jpg",
+        "alt": "Gigi Skort Black US 2 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-004-black-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+        "alt": "Gigi Skort Black US 4 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-004-black-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_4a57178b-1d5e-49fb-aaff-8257266578ee.jpg?v=1780982879",
+        "alt": "Gigi Skort Black US 4 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-004-black-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us14_9aa8508a-33c3-4b01-ace3-ca52d9fb85eb.jpg",
+        "alt": "Gigi Skort Black US 4 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-004-black-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+        "alt": "Gigi Skort Black US 6 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-004-black-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_4a57178b-1d5e-49fb-aaff-8257266578ee.jpg?v=1780982879",
+        "alt": "Gigi Skort Black US 6 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-004-black-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us14_9aa8508a-33c3-4b01-ace3-ca52d9fb85eb.jpg",
+        "alt": "Gigi Skort Black US 6 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-004-black-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+        "alt": "Gigi Skort Black US 8 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-004-black-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_4a57178b-1d5e-49fb-aaff-8257266578ee.jpg?v=1780982879",
+        "alt": "Gigi Skort Black US 8 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-004-black-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us14_9aa8508a-33c3-4b01-ace3-ca52d9fb85eb.jpg",
+        "alt": "Gigi Skort Black US 8 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-004-black-us8"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [
+      "p-pp-001",
+      "p-pp-003"
+    ],
+    "upsells": [
+      "p-gia-001"
+    ],
+    "crossSells": [
+      "p-ed-001"
+    ]
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.25,
+    "dimensions": {
+      "l": 28,
+      "w": 20,
+      "h": 2,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Gigi Skort White | Princess Polly",
+    "description": "Shop the Gigi Skort in White.",
+    "keywords": [
+      "skort",
+      "tennis",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-emma-us4_f8d3f647-c005-44f3-94b7-217de53c9bbe.jpg?v=1780441967",
+    "canonical": "/product/gigi-skort"
+  },
+  "meta": {
+    "createdAt": "2025-12-05T11:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2025-12-05T11:00:00Z"
+  }
+}

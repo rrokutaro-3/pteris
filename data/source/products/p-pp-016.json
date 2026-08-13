@@ -1,0 +1,151 @@
+{
+  "id": "p-pp-016",
+  "type": "physical",
+  "identity": {
+    "name": "Rave On Sunglasses Black",
+    "slug": "rave-on-sunglasses-black",
+    "sku": "RAVEONSUNGLA-026",
+    "barcode": "7800000000026",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 25,
+    "compareAtPrice": 25,
+    "costPrice": 10.5,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Rectangular wrap-around sunglasses with glossy black tinted lenses.",
+    "full": "Rectangular wrap-around sunglasses with glossy black tinted lenses.\nResearched product details: 100% PC. Oversized fit. See the official product page for current availability and care guidance.\n\n### Highlights\n\n- Rectangular wrap-around frame\n- Tinted lenses\n- Oversized fit\n- 100% PC",
+    "highlights": [
+      "Rectangular wrap-around frame",
+      "Tinted lenses",
+      "Oversized fit",
+      "100% PC"
+    ]
+  },
+  "categories": [
+    "accessories",
+    "accessories/sunglasses",
+    "festival"
+  ],
+  "tags": [
+    "rave",
+    "festival",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "100% PC",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Oversized",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp-016-onesize",
+      "sku": "RAVEONSUNGLA-026-OS",
+      "options": {
+        "Color": "Black",
+        "Size": "ONE SIZE"
+      },
+      "price": 25,
+      "weight": 0.35,
+      "image": "https://us.princesspolly.com/cdn/shop/files/Rave-On-Sunglasses-Black_beb5f5fe-499d-499f-a379-460346bc8a91.jpg?v=1764805573",
+      "stock": 12,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/Rave-On-Sunglasses-Black_beb5f5fe-499d-499f-a379-460346bc8a91.jpg?v=1764805573",
+        "alt": "Rave On Sunglasses Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-016-onesize"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/Rave-On-Sunglasses-Black_beb5f5fe-499d-499f-a379-460346bc8a91_large.jpg?v=1764805573",
+        "alt": "Rave On Sunglasses Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-016-onesize"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/2_51e404c1-bef3-4585-bae9-291711b644fb.jpg?v=1775795017",
+        "alt": "Rave On Sunglasses Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-016-onesize"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/1_54cd8300-3824-4896-9d3b-89e442387fcb.jpg?v=1775795017",
+        "alt": "Rave On Sunglasses Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-016-onesize"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [],
+    "upsells": [],
+    "crossSells": []
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.3,
+    "dimensions": {
+      "l": 30,
+      "w": 22,
+      "h": 5,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Rave On Sunglasses Black | Princess Polly",
+    "description": "Shop Rave On Sunglasses Black from Princess Polly.",
+    "keywords": [
+      "rave on sunglasses black",
+      "accessories",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/Rave-On-Sunglasses-Black_beb5f5fe-499d-499f-a379-460346bc8a91.jpg?v=1764805573",
+    "canonical": "/product/rave-on-sunglasses-black",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Rave On Sunglasses Black",
+      "brand": {
+        "@type": "Brand",
+        "name": "Princess Polly"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": 25,
+        "priceCurrency": "USD"
+      }
+    }
+  },
+  "meta": {
+    "createdAt": "2026-08-13T00:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2026-08-13T00:00:00Z"
+  }
+}

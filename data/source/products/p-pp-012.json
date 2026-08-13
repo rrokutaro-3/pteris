@@ -1,0 +1,403 @@
+{
+  "id": "p-pp-012",
+  "type": "physical",
+  "identity": {
+    "name": "Bessie Top Black",
+    "slug": "bessie-top-black",
+    "sku": "BESSIETOPBLA-022",
+    "barcode": "7800000000022",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 49,
+    "compareAtPrice": 49,
+    "costPrice": 20.58,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Silky button-up top with classic collar and gathered bust.",
+    "full": "Silky button-up top with classic collar and gathered bust.\nResearched product details: 98% polyester 2% elastane. Slim fit. See the official product page for current availability and care guidance.\n\n### Highlights\n\n- Silky material\n- Classic collar\n- Front buttons\n- Gathered bust",
+    "highlights": [
+      "Silky material",
+      "Classic collar",
+      "Front buttons",
+      "Gathered bust"
+    ]
+  },
+  "categories": [
+    "tops",
+    "tops/blouses",
+    "workwear"
+  ],
+  "tags": [
+    "bessie",
+    "workwear",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "98% polyester 2% elastane",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Slim",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp-012-blk-us0",
+      "sku": "BESSIETOPBLA-022-BLK-01",
+      "options": {
+        "Color": "Black",
+        "Size": "US 0"
+      },
+      "price": 49,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-012-blk-us2",
+      "sku": "BESSIETOPBLA-022-BLK-02",
+      "options": {
+        "Color": "Black",
+        "Size": "US 2"
+      },
+      "price": 49,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-012-blk-us4",
+      "sku": "BESSIETOPBLA-022-BLK-03",
+      "options": {
+        "Color": "Black",
+        "Size": "US 4"
+      },
+      "price": 49,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+      "stock": 11,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-012-blk-us6",
+      "sku": "BESSIETOPBLA-022-BLK-04",
+      "options": {
+        "Color": "Black",
+        "Size": "US 6"
+      },
+      "price": 49,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+      "stock": 14,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-012-blk-us8",
+      "sku": "BESSIETOPBLA-022-BLK-05",
+      "options": {
+        "Color": "Black",
+        "Size": "US 8"
+      },
+      "price": 49,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-012-blk-us10",
+      "sku": "BESSIETOPBLA-022-BLK-06",
+      "options": {
+        "Color": "Black",
+        "Size": "US 10"
+      },
+      "price": 49,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+      "stock": 5,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-012-blk-us12",
+      "sku": "BESSIETOPBLA-022-BLK-07",
+      "options": {
+        "Color": "Black",
+        "Size": "US 12"
+      },
+      "price": 49,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+      "stock": 8,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-012-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-christy-us2_85226bb3-f0e3-4273-a74e-802f25679df4.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-012-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-christy-us2_8100e2ed-1da6-486b-86d8-ae13bfa115f7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-012-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-christy-us2_bd59d656-40f4-46e7-90f9-32e66c04f521.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-012-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-012-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-christy-us2_85226bb3-f0e3-4273-a74e-802f25679df4.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-012-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-christy-us2_8100e2ed-1da6-486b-86d8-ae13bfa115f7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-012-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-christy-us2_bd59d656-40f4-46e7-90f9-32e66c04f521.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-012-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-012-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-christy-us2_85226bb3-f0e3-4273-a74e-802f25679df4.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-012-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-christy-us2_8100e2ed-1da6-486b-86d8-ae13bfa115f7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-012-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-christy-us2_bd59d656-40f4-46e7-90f9-32e66c04f521.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-012-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-012-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-christy-us2_85226bb3-f0e3-4273-a74e-802f25679df4.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-012-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-christy-us2_8100e2ed-1da6-486b-86d8-ae13bfa115f7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-012-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-christy-us2_bd59d656-40f4-46e7-90f9-32e66c04f521.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-012-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-012-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-christy-us2_85226bb3-f0e3-4273-a74e-802f25679df4.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-012-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-christy-us2_8100e2ed-1da6-486b-86d8-ae13bfa115f7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-012-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-christy-us2_bd59d656-40f4-46e7-90f9-32e66c04f521.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-012-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-012-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-christy-us2_85226bb3-f0e3-4273-a74e-802f25679df4.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-012-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-christy-us2_8100e2ed-1da6-486b-86d8-ae13bfa115f7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-012-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-christy-us2_bd59d656-40f4-46e7-90f9-32e66c04f521.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-012-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-012-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/1-modelinfo-christy-us2_85226bb3-f0e3-4273-a74e-802f25679df4.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-012-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/2-modelinfo-christy-us2_8100e2ed-1da6-486b-86d8-ae13bfa115f7.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-012-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/3-modelinfo-christy-us2_bd59d656-40f4-46e7-90f9-32e66c04f521.jpg?v=1657155197",
+        "alt": "Bessie Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-012-blk-us12"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [],
+    "upsells": [],
+    "crossSells": []
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.3,
+    "dimensions": {
+      "l": 30,
+      "w": 22,
+      "h": 5,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Bessie Top Black | Princess Polly",
+    "description": "Shop Bessie Top Black from Princess Polly.",
+    "keywords": [
+      "bessie top black",
+      "tops",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/products/0-modelinfo-christy-us2_92a1a8ea-34c5-46e7-ad3a-f0bd1b8bd6d7.jpg?v=1657155197",
+    "canonical": "/product/bessie-top-black",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Bessie Top Black",
+      "brand": {
+        "@type": "Brand",
+        "name": "Princess Polly"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": 49,
+        "priceCurrency": "USD"
+      }
+    }
+  },
+  "meta": {
+    "createdAt": "2026-08-13T00:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2026-08-13T00:00:00Z"
+  }
+}

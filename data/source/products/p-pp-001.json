@@ -1,0 +1,522 @@
+{
+  "id": "p-pp-001",
+  "type": "physical",
+  "identity": {
+    "name": "Alonah Shirred Mini Dress",
+    "slug": "alonah-shirred-mini-dress",
+    "sku": "ALONAH-PP001",
+    "barcode": "8123456789001",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 69.0,
+    "compareAtPrice": 69.0,
+    "costPrice": 28.0,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Shirred mini dress with adjustable straps and ruffle hem.",
+    "full": "The Alonah Shirred Mini Dress features soft stretch fabric, fully shirred bodice, adjustable straps and a flirty mini length. Perfect for vacations and nights out. Current product-page research was used to expand fit, material, sizing, and merchandising fields.\n\n### Highlights\n\n- Shirred bodice\n- Adjustable straps\n- Mini length",
+    "highlights": [
+      "Shirred bodice",
+      "Adjustable straps",
+      "Mini length"
+    ]
+  },
+  "categories": [
+    "dresses",
+    "dresses/mini",
+    "vacation"
+  ],
+  "tags": [
+    "mini-dress",
+    "shirred",
+    "princess-polly",
+    "vacation"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "Stretch jersey",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Bodycon",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp001-wht-us0",
+      "sku": "PP001-WHT-US0",
+      "options": {
+        "Color": "White",
+        "Size": "US 0"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133&width=1200",
+      "stock": 8,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp001-wht-us2",
+      "sku": "PP001-WHT-US2",
+      "options": {
+        "Color": "White",
+        "Size": "US 2"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133&width=1200",
+      "stock": 12,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp001-wht-us4",
+      "sku": "PP001-WHT-US4",
+      "options": {
+        "Color": "White",
+        "Size": "US 4"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133&width=1200",
+      "stock": 15,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp001-wht-us6",
+      "sku": "PP001-WHT-US6",
+      "options": {
+        "Color": "White",
+        "Size": "US 6"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133&width=1200",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp001-wht-us8",
+      "sku": "PP001-WHT-US8",
+      "options": {
+        "Color": "White",
+        "Size": "US 8"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133&width=1200",
+      "stock": 6,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp001-wht-us10",
+      "sku": "PP001-WHT-US10",
+      "options": {
+        "Color": "White",
+        "Size": "US 10"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133&width=1200",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-001-black-us0",
+      "sku": "ALONAH-PP001-BLAC-01",
+      "options": {
+        "Color": "Black",
+        "Size": "US 0"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+      "stock": 6,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-001-black-us2",
+      "sku": "ALONAH-PP001-BLAC-02",
+      "options": {
+        "Color": "Black",
+        "Size": "US 2"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-001-black-us4",
+      "sku": "ALONAH-PP001-BLAC-03",
+      "options": {
+        "Color": "Black",
+        "Size": "US 4"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+      "stock": 12,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-001-black-us6",
+      "sku": "ALONAH-PP001-BLAC-04",
+      "options": {
+        "Color": "Black",
+        "Size": "US 6"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-001-black-us8",
+      "sku": "ALONAH-PP001-BLAC-05",
+      "options": {
+        "Color": "Black",
+        "Size": "US 8"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-001-black-us10",
+      "sku": "ALONAH-PP001-BLAC-06",
+      "options": {
+        "Color": "Black",
+        "Size": "US 10"
+      },
+      "price": 69.0,
+      "weight": 0.28,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+      "stock": 10,
+      "lowStockThreshold": 3,
+      "backorder": true
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 0 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp001-wht-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 0 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp001-wht-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 0 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp001-wht-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 2 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp001-wht-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 2 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp001-wht-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 2 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp001-wht-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 4 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp001-wht-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 4 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp001-wht-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 4 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp001-wht-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 6 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp001-wht-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 6 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp001-wht-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 6 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp001-wht-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 8 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp001-wht-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 8 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp001-wht-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 8 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp001-wht-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 10 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp001-wht-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 10 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp001-wht-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress White US 10 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp001-wht-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 0 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-001-black-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 0 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-001-black-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 0 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-001-black-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 2 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-001-black-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 2 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-001-black-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 2 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-001-black-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 4 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-001-black-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 4 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-001-black-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 4 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-001-black-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 6 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-001-black-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 6 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-001-black-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 6 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-001-black-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 8 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-001-black-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 8 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-001-black-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 8 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-001-black-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 10 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-001-black-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 10 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-001-black-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-niki-us2_6b41a096-50f2-4281-9a45-eb03ab60ee58.jpg?v=1753764133",
+        "alt": "Alonah Shirred Mini Dress Black US 10 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-001-black-us10"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [
+      "p-pp-002",
+      "p-pp-003"
+    ],
+    "upsells": [
+      "p-gia-001"
+    ],
+    "crossSells": [
+      "p-ed-001"
+    ]
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.28,
+    "dimensions": {
+      "l": 30,
+      "w": 22,
+      "h": 3,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Alonah Shirred Mini Dress | Princess Polly",
+    "description": "Shop the Alonah Shirred Mini Dress in White.",
+    "keywords": [
+      "mini dress",
+      "shirred",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-niki-us2_cdacd5b0-f1f9-4f59-af74-9faf2c2a6cd2.jpg?v=1753764133",
+    "canonical": "/product/alonah-shirred-mini-dress"
+  },
+  "meta": {
+    "createdAt": "2025-12-01T10:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2025-12-01T10:00:00Z"
+  }
+}

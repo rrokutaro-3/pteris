@@ -1,0 +1,354 @@
+{
+  "id": "p-pp-011",
+  "type": "physical",
+  "identity": {
+    "name": "Swing Mini Dress White",
+    "slug": "swing-mini-dress-white",
+    "sku": "SWINGMINIDRE-021",
+    "barcode": "7800000000021",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 69,
+    "compareAtPrice": 69,
+    "costPrice": 28.98,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Embroidered mini dress with square neck, front tie and keyhole.",
+    "full": "Embroidered mini dress with square neck, front tie and keyhole.\nResearched product details: 100% recycled cotton / cotton lining. Relaxed fit. See the official product page for current availability and care guidance.\n\n### Highlights\n\n- Embroidered detail\n- Square neck\n- Front tie\n- Keyhole detail",
+    "highlights": [
+      "Embroidered detail",
+      "Square neck",
+      "Front tie",
+      "Keyhole detail"
+    ]
+  },
+  "categories": [
+    "dresses",
+    "dresses/mini",
+    "vacation"
+  ],
+  "tags": [
+    "swing",
+    "vacation",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "100% recycled cotton / cotton lining",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Relaxed",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp-011-blk-us0",
+      "sku": "SWINGMINIDRE-021-BLK-01",
+      "options": {
+        "Color": "White",
+        "Size": "US 0"
+      },
+      "price": 69,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-011-blk-us2",
+      "sku": "SWINGMINIDRE-021-BLK-02",
+      "options": {
+        "Color": "White",
+        "Size": "US 2"
+      },
+      "price": 69,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-011-blk-us4",
+      "sku": "SWINGMINIDRE-021-BLK-03",
+      "options": {
+        "Color": "White",
+        "Size": "US 4"
+      },
+      "price": 69,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+      "stock": 11,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-011-blk-us6",
+      "sku": "SWINGMINIDRE-021-BLK-04",
+      "options": {
+        "Color": "White",
+        "Size": "US 6"
+      },
+      "price": 69,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+      "stock": 14,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-011-blk-us8",
+      "sku": "SWINGMINIDRE-021-BLK-05",
+      "options": {
+        "Color": "White",
+        "Size": "US 8"
+      },
+      "price": 69,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-011-blk-us10",
+      "sku": "SWINGMINIDRE-021-BLK-06",
+      "options": {
+        "Color": "White",
+        "Size": "US 10"
+      },
+      "price": 69,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+      "stock": 5,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-011-blk-us12",
+      "sku": "SWINGMINIDRE-021-BLK-07",
+      "options": {
+        "Color": "White",
+        "Size": "US 12"
+      },
+      "price": 69,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+      "stock": 8,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-011-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-011-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-011-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-011-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-011-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-011-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-011-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-011-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-011-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-011-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-011-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-011-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-011-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-011-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-011-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-011-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-011-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-011-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-011-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad_large.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-011-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-mia-us4.jpg?v=1778047316",
+        "alt": "Swing Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-011-blk-us12"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [],
+    "upsells": [],
+    "crossSells": []
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.3,
+    "dimensions": {
+      "l": 30,
+      "w": 22,
+      "h": 5,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Swing Mini Dress White | Princess Polly",
+    "description": "Shop Swing Mini Dress White from Princess Polly.",
+    "keywords": [
+      "swing mini dress white",
+      "dresses",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-mia-us4_54496ca2-e8b9-4a81-a90e-5c89936fe2ad.jpg?v=1778047316",
+    "canonical": "/product/swing-mini-dress-white",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Swing Mini Dress White",
+      "brand": {
+        "@type": "Brand",
+        "name": "Princess Polly"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": 69,
+        "priceCurrency": "USD"
+      }
+    }
+  },
+  "meta": {
+    "createdAt": "2026-08-13T00:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2026-08-13T00:00:00Z"
+  }
+}

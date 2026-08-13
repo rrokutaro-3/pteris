@@ -1,0 +1,277 @@
+{
+  "id": "p-pp-015",
+  "type": "physical",
+  "identity": {
+    "name": "Compelling Pointed Toe Heels Beige",
+    "slug": "compelling-pointed-toe-heels-cream",
+    "sku": "COMPELLINGPO-025",
+    "barcode": "7800000000025",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 55,
+    "compareAtPrice": 55,
+    "costPrice": 23.1,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Faux-leather pointed toe heels with buckle and open-back details.",
+    "full": "Faux-leather pointed toe heels with buckle and open-back details.\nResearched product details: Man-made fabric upper. Pointed toe fit. See the official product page for current availability and care guidance.\n\n### Highlights\n\n- Pointed toe\n- Buckle detail\n- Open back\n- 9cm heel",
+    "highlights": [
+      "Pointed toe",
+      "Buckle detail",
+      "Open back",
+      "9cm heel"
+    ]
+  },
+  "categories": [
+    "shoes",
+    "shoes/heels",
+    "occasion"
+  ],
+  "tags": [
+    "compelling",
+    "occasion",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "Man-made fabric upper",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Pointed toe",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp-015-blk-shoeus5",
+      "sku": "COMPELLINGPO-025-BLK-01",
+      "options": {
+        "Color": "Beige",
+        "Size": "SHOE US 5"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-015-blk-shoeus6",
+      "sku": "COMPELLINGPO-025-BLK-02",
+      "options": {
+        "Color": "Beige",
+        "Size": "SHOE US 6"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-015-blk-shoeus7",
+      "sku": "COMPELLINGPO-025-BLK-03",
+      "options": {
+        "Color": "Beige",
+        "Size": "SHOE US 7"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+      "stock": 11,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-015-blk-shoeus8",
+      "sku": "COMPELLINGPO-025-BLK-04",
+      "options": {
+        "Color": "Beige",
+        "Size": "SHOE US 8"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+      "stock": 14,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-015-blk-shoeus9",
+      "sku": "COMPELLINGPO-025-BLK-05",
+      "options": {
+        "Color": "Beige",
+        "Size": "SHOE US 9"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-015-blk-shoeus10",
+      "sku": "COMPELLINGPO-025-BLK-06",
+      "options": {
+        "Color": "Beige",
+        "Size": "SHOE US 10"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+      "stock": 5,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-015-blk-shoeus5"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f_large.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-015-blk-shoeus5"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-015-blk-shoeus6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f_large.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-015-blk-shoeus6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-015-blk-shoeus7"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f_large.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-015-blk-shoeus7"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-015-blk-shoeus8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f_large.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-015-blk-shoeus8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-015-blk-shoeus9"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f_large.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-015-blk-shoeus9"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-015-blk-shoeus10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f_large.jpg?v=1754266506",
+        "alt": "Compelling Pointed Toe Heels Beige media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-015-blk-shoeus10"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [],
+    "upsells": [],
+    "crossSells": []
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.3,
+    "dimensions": {
+      "l": 30,
+      "w": 22,
+      "h": 5,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Compelling Pointed Toe Heels Beige | Princess Polly",
+    "description": "Shop Compelling Pointed Toe Heels Beige from Princess Polly.",
+    "keywords": [
+      "compelling pointed toe heels beige",
+      "shoes",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/compellingpointedtoeheelsbeige_1d0a538c-bd8d-447e-8e04-890b0412b11f.jpg?v=1754266506",
+    "canonical": "/product/compelling-pointed-toe-heels-cream",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Compelling Pointed Toe Heels Beige",
+      "brand": {
+        "@type": "Brand",
+        "name": "Princess Polly"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": 55,
+        "priceCurrency": "USD"
+      }
+    }
+  },
+  "meta": {
+    "createdAt": "2026-08-13T00:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2026-08-13T00:00:00Z"
+  }
+}

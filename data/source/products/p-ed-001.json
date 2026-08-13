@@ -1,0 +1,522 @@
+{
+  "id": "p-ed-001",
+  "type": "physical",
+  "identity": {
+    "name": "Raelynn Washed Low Rise Baggy Jeans",
+    "slug": "raelynn-washed-low-rise-baggy-jeans",
+    "sku": "RAELYNN-ED001",
+    "barcode": "8123456789006",
+    "brand": "Edikted",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 49.0,
+    "compareAtPrice": 98.0,
+    "costPrice": 21.0,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Viral low-rise baggy jeans in washed denim.",
+    "full": "The Raelynn Washed Low Rise Baggy Jeans – soft denim, low rise and relaxed baggy leg. A best-seller for a reason. Current product-page research was used to expand fit, material, sizing, and merchandising fields.\n\n### Highlights\n\n- Low rise\n- Baggy fit\n- Washed denim",
+    "highlights": [
+      "Low rise",
+      "Baggy fit",
+      "Washed denim"
+    ]
+  },
+  "categories": [
+    "bottoms",
+    "bottoms/jeans",
+    "denim",
+    "sale"
+  ],
+  "tags": [
+    "baggy-jeans",
+    "low-rise",
+    "washed",
+    "edikted"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "100% Cotton",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Baggy / Low Rise",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-ed001-dark-24",
+      "sku": "ED001-DARK-24",
+      "options": {
+        "Color": "Dark Wash",
+        "Size": "24"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 6,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed001-dark-25",
+      "sku": "ED001-DARK-25",
+      "options": {
+        "Color": "Dark Wash",
+        "Size": "25"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 10,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed001-dark-26",
+      "sku": "ED001-DARK-26",
+      "options": {
+        "Color": "Dark Wash",
+        "Size": "26"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 14,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed001-dark-27",
+      "sku": "ED001-DARK-27",
+      "options": {
+        "Color": "Dark Wash",
+        "Size": "27"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 11,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed001-dark-28",
+      "sku": "ED001-DARK-28",
+      "options": {
+        "Color": "Dark Wash",
+        "Size": "28"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 8,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed001-dark-29",
+      "sku": "ED001-DARK-29",
+      "options": {
+        "Color": "Dark Wash",
+        "Size": "29"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 5,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed-001-black-24",
+      "sku": "RAELYNN-ED001-BLAC-01",
+      "options": {
+        "Color": "Black",
+        "Size": "24"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+      "stock": 6,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed-001-black-25",
+      "sku": "RAELYNN-ED001-BLAC-02",
+      "options": {
+        "Color": "Black",
+        "Size": "25"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed-001-black-26",
+      "sku": "RAELYNN-ED001-BLAC-03",
+      "options": {
+        "Color": "Black",
+        "Size": "26"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+      "stock": 12,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed-001-black-27",
+      "sku": "RAELYNN-ED001-BLAC-04",
+      "options": {
+        "Color": "Black",
+        "Size": "27"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed-001-black-28",
+      "sku": "RAELYNN-ED001-BLAC-05",
+      "options": {
+        "Color": "Black",
+        "Size": "28"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-ed-001-black-29",
+      "sku": "RAELYNN-ED001-BLAC-06",
+      "options": {
+        "Color": "Black",
+        "Size": "29"
+      },
+      "price": 49.0,
+      "weight": 0.55,
+      "image": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+      "stock": 10,
+      "lowStockThreshold": 3,
+      "backorder": true
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 24 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed001-dark-24"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 24 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed001-dark-24"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 24 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed001-dark-24"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 25 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed001-dark-25"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 25 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed001-dark-25"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 25 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed001-dark-25"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 26 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed001-dark-26"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 26 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed001-dark-26"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 26 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed001-dark-26"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 27 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed001-dark-27"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 27 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed001-dark-27"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 27 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed001-dark-27"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 28 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed001-dark-28"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 28 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed001-dark-28"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 28 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed001-dark-28"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 29 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed001-dark-29"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 29 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed001-dark-29"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Dark Wash 29 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed001-dark-29"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 24 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed-001-black-24"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 24 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed-001-black-24"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 24 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed-001-black-24"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 25 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed-001-black-25"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 25 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed-001-black-25"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 25 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed-001-black-25"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 26 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed-001-black-26"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 26 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed-001-black-26"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 26 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed-001-black-26"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 27 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed-001-black-27"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 27 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed-001-black-27"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 27 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed-001-black-27"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 28 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed-001-black-28"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 28 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed-001-black-28"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 28 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed-001-black-28"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 29 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-ed-001-black-29"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_02.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 29 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-ed-001-black-29"
+      },
+      {
+        "url": "https://edikted.com/cdn/shop/files/s14091_blue-washed_03.jpg",
+        "alt": "Raelynn Washed Low Rise Baggy Jeans Black 29 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-ed-001-black-29"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [
+      "p-ed-002"
+    ],
+    "upsells": [
+      "p-pp-003"
+    ],
+    "crossSells": [
+      "p-gia-001"
+    ]
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.55,
+    "dimensions": {
+      "l": 40,
+      "w": 30,
+      "h": 5,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Raelynn Washed Low Rise Baggy Jeans | Edikted",
+    "description": "Shop the Raelynn Washed Low Rise Baggy Jeans.",
+    "keywords": [
+      "baggy jeans",
+      "low rise",
+      "edikted"
+    ],
+    "ogImage": "https://edikted.com/cdn/shop/files/s14091_blue-washed_01.jpg",
+    "canonical": "/product/raelynn-washed-low-rise-baggy-jeans"
+  },
+  "meta": {
+    "createdAt": "2025-09-15T09:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2025-09-15T09:00:00Z"
+  }
+}

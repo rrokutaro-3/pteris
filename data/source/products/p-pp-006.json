@@ -1,0 +1,452 @@
+{
+  "id": "p-pp-006",
+  "type": "physical",
+  "identity": {
+    "name": "Mattey Cinched V Neck Top",
+    "slug": "mattey-cinched-v-neck-top",
+    "sku": "MATTEY-PP006",
+    "barcode": "8123456789010",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 45.0,
+    "compareAtPrice": 45.0,
+    "costPrice": 18.0,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Cinched V-neck top in black.",
+    "full": "Mattey Cinched V Neck Top – soft fabric with front cinch detail and flattering V neckline. Easy elevated basic. Current product-page research was used to expand fit, material, sizing, and merchandising fields.\n\n### Highlights\n\n- V neck\n- Cinch detail\n- Soft fabric",
+    "highlights": [
+      "V neck",
+      "Cinch detail",
+      "Soft fabric"
+    ]
+  },
+  "categories": [
+    "tops",
+    "tops/blouses",
+    "basics"
+  ],
+  "tags": [
+    "v-neck",
+    "cinched",
+    "top",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "Soft stretch",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Regular",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp006-blk-us0",
+      "sku": "PP006-BLK-US0",
+      "options": {
+        "Color": "Black",
+        "Size": "US 0"
+      },
+      "price": 45.0,
+      "weight": 0.24,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp006-blk-us2",
+      "sku": "PP006-BLK-US2",
+      "options": {
+        "Color": "Black",
+        "Size": "US 2"
+      },
+      "price": 45.0,
+      "weight": 0.24,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 11,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp006-blk-us4",
+      "sku": "PP006-BLK-US4",
+      "options": {
+        "Color": "Black",
+        "Size": "US 4"
+      },
+      "price": 45.0,
+      "weight": 0.24,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 14,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp006-blk-us6",
+      "sku": "PP006-BLK-US6",
+      "options": {
+        "Color": "Black",
+        "Size": "US 6"
+      },
+      "price": 45.0,
+      "weight": 0.24,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp006-blk-us8",
+      "sku": "PP006-BLK-US8",
+      "options": {
+        "Color": "Black",
+        "Size": "US 8"
+      },
+      "price": 45.0,
+      "weight": 0.24,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 6,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-006-white-us0",
+      "sku": "MATTEY-PP006-WHIT-01",
+      "options": {
+        "Color": "White",
+        "Size": "US 0"
+      },
+      "price": 45.0,
+      "weight": 0.24,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 6,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-006-white-us2",
+      "sku": "MATTEY-PP006-WHIT-02",
+      "options": {
+        "Color": "White",
+        "Size": "US 2"
+      },
+      "price": 45.0,
+      "weight": 0.24,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-006-white-us4",
+      "sku": "MATTEY-PP006-WHIT-03",
+      "options": {
+        "Color": "White",
+        "Size": "US 4"
+      },
+      "price": 45.0,
+      "weight": 0.24,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 12,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-006-white-us6",
+      "sku": "MATTEY-PP006-WHIT-04",
+      "options": {
+        "Color": "White",
+        "Size": "US 6"
+      },
+      "price": 45.0,
+      "weight": 0.24,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-006-white-us8",
+      "sku": "MATTEY-PP006-WHIT-05",
+      "options": {
+        "Color": "White",
+        "Size": "US 8"
+      },
+      "price": 45.0,
+      "weight": 0.24,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 0 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp006-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 0 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp006-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 0 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp006-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 2 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp006-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 2 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp006-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 2 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp006-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 4 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp006-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 4 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp006-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 4 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp006-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 6 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp006-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 6 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp006-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 6 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp006-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 8 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp006-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 8 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp006-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top Black US 8 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp006-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 0 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-006-white-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 0 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-006-white-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 0 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-006-white-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 2 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-006-white-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 2 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-006-white-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 2 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-006-white-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 4 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-006-white-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 4 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-006-white-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 4 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-006-white-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 6 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-006-white-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 6 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-006-white-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 6 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-006-white-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 8 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-006-white-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 8 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-006-white-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Mattey Cinched V Neck Top White US 8 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-006-white-us8"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [
+      "p-pp-003",
+      "p-pp-002"
+    ],
+    "upsells": [
+      "p-gia-001"
+    ],
+    "crossSells": [
+      "p-ed-001"
+    ]
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.24,
+    "dimensions": {
+      "l": 26,
+      "w": 18,
+      "h": 2,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Mattey Cinched V Neck Top Black | Princess Polly",
+    "description": "Shop the Mattey Cinched V Neck Top.",
+    "keywords": [
+      "v neck",
+      "cinched top",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+    "canonical": "/product/mattey-cinched-v-neck-top"
+  },
+  "meta": {
+    "createdAt": "2025-11-25T10:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2025-11-25T10:00:00Z"
+  }
+}

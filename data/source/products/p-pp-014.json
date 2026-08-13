@@ -1,0 +1,151 @@
+{
+  "id": "p-pp-014",
+  "type": "physical",
+  "identity": {
+    "name": "Marano Bag Black",
+    "slug": "marano-bag-black",
+    "sku": "MARANOBAGBLA-024",
+    "barcode": "7800000000024",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 40,
+    "compareAtPrice": 40,
+    "costPrice": 16.8,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Faux leather vintage-style shoulder/crossbody bag.",
+    "full": "Faux leather vintage-style shoulder/crossbody bag.\nResearched product details: 60% PU 20% polyester 20% iron. One size fit. See the official product page for current availability and care guidance.\n\n### Highlights\n\n- Faux leather\n- Studded removable strap\n- Zip fastening\n- Internal zip pocket",
+    "highlights": [
+      "Faux leather",
+      "Studded removable strap",
+      "Zip fastening",
+      "Internal zip pocket"
+    ]
+  },
+  "categories": [
+    "accessories",
+    "accessories/bags",
+    "crossbody-bags"
+  ],
+  "tags": [
+    "marano",
+    "crossbody-bags",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "60% PU 20% polyester 20% iron",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "One size",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp-014-onesize",
+      "sku": "MARANOBAGBLA-024-OS",
+      "options": {
+        "Color": "Black",
+        "Size": "ONE SIZE"
+      },
+      "price": 40,
+      "weight": 0.35,
+      "image": "https://us.princesspolly.com/cdn/shop/products/0_e12262e8-1ab8-4498-9fb6-fb1803c9a2fe.jpg?v=1681240087",
+      "stock": 12,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/0_e12262e8-1ab8-4498-9fb6-fb1803c9a2fe.jpg?v=1681240087",
+        "alt": "Marano Bag Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-014-onesize"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/1_3ed69f47-6624-491c-92ac-9e430ce4aef6.jpg?v=1681240087",
+        "alt": "Marano Bag Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-014-onesize"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/2_84164497-66d7-4f4d-93d9-e0f60a206e20.jpg?v=1681240087",
+        "alt": "Marano Bag Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-014-onesize"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/products/3_521da867-f49f-4fc7-8f38-f9530dfbd04b.jpg?v=1681240087",
+        "alt": "Marano Bag Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-014-onesize"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [],
+    "upsells": [],
+    "crossSells": []
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.3,
+    "dimensions": {
+      "l": 30,
+      "w": 22,
+      "h": 5,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Marano Bag Black | Princess Polly",
+    "description": "Shop Marano Bag Black from Princess Polly.",
+    "keywords": [
+      "marano bag black",
+      "accessories",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/products/0_e12262e8-1ab8-4498-9fb6-fb1803c9a2fe.jpg?v=1681240087",
+    "canonical": "/product/marano-bag-black",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Marano Bag Black",
+      "brand": {
+        "@type": "Brand",
+        "name": "Princess Polly"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": 40,
+        "priceCurrency": "USD"
+      }
+    }
+  },
+  "meta": {
+    "createdAt": "2026-08-13T00:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2026-08-13T00:00:00Z"
+  }
+}

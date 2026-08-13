@@ -1,0 +1,403 @@
+{
+  "id": "p-pp-008",
+  "type": "physical",
+  "identity": {
+    "name": "Modern Girl Top White",
+    "slug": "modern-girl-top-white",
+    "sku": "MODERNGIRLTO-018",
+    "barcode": "7800000000018",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 55,
+    "compareAtPrice": 55,
+    "costPrice": 23.1,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Square-neck corset top with pleated bust and adjustable straps.",
+    "full": "Square-neck corset top with pleated bust and adjustable straps.\nResearched product details: 100% polyester. Cropped fit. See the official product page for current availability and care guidance.\n\n### Highlights\n\n- Square neck\n- Pleated bust\n- Front tie\n- Adjustable straps",
+    "highlights": [
+      "Square neck",
+      "Pleated bust",
+      "Front tie",
+      "Adjustable straps"
+    ]
+  },
+  "categories": [
+    "tops",
+    "tops/corsets",
+    "new-arrivals"
+  ],
+  "tags": [
+    "modern",
+    "new-arrivals",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "100% polyester",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Cropped",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp-008-blk-us0",
+      "sku": "MODERNGIRLTO-018-BLK-01",
+      "options": {
+        "Color": "White",
+        "Size": "US 0"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-008-blk-us2",
+      "sku": "MODERNGIRLTO-018-BLK-02",
+      "options": {
+        "Color": "White",
+        "Size": "US 2"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-008-blk-us4",
+      "sku": "MODERNGIRLTO-018-BLK-03",
+      "options": {
+        "Color": "White",
+        "Size": "US 4"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+      "stock": 11,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-008-blk-us6",
+      "sku": "MODERNGIRLTO-018-BLK-04",
+      "options": {
+        "Color": "White",
+        "Size": "US 6"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+      "stock": 14,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-008-blk-us8",
+      "sku": "MODERNGIRLTO-018-BLK-05",
+      "options": {
+        "Color": "White",
+        "Size": "US 8"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-008-blk-us10",
+      "sku": "MODERNGIRLTO-018-BLK-06",
+      "options": {
+        "Color": "White",
+        "Size": "US 10"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+      "stock": 5,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-008-blk-us12",
+      "sku": "MODERNGIRLTO-018-BLK-07",
+      "options": {
+        "Color": "White",
+        "Size": "US 12"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+      "stock": 8,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-008-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ayla-us2_91d3428c-89a3-44aa-bb5b-f7f139cf9c54.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-008-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ayla-us2_24187d62-59d0-4caa-ac07-27dbfb3f3048.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-008-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ayla-us2_9512d945-14b1-47e2-8593-eba409feb216.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-008-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-008-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ayla-us2_91d3428c-89a3-44aa-bb5b-f7f139cf9c54.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-008-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ayla-us2_24187d62-59d0-4caa-ac07-27dbfb3f3048.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-008-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ayla-us2_9512d945-14b1-47e2-8593-eba409feb216.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-008-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-008-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ayla-us2_91d3428c-89a3-44aa-bb5b-f7f139cf9c54.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-008-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ayla-us2_24187d62-59d0-4caa-ac07-27dbfb3f3048.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-008-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ayla-us2_9512d945-14b1-47e2-8593-eba409feb216.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-008-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-008-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ayla-us2_91d3428c-89a3-44aa-bb5b-f7f139cf9c54.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-008-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ayla-us2_24187d62-59d0-4caa-ac07-27dbfb3f3048.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-008-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ayla-us2_9512d945-14b1-47e2-8593-eba409feb216.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-008-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-008-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ayla-us2_91d3428c-89a3-44aa-bb5b-f7f139cf9c54.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-008-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ayla-us2_24187d62-59d0-4caa-ac07-27dbfb3f3048.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-008-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ayla-us2_9512d945-14b1-47e2-8593-eba409feb216.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-008-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-008-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ayla-us2_91d3428c-89a3-44aa-bb5b-f7f139cf9c54.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-008-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ayla-us2_24187d62-59d0-4caa-ac07-27dbfb3f3048.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-008-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ayla-us2_9512d945-14b1-47e2-8593-eba409feb216.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-008-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-008-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-ayla-us2_91d3428c-89a3-44aa-bb5b-f7f139cf9c54.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-008-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-ayla-us2_24187d62-59d0-4caa-ac07-27dbfb3f3048.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-008-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-ayla-us2_9512d945-14b1-47e2-8593-eba409feb216.jpg?v=1750388854",
+        "alt": "Modern Girl Top White media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-008-blk-us12"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [],
+    "upsells": [],
+    "crossSells": []
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.3,
+    "dimensions": {
+      "l": 30,
+      "w": 22,
+      "h": 5,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Modern Girl Top White | Princess Polly",
+    "description": "Shop Modern Girl Top White from Princess Polly.",
+    "keywords": [
+      "modern girl top white",
+      "tops",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-ayla-us2_e1fbcb42-fc91-4bcd-9bd8-3ec3548b6caa.jpg?v=1750388854",
+    "canonical": "/product/modern-girl-top-white",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Modern Girl Top White",
+      "brand": {
+        "@type": "Brand",
+        "name": "Princess Polly"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": 55,
+        "priceCurrency": "USD"
+      }
+    }
+  },
+  "meta": {
+    "createdAt": "2026-08-13T00:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2026-08-13T00:00:00Z"
+  }
+}

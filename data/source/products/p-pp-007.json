@@ -1,0 +1,353 @@
+{
+  "id": "p-pp-007",
+  "type": "physical",
+  "identity": {
+    "name": "Classic Mini Dress White",
+    "slug": "the-classic-mini-dress-white-sustainably-made",
+    "sku": "CLASSICMINID-017",
+    "barcode": "7800000000017",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 55,
+    "compareAtPrice": 55,
+    "costPrice": 23.1,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Ribbed mini dress with capped sleeves and good stretch.",
+    "full": "Ribbed mini dress with capped sleeves and good stretch.\nResearched product details: 95% organic cotton 5% elastane. Slim fit. See the official product page for current availability and care guidance.\n\n### Highlights\n\n- Mini length\n- Ribbed organic cotton\n- Good stretch",
+    "highlights": [
+      "Mini length",
+      "Ribbed organic cotton",
+      "Good stretch"
+    ]
+  },
+  "categories": [
+    "dresses",
+    "dresses/mini",
+    "new-arrivals"
+  ],
+  "tags": [
+    "classic",
+    "new-arrivals",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "95% organic cotton 5% elastane",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Slim",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp-007-blk-us0",
+      "sku": "CLASSICMINID-017-BLK-01",
+      "options": {
+        "Color": "White",
+        "Size": "US 0"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-007-blk-us2",
+      "sku": "CLASSICMINID-017-BLK-02",
+      "options": {
+        "Color": "White",
+        "Size": "US 2"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-007-blk-us4",
+      "sku": "CLASSICMINID-017-BLK-03",
+      "options": {
+        "Color": "White",
+        "Size": "US 4"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+      "stock": 11,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-007-blk-us6",
+      "sku": "CLASSICMINID-017-BLK-04",
+      "options": {
+        "Color": "White",
+        "Size": "US 6"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+      "stock": 14,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-007-blk-us8",
+      "sku": "CLASSICMINID-017-BLK-05",
+      "options": {
+        "Color": "White",
+        "Size": "US 8"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-007-blk-us10",
+      "sku": "CLASSICMINID-017-BLK-06",
+      "options": {
+        "Color": "White",
+        "Size": "US 10"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+      "stock": 5,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-007-blk-us12",
+      "sku": "CLASSICMINID-017-BLK-07",
+      "options": {
+        "Color": "White",
+        "Size": "US 12"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+      "stock": 8,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-007-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-007-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-007-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-007-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-007-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-007-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-007-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-007-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-007-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-007-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-007-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-007-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-007-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-007-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-007-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-007-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-007-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-007-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-007-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-007-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-camelia-us2.jpg",
+        "alt": "Classic Mini Dress White media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-007-blk-us12"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [],
+    "upsells": [],
+    "crossSells": []
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.3,
+    "dimensions": {
+      "l": 30,
+      "w": 22,
+      "h": 5,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Classic Mini Dress White | Princess Polly",
+    "description": "Shop Classic Mini Dress White from Princess Polly.",
+    "keywords": [
+      "classic mini dress white",
+      "dresses",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-camelia-us2.jpg",
+    "canonical": "/product/the-classic-mini-dress-white-sustainably-made",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Classic Mini Dress White",
+      "brand": {
+        "@type": "Brand",
+        "name": "Princess Polly"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": 55,
+        "priceCurrency": "USD"
+      }
+    }
+  },
+  "meta": {
+    "createdAt": "2026-08-13T00:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2026-08-13T00:00:00Z"
+  }
+}

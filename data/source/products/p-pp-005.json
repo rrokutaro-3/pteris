@@ -1,0 +1,452 @@
+{
+  "id": "p-pp-005",
+  "type": "physical",
+  "identity": {
+    "name": "Dreamful Low Rise Mini Denim Shorts",
+    "slug": "dreamful-low-rise-mini-denim-shorts",
+    "sku": "DREAMFUL-PP005",
+    "barcode": "8123456789009",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 34.0,
+    "compareAtPrice": 34.0,
+    "costPrice": 13.5,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Low rise mini denim shorts in dark wash.",
+    "full": "Dreamful Low Rise Mini Denim Shorts – ultra short, low rise and soft washed denim. Summer essential. Current product-page research was used to expand fit, material, sizing, and merchandising fields.\n\n### Highlights\n\n- Low rise\n- Mini length\n- Dark wash",
+    "highlights": [
+      "Low rise",
+      "Mini length",
+      "Dark wash"
+    ]
+  },
+  "categories": [
+    "bottoms",
+    "bottoms/shorts",
+    "denim"
+  ],
+  "tags": [
+    "denim-shorts",
+    "low-rise",
+    "mini",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "Cotton denim",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Low rise",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp005-dark-us0",
+      "sku": "PP005-DARK-US0",
+      "options": {
+        "Color": "Dark Blue Wash",
+        "Size": "US 0"
+      },
+      "price": 34.0,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp005-dark-us2",
+      "sku": "PP005-DARK-US2",
+      "options": {
+        "Color": "Dark Blue Wash",
+        "Size": "US 2"
+      },
+      "price": 34.0,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 13,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp005-dark-us4",
+      "sku": "PP005-DARK-US4",
+      "options": {
+        "Color": "Dark Blue Wash",
+        "Size": "US 4"
+      },
+      "price": 34.0,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 11,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp005-dark-us6",
+      "sku": "PP005-DARK-US6",
+      "options": {
+        "Color": "Dark Blue Wash",
+        "Size": "US 6"
+      },
+      "price": 34.0,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 8,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp005-dark-us8",
+      "sku": "PP005-DARK-US8",
+      "options": {
+        "Color": "Dark Blue Wash",
+        "Size": "US 8"
+      },
+      "price": 34.0,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 5,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-005-mediumbluewash-us0",
+      "sku": "DREAMFUL-PP005-MEDI-01",
+      "options": {
+        "Color": "Medium Blue Wash",
+        "Size": "US 0"
+      },
+      "price": 34.0,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 6,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-005-mediumbluewash-us2",
+      "sku": "DREAMFUL-PP005-MEDI-02",
+      "options": {
+        "Color": "Medium Blue Wash",
+        "Size": "US 2"
+      },
+      "price": 34.0,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-005-mediumbluewash-us4",
+      "sku": "DREAMFUL-PP005-MEDI-03",
+      "options": {
+        "Color": "Medium Blue Wash",
+        "Size": "US 4"
+      },
+      "price": 34.0,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 12,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-005-mediumbluewash-us6",
+      "sku": "DREAMFUL-PP005-MEDI-04",
+      "options": {
+        "Color": "Medium Blue Wash",
+        "Size": "US 6"
+      },
+      "price": 34.0,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-005-mediumbluewash-us8",
+      "sku": "DREAMFUL-PP005-MEDI-05",
+      "options": {
+        "Color": "Medium Blue Wash",
+        "Size": "US 8"
+      },
+      "price": 34.0,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 0 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp005-dark-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 0 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp005-dark-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-sasha-us2.jpg",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 0 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp005-dark-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 2 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp005-dark-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 2 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp005-dark-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-sasha-us2.jpg",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 2 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp005-dark-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 4 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp005-dark-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 4 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp005-dark-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-sasha-us2.jpg",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 4 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp005-dark-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 6 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp005-dark-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 6 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp005-dark-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-sasha-us2.jpg",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 6 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp005-dark-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 8 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp005-dark-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 8 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp005-dark-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-sasha-us2.jpg",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Dark Blue Wash US 8 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp005-dark-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 0 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-005-mediumbluewash-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 0 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-005-mediumbluewash-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-sasha-us2.jpg",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 0 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-005-mediumbluewash-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 2 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-005-mediumbluewash-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 2 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-005-mediumbluewash-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-sasha-us2.jpg",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 2 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-005-mediumbluewash-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 4 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-005-mediumbluewash-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 4 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-005-mediumbluewash-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-sasha-us2.jpg",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 4 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-005-mediumbluewash-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 6 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-005-mediumbluewash-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 6 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-005-mediumbluewash-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-sasha-us2.jpg",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 6 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-005-mediumbluewash-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 8 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-005-mediumbluewash-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 8 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-005-mediumbluewash-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-sasha-us2.jpg",
+        "alt": "Dreamful Low Rise Mini Denim Shorts Medium Blue Wash US 8 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-005-mediumbluewash-us8"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [
+      "p-ed-001",
+      "p-pp-002"
+    ],
+    "upsells": [
+      "p-pp-003"
+    ],
+    "crossSells": [
+      "p-gia-001"
+    ]
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.3,
+    "dimensions": {
+      "l": 28,
+      "w": 22,
+      "h": 3,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Dreamful Low Rise Mini Denim Shorts | Princess Polly",
+    "description": "Shop the Dreamful Low Rise Mini Denim Shorts.",
+    "keywords": [
+      "denim shorts",
+      "low rise",
+      "mini"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+    "canonical": "/product/dreamful-low-rise-mini-denim-shorts"
+  },
+  "meta": {
+    "createdAt": "2025-12-10T09:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2025-12-10T09:00:00Z"
+  }
+}

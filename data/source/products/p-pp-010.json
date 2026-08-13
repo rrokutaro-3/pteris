@@ -1,0 +1,403 @@
+{
+  "id": "p-pp-010",
+  "type": "physical",
+  "identity": {
+    "name": "Tullock Top Black",
+    "slug": "tullock-top-black",
+    "sku": "TULLOCKTOPBL-020",
+    "barcode": "7800000000020",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 55,
+    "compareAtPrice": 55,
+    "costPrice": 23.1,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Short-sleeve V-neck top with lace trim and petal sleeves.",
+    "full": "Short-sleeve V-neck top with lace trim and petal sleeves.\nResearched product details: 100% cotton. Regular fit. See the official product page for current availability and care guidance.\n\n### Highlights\n\n- V-neck\n- Lace trim\n- Tie front\n- Petal sleeves",
+    "highlights": [
+      "V-neck",
+      "Lace trim",
+      "Tie front",
+      "Petal sleeves"
+    ]
+  },
+  "categories": [
+    "tops",
+    "tops/blouses",
+    "party"
+  ],
+  "tags": [
+    "tullock",
+    "party",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "100% cotton",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Regular",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp-010-blk-us0",
+      "sku": "TULLOCKTOPBL-020-BLK-01",
+      "options": {
+        "Color": "Black",
+        "Size": "US 0"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-010-blk-us2",
+      "sku": "TULLOCKTOPBL-020-BLK-02",
+      "options": {
+        "Color": "Black",
+        "Size": "US 2"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-010-blk-us4",
+      "sku": "TULLOCKTOPBL-020-BLK-03",
+      "options": {
+        "Color": "Black",
+        "Size": "US 4"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+      "stock": 11,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-010-blk-us6",
+      "sku": "TULLOCKTOPBL-020-BLK-04",
+      "options": {
+        "Color": "Black",
+        "Size": "US 6"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+      "stock": 14,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-010-blk-us8",
+      "sku": "TULLOCKTOPBL-020-BLK-05",
+      "options": {
+        "Color": "Black",
+        "Size": "US 8"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-010-blk-us10",
+      "sku": "TULLOCKTOPBL-020-BLK-06",
+      "options": {
+        "Color": "Black",
+        "Size": "US 10"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+      "stock": 5,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp-010-blk-us12",
+      "sku": "TULLOCKTOPBL-020-BLK-07",
+      "options": {
+        "Color": "Black",
+        "Size": "US 12"
+      },
+      "price": 55,
+      "weight": 0.3,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+      "stock": 8,
+      "lowStockThreshold": 3,
+      "backorder": false
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-010-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-crystal-us2_3e685109-5723-4b25-861b-31d3476a6a22.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-010-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-crystal-us2_fb31808c-c4fe-40cb-9a2a-8b2ed8545379.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-010-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-crystal-us2_e0c26c39-45b6-4290-a07b-a090e5f8bea8.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-010-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-010-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-crystal-us2_3e685109-5723-4b25-861b-31d3476a6a22.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-010-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-crystal-us2_fb31808c-c4fe-40cb-9a2a-8b2ed8545379.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-010-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-crystal-us2_e0c26c39-45b6-4290-a07b-a090e5f8bea8.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-010-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-010-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-crystal-us2_3e685109-5723-4b25-861b-31d3476a6a22.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-010-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-crystal-us2_fb31808c-c4fe-40cb-9a2a-8b2ed8545379.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-010-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-crystal-us2_e0c26c39-45b6-4290-a07b-a090e5f8bea8.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-010-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-010-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-crystal-us2_3e685109-5723-4b25-861b-31d3476a6a22.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-010-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-crystal-us2_fb31808c-c4fe-40cb-9a2a-8b2ed8545379.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-010-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-crystal-us2_e0c26c39-45b6-4290-a07b-a090e5f8bea8.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-010-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-010-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-crystal-us2_3e685109-5723-4b25-861b-31d3476a6a22.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-010-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-crystal-us2_fb31808c-c4fe-40cb-9a2a-8b2ed8545379.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-010-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-crystal-us2_e0c26c39-45b6-4290-a07b-a090e5f8bea8.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-010-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-010-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-crystal-us2_3e685109-5723-4b25-861b-31d3476a6a22.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-010-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-crystal-us2_fb31808c-c4fe-40cb-9a2a-8b2ed8545379.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-010-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-crystal-us2_e0c26c39-45b6-4290-a07b-a090e5f8bea8.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-010-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp-010-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-crystal-us2_3e685109-5723-4b25-861b-31d3476a6a22.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp-010-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/2-modelinfo-crystal-us2_fb31808c-c4fe-40cb-9a2a-8b2ed8545379.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp-010-blk-us12"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/3-modelinfo-crystal-us2_e0c26c39-45b6-4290-a07b-a090e5f8bea8.jpg?v=1776664599",
+        "alt": "Tullock Top Black media 4",
+        "type": "image",
+        "order": 4,
+        "variant": "v-pp-010-blk-us12"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [],
+    "upsells": [],
+    "crossSells": []
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.3,
+    "dimensions": {
+      "l": 30,
+      "w": 22,
+      "h": 5,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Tullock Top Black | Princess Polly",
+    "description": "Shop Tullock Top Black from Princess Polly.",
+    "keywords": [
+      "tullock top black",
+      "tops",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/0_c68fa311-13b7-47cd-8be5-2630573fac93.jpg?v=1776664599",
+    "canonical": "/product/tullock-top-black",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Tullock Top Black",
+      "brand": {
+        "@type": "Brand",
+        "name": "Princess Polly"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": 55,
+        "priceCurrency": "USD"
+      }
+    }
+  },
+  "meta": {
+    "createdAt": "2026-08-13T00:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2026-08-13T00:00:00Z"
+  }
+}

@@ -1,0 +1,521 @@
+{
+  "id": "p-pp-002",
+  "type": "physical",
+  "identity": {
+    "name": "Yumiko Romper",
+    "slug": "yumiko-romper",
+    "sku": "YUMIKO-PP002",
+    "barcode": "8123456789002",
+    "brand": "Princess Polly",
+    "status": "active"
+  },
+  "pricing": {
+    "currency": "USD",
+    "price": 65.0,
+    "compareAtPrice": 65.0,
+    "costPrice": 26.0,
+    "taxClass": "standard"
+  },
+  "description": {
+    "short": "Scoop neck romper with short sleeves and relaxed fit.",
+    "full": "The Yumiko Romper is a soft jersey one-piece with scoop neckline, short sleeves and a relaxed silhouette. Easy everyday staple. Current product-page research was used to expand fit, material, sizing, and merchandising fields.\n\n### Highlights\n\n- Scoop neck\n- Relaxed fit\n- Short sleeves",
+    "highlights": [
+      "Scoop neck",
+      "Relaxed fit",
+      "Short sleeves"
+    ]
+  },
+  "categories": [
+    "rompers",
+    "jumpsuits",
+    "basics"
+  ],
+  "tags": [
+    "romper",
+    "jersey",
+    "princess-polly"
+  ],
+  "attributes": [
+    {
+      "name": "Material",
+      "value": "Soft jersey",
+      "group": "fabric",
+      "visible": true,
+      "filterable": true
+    },
+    {
+      "name": "Fit",
+      "value": "Relaxed",
+      "group": "fit",
+      "visible": true,
+      "filterable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": "v-pp002-blk-us0",
+      "sku": "PP002-BLK-US0",
+      "options": {
+        "Color": "Black",
+        "Size": "US 0"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp002-blk-us2",
+      "sku": "PP002-BLK-US2",
+      "options": {
+        "Color": "Black",
+        "Size": "US 2"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 11,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp002-blk-us4",
+      "sku": "PP002-BLK-US4",
+      "options": {
+        "Color": "Black",
+        "Size": "US 4"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 14,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp002-blk-us6",
+      "sku": "PP002-BLK-US6",
+      "options": {
+        "Color": "Black",
+        "Size": "US 6"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp002-blk-us8",
+      "sku": "PP002-BLK-US8",
+      "options": {
+        "Color": "Black",
+        "Size": "US 8"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 5,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pp002-blk-us10",
+      "sku": "PP002-BLK-US10",
+      "options": {
+        "Color": "Black",
+        "Size": "US 10"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178&width=1200",
+      "stock": 3,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-002-white-us0",
+      "sku": "YUMIKO-PP002-WHIT-01",
+      "options": {
+        "Color": "White",
+        "Size": "US 0"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 6,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-002-white-us2",
+      "sku": "YUMIKO-PP002-WHIT-02",
+      "options": {
+        "Color": "White",
+        "Size": "US 2"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 9,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-002-white-us4",
+      "sku": "YUMIKO-PP002-WHIT-03",
+      "options": {
+        "Color": "White",
+        "Size": "US 4"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 12,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-002-white-us6",
+      "sku": "YUMIKO-PP002-WHIT-04",
+      "options": {
+        "Color": "White",
+        "Size": "US 6"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 7,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-002-white-us8",
+      "sku": "YUMIKO-PP002-WHIT-05",
+      "options": {
+        "Color": "White",
+        "Size": "US 8"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 4,
+      "lowStockThreshold": 3,
+      "backorder": false
+    },
+    {
+      "id": "v-pv-002-white-us10",
+      "sku": "YUMIKO-PP002-WHIT-06",
+      "options": {
+        "Color": "White",
+        "Size": "US 10"
+      },
+      "price": 65.0,
+      "weight": 0.32,
+      "image": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+      "stock": 10,
+      "lowStockThreshold": 3,
+      "backorder": true
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 0 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp002-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 0 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp002-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper Black US 0 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp002-blk-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 2 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp002-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 2 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp002-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper Black US 2 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp002-blk-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 4 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp002-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 4 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp002-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper Black US 4 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp002-blk-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 6 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp002-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 6 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp002-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper Black US 6 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp002-blk-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 8 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp002-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 8 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp002-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper Black US 8 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp002-blk-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 10 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pp002-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper Black US 10 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pp002-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper Black US 10 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pp002-blk-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 0 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-002-white-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 0 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-002-white-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper White US 0 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-002-white-us0"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 2 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-002-white-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 2 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-002-white-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper White US 2 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-002-white-us2"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 4 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-002-white-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 4 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-002-white-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper White US 4 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-002-white-us4"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 6 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-002-white-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 6 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-002-white-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper White US 6 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-002-white-us6"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 8 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-002-white-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 8 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-002-white-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper White US 8 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-002-white-us8"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 10 view 1",
+        "type": "image",
+        "order": 1,
+        "variant": "v-pv-002-white-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e_large.jpg?v=1781654178",
+        "alt": "Yumiko Romper White US 10 view 2",
+        "type": "image",
+        "order": 2,
+        "variant": "v-pv-002-white-us10"
+      },
+      {
+        "url": "https://us.princesspolly.com/cdn/shop/files/1-modelinfo-nat-us2_896ed480-0139-4105-acc4-8615fc683177.jpg?v=1780358936",
+        "alt": "Yumiko Romper White US 10 view 3",
+        "type": "image",
+        "order": 3,
+        "variant": "v-pv-002-white-us10"
+      }
+    ],
+    "videos": []
+  },
+  "ugc": [],
+  "relations": {
+    "related": [
+      "p-pp-001",
+      "p-pp-003"
+    ],
+    "upsells": [
+      "p-gia-001"
+    ],
+    "crossSells": [
+      "p-ed-001"
+    ]
+  },
+  "shipping": {
+    "profile": "standard",
+    "weight": 0.32,
+    "dimensions": {
+      "l": 32,
+      "w": 24,
+      "h": 3,
+      "unit": "cm"
+    },
+    "requiresShipping": true
+  },
+  "seo": {
+    "title": "Yumiko Romper Black | Princess Polly",
+    "description": "Shop the Yumiko Romper in Black.",
+    "keywords": [
+      "romper",
+      "jersey",
+      "princess polly"
+    ],
+    "ogImage": "https://us.princesspolly.com/cdn/shop/files/0-modelinfo-jess-us2_36f323fd-2941-4378-99ef-48467bfdab1e.jpg?v=1781654178",
+    "canonical": "/product/yumiko-romper"
+  },
+  "meta": {
+    "createdAt": "2025-11-20T09:00:00Z",
+    "updatedAt": "2026-08-13T00:00:00Z",
+    "publishedAt": "2025-11-20T09:00:00Z"
+  }
+}
