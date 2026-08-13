@@ -4,6 +4,7 @@ import path from 'path';
 const BUILT_DIR = './data/products';   // FIXED: Read from BUILT products, not source
 const OUTPUT_DIR = './data';
 const BATCH_SIZE = 24;
+const COLLECTIONS_CONFIG_PATH = './data/config/collections.json';
 
 function buildSearchText(product) {
   const parts = [
@@ -34,11 +35,48 @@ function buildCategoryMap(products) {
   return map;
 }
 
-function buildCollectionMap(products) {
+/**
+ * Load custom collections from data/config/collections.json.
+ * Returns an empty object if the file doesn't exist — the three
+ * auto-generated collections always work regardless.
+ */
+async function loadCustomCollections(validIds) {
+  try {
+    const raw = await fs.readFile(COLLECTIONS_CONFIG_PATH, 'utf-8');
+    const data = JSON.parse(raw);
+    const result = {};
+
+    for (const [id, col] of Object.entries(data)) {
+      if (typeof id !== 'string' || !id.trim()) continue;
+
+      // Filter out any product IDs that weren't actually built (draft/archived/missing)
+      const productIds = (col.productIds || []).filter(pid => validIds.has(pid));
+
+      result[id] = {
+        name: col.name || id,
+        description: col.description || null,
+        heroImage: col.heroImage || null,
+        productIds
+      };
+    }
+
+    return result;
+  } catch {
+    return {};
+  }
+}
+
+function buildCollectionMap(products, customCollections = {}) {
+  // Auto-generated collections
   const collections = {
     'new-arrivals': { name: 'New Arrivals', productIds: [], heroImage: null },
-    'bestsellers': { name: 'Bestsellers', productIds: [], heroImage: null },
-    'sale': { name: 'On Sale', productIds: [], heroImage: null }
+    'bestsellers':  { name: 'Bestsellers',  productIds: [], heroImage: null },
+    'sale':         { name: 'On Sale',       productIds: [], heroImage: null },
+    // Merge custom collections — defined before auto-population so the
+    // auto loop below can also add products into any custom collection
+    // that uses a tag/category rule in the future. For now they are
+    // purely productIds-based and don't overlap with the auto sets.
+    ...customCollections
   };
 
   for (const p of products) {
@@ -84,6 +122,10 @@ export async function buildIndex(timestamp) {
     p.relations = filterRelations(p, validIds);
   }
 
+  // Load custom collections (needs validIds to filter references to
+  // draft/archived/missing products before they reach the index)
+  const customCollections = await loadCustomCollections(validIds);
+
   // Build lightweight refs
   const productRefs = {};
   const searchIndex = {};
@@ -118,7 +160,7 @@ export async function buildIndex(timestamp) {
     productCount: products.length,
     products: productRefs,
     categories: buildCategoryMap(products),
-    collections: buildCollectionMap(products),
+    collections: buildCollectionMap(products, customCollections),
     search: searchIndex,
     pages: {
       home: 'config/home.json',
