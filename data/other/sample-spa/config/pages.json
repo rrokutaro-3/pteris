@@ -1,0 +1,22 @@
+{
+  "about": {
+    "title": "About Us",
+    "content": "<p>Welcome to our store. We believe in quality, design, and sustainable practices.</p><p>Founded in 2026, we aim to bring you the best curated fashion.</p>"
+  },
+  "shipping": {
+    "title": "Shipping Information",
+    "content": "<h2>Rates & Times</h2><p>Free standard shipping on orders over $75. Standard delivery takes 5-7 business days.</p><h2>International</h2><p>We ship internationally. Rates and transit times are calculated at checkout based on your destination.</p>"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "content": "<p>We respect your privacy and are committed to protecting your personal data. We do not sell your information to third parties.</p>"
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "content": "<p>By using this website, you agree to our terms of service and conditions of sale.</p>"
+  },
+  "faq": {
+    "title": "FAQ",
+    "content": "<h2>How do I return an item?</h2><p>Reach out to returns@yourbrand.com within 30 days of delivery.</p><h2>When will my order ship?</h2><p>Orders typically process within 1-2 business days before shipping.</p>"
+  }
+}
