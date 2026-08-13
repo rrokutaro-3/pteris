@@ -1,0 +1,10 @@
+{
+  "_note": "Custom collections. Each key becomes the collection ID used in StoreClient.getCollection(id). Product IDs that don't exist in the built catalog are silently filtered out at build time.",
+
+  "lookbook-summer-26": {
+    "name": "Summer Lookbook",
+    "description": "Our summer 2026 editorial picks.",
+    "heroImage": null,
+    "productIds": []
+  }
+}
