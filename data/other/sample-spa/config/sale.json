@@ -1,0 +1,12 @@
+{
+  "active": false,
+  "saleName": "Summer Sale",
+  "startDate": "2026-06-01T00:00:00Z",
+  "endDate": "2026-08-31T23:59:59Z",
+  "rules": [
+    { "category": "dresses", "discountType": "percentage", "discountValue": 20 }
+  ],
+  "badgeText": "SALE",
+  "badgeColor": "#d32f2f",
+  "badgeTextColor": "#ffffff"
+}
