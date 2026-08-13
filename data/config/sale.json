@@ -1,12 +1,26 @@
 {
   "active": false,
-  "saleName": "Example Sale (edit or replace before running a real one)",
-  "startDate": "2020-01-01T00:00:00Z",
-  "endDate": "2030-01-01T00:00:00Z",
+  "saleName": "End of Season Sale",
+  "startDate": "2026-09-01T00:00:00Z",
+  "endDate": "2026-09-15T23:59:59Z",
   "rules": [
-    { "productId": "p-8392", "discountType": "percentage", "discountValue": 20 }
+    {
+      "category": "dresses",
+      "discountType": "percentage",
+      "discountValue": 20
+    },
+    {
+      "tag": "sale",
+      "discountType": "percentage",
+      "discountValue": 15
+    },
+    {
+      "productId": "p-ed-001",
+      "discountType": "fixed",
+      "discountValue": 10.00
+    }
   ],
   "badgeText": "SALE",
-  "badgeColor": "#f00",
-  "badgeTextColor": "#fff"
+  "badgeColor": "#d32f2f",
+  "badgeTextColor": "#ffffff"
 }
