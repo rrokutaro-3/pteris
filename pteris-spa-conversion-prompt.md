@@ -275,6 +275,33 @@ const [product, liveStock] = await Promise.all([
 
 const { matrix, optionKeys, availability } = client.buildVariantMatrix(product);
 
+// 2. Build variant groups for colour-swatch UI.
+//    getVariantGroups() returns { groupId: variant[] } — one entry per
+//    distinct variantGroup value on the product's variants.
+const variantGroups = client.getVariantGroups(product);
+
+// Render colour swatches (only if the product has multiple groups)
+const groupIds = Object.keys(variantGroups).filter(g => g !== 'null' && g !== null);
+if (groupIds.length > 1) {
+  groupIds.forEach(groupId => {
+    const swatch = renderColorSwatch(groupId, variantGroups[groupId][0].image);
+    swatch.addEventListener('click', () => onGroupSelect(groupId));
+  });
+}
+
+// When a swatch is clicked, swap the gallery and pre-select the first available size
+function onGroupSelect(groupId) {
+  // getMediaForGroup returns images for this group + shared images (variantGroup: null), sorted by order
+  const images = client.getMediaForGroup(product, groupId);
+  renderGallery(images);
+
+  const firstAvailable = variantGroups[groupId].find(v => (v.stock || 0) > 0 || v.backorder);
+  if (firstAvailable) {
+    selectedOptions['Color'] = firstAvailable.options['Color'];
+    onOptionSelect('Size', firstAvailable.options['Size']);
+  }
+}
+
 function onOptionSelect(key, value) {
   selectedOptions[key] = value;
   const available = client.getAvailableOptions(product, selectedOptions);
@@ -285,14 +312,18 @@ function onOptionSelect(key, value) {
   );
 
   if (variant) {
-    // 2. Pricing nuance: account for build-time sale discounts
+    // 3. Pricing nuance: account for build-time sale discounts
     const comparePrice = variant.originalPrice || product.pricing.compareAtPrice;
     updatePrice(variant.price, comparePrice);
 
-    // 3. Image reversion — never leave a stale image from a prior variant
-    updateMainImage(variant.image || product.media.images[0]?.url);
+    // 4. Image reversion — if no variantGroup is in use, fall back to
+    //    variant.image then the primary product image. If variantGroup IS
+    //    in use the gallery was already swapped by onGroupSelect above.
+    if (!variant.variantGroup) {
+      updateMainImage(variant.image || product.media.images[0]?.url);
+    }
 
-    // 4. Effective stock math — subtract what's already in the cart
+    // 5. Effective stock math — subtract what's already in the cart
     const cartQty = appState.state.cart.find(item => item.variantId === variant.id)?.qty || 0;
     const effectiveStock = (liveStock.variants[variant.id]?.available || 0) - cartQty;
 
@@ -304,6 +335,7 @@ function onOptionSelect(key, value) {
 
 **Rules:**
 - Option keys (e.g., "Color", "Size") derive dynamically from `variant.options`. Never assume fixed keys.
+- Use `client.getVariantGroups(product)` and `client.getMediaForGroup(product, groupId)` for colour-swatch gallery switching. Only render swatches if more than one group exists.
 - Use `client.sanitizeHtml(product.description.full)` for rich text.
 - Fetch related/upsell products via `client.getProducts(product.relations.related)` / `product.relations.upsells`.
 - Display low-stock warnings when `effectiveStock <= variant.lowStockThreshold`.
