@@ -41,11 +41,18 @@ export async function syncStock() {
   const jsonFiles = files.filter(f => f.endsWith('.json'));
 
   let updated = 0;
+  let seeded = 0;
 
   for (const file of jsonFiles) {
     const filePath = path.join(SOURCE_DIR, file);
     const raw = await fs.readFile(filePath, 'utf-8');
     const product = JSON.parse(raw);
+
+    // Skip draft/archived products — same logic as build-products.js and
+    // seed-inventory.js so D1 inventory stays consistent with what is
+    // actually published and purchasable.
+    if (['draft', 'archived'].includes(product.identity?.status)) continue;
+    if (!product.variants?.length) continue;
 
     const rows = await d1Query(
       'SELECT variants FROM inventory WHERE product_id = ?',
@@ -53,6 +60,8 @@ export async function syncStock() {
     );
 
     if (rows.length > 0) {
+      // Product already exists in D1 — pull live quantities back into the
+      // source file so the next build reflects real stock levels.
       const stockDoc = JSON.parse(rows[0].variants);
       let changed = false;
 
@@ -70,10 +79,33 @@ export async function syncStock() {
         await fs.writeFile(filePath, JSON.stringify(product, null, 2));
         updated++;
       }
+    } else {
+      // Product is not in D1 yet — seed it from the source file's stock
+      // values. Without this, new products are never inserted into the
+      // inventory table and checkout always returns "out of stock" for
+      // them, even when stock > 0 in the product JSON.
+      const variants = {};
+      for (const v of product.variants) {
+        variants[v.id] = {
+          qty: v.stock ?? 0,
+          reserved: 0,
+          backorder: v.backorder ?? false
+        };
+      }
+
+      await d1Query(
+        `INSERT INTO inventory (product_id, variants, last_updated)
+         VALUES (?, ?, datetime('now'))
+         ON CONFLICT(product_id) DO NOTHING`,
+        [product.id, JSON.stringify(variants)]
+      );
+
+      console.log(`   ↳ Seeded new product into D1 inventory: ${product.id}`);
+      seeded++;
     }
   }
 
-  console.log(`   Synced stock for ${updated} products from D1`);
+  console.log(`   Synced stock for ${updated} products from D1, seeded ${seeded} new products`);
 }
 
 if (process.argv[1].endsWith('sync-stock.js')) {
