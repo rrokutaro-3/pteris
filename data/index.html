@@ -75,38 +75,65 @@
       display: grid; grid-template-columns: 1fr auto 1fr;
       align-items: center; height: var(--hh); gap: 8px;
     }
-    .header-left { display: flex; align-items: center; gap: 4px; }
-    .logo {
-      font-size: 13px; font-weight: 400; letter-spacing: .22em;
-      text-transform: lowercase; justify-self: center;
+    .header-left {
+      display: flex; align-items: center; gap: 4px;
+      min-width: 0; justify-self: start;
     }
-    .main-nav { display: none; gap: 18px; align-items: center; }
-    @media (min-width: 960px) {
+    .logo {
+      font-size: 12px; font-weight: 400; letter-spacing: .2em;
+      text-transform: uppercase; justify-self: center;
+      white-space: nowrap;
+    }
+    .main-nav {
+      display: none; gap: 4px; align-items: center;
+      flex-wrap: nowrap; overflow: hidden;
+    }
+    @media (min-width: 1024px) {
       .main-nav { display: flex; }
       .hamburger { display: none !important; }
     }
     .nav-link {
-      font-size: 10px; font-weight: 300; letter-spacing: .14em;
-      text-transform: uppercase;
+      font-size: 10px; font-weight: 300; letter-spacing: .12em;
+      text-transform: uppercase; padding: 6px 8px;
+      white-space: nowrap;
     }
-    .nav-link:hover, .nav-link[aria-current="page"] { opacity: .4; }
-    .nav-link.highlight { opacity: 1; }
+    .nav-link:hover { opacity: .45; }
+    .nav-link[aria-current="page"] { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+    .nav-link.highlight { color: #b00000; }
 
-    .header-actions { display: flex; align-items: center; gap: 2px; justify-self: end; }
+    .header-actions {
+      display: flex; align-items: center; gap: 0; justify-self: end;
+    }
     .icon-btn {
-      font-size: 10px; font-weight: 300; letter-spacing: .1em;
-      text-transform: uppercase; padding: 6px 7px; position: relative;
+      font-size: 10px; font-weight: 300; letter-spacing: .08em;
+      text-transform: uppercase; padding: 8px 6px; position: relative;
+      line-height: 1;
+    }
+    @media (max-width: 420px) {
+      .icon-btn { padding: 8px 5px; letter-spacing: .04em; }
     }
     .icon-btn:hover { opacity: .4; }
     .badge {
-      font-size: 9px; font-weight: 400; display: none; margin-left: 2px;
+      font-size: 9px; font-weight: 400; display: none; margin-left: 1px;
     }
     .badge.visible { display: inline; }
 
     .hamburger {
-      display: flex; flex-direction: column; gap: 4px; padding: 8px 6px;
+      display: flex; flex-direction: column; justify-content: center;
+      gap: 5px; padding: 10px 8px; margin-left: -4px;
     }
-    .hamburger span { display: block; width: 14px; height: 1px; background: var(--text); }
+    .hamburger span {
+      display: block; width: 16px; height: 1px; background: var(--text);
+    }
+
+    /* Mobile drawer cleaner */
+    .mobile-nav-drawer {
+      padding-top: 8px;
+    }
+    .mobile-nav-link {
+      font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+      font-weight: 300; padding: 16px 20px;
+    }
 
     /* —— Mobile menu (Nora) —— */
     .mobile-nav-drawer {
@@ -319,20 +346,42 @@
         padding-top: 20px; align-items: start;
       }
     }
-    .product-gallery { display: flex; flex-direction: column; gap: 6px; }
+    .product-gallery {
+      display: flex; flex-direction: column; gap: 10px;
+      min-width: 0;
+    }
     @media (min-width: 860px) {
       .product-gallery { position: sticky; top: calc(var(--hh) + 12px); }
     }
-    .main-img-wrap {
-      width: 100%; aspect-ratio: 3/4; background: #f3f3f3; overflow: hidden;
+    .pd-gallery-scroll {
+      display: flex; overflow-x: auto; overflow-y: hidden;
+      scroll-snap-type: x mandatory; scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; -ms-overflow-style: none;
+      background: #f3f3f3;
     }
-    .main-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .thumb-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
-    .thumb-img {
-      width: 100%; aspect-ratio: 1; object-fit: cover; cursor: pointer;
-      opacity: .4; border: 1px solid transparent;
+    .pd-gallery-scroll::-webkit-scrollbar { display: none; }
+    .pd-gallery-slide {
+      flex: 0 0 100%; width: 100%; aspect-ratio: 3/4;
+      scroll-snap-align: start; scroll-snap-stop: always;
+      background: #f3f3f3;
     }
-    .thumb-img:hover, .thumb-img.active { opacity: 1; border-color: #0d0d0d; }
+    .pd-gallery-slide img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .pd-gallery-dots {
+      display: flex; justify-content: center; gap: 5px; min-height: 8px;
+    }
+    .pd-gallery-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #ddd; border: 0; padding: 0; cursor: pointer;
+    }
+    .pd-gallery-dot.active { background: #0d0d0d; }
+    /* desktop: still horizontal scroll, slightly taller feel */
+    @media (min-width: 860px) {
+      .pd-gallery-slide { aspect-ratio: 3/4; }
+    }
+    .main-img-wrap, .thumb-grid { display: none; }
 
     .product-info { padding-bottom: 20px; max-width: 420px; }
     @media (min-width: 860px) { .product-info { padding-top: 8px; } }
@@ -389,15 +438,22 @@
     /* Colour dots — Nora */
     .color-swatch {
       width: 22px; height: 22px; border-radius: 50%;
-      border: 1px solid var(--line); padding: 2px; overflow: hidden;
-      cursor: pointer; background: none;
+      border: 1px solid var(--line); padding: 0; overflow: hidden;
+      cursor: pointer; background: #eee;
+      box-sizing: border-box;
     }
-    .color-swatch img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-    .color-swatch.selected { border-color: #0d0d0d; outline: 1px solid #0d0d0d; outline-offset: 1px; }
+    .color-swatch img {
+      width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;
+    }
+    .color-swatch.selected {
+      box-shadow: 0 0 0 1px #fff, 0 0 0 2px #0d0d0d;
+      border-color: transparent;
+    }
     .color-swatch.disabled { opacity: .25; cursor: not-allowed; }
     .color-swatch-label {
-      font-size: 8px; color: var(--muted); text-align: center; margin-top: 2px;
-      max-width: 28px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      font-size: 8px; color: var(--muted); text-align: center; margin-top: 3px;
+      max-width: 36px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      font-weight: 300; letter-spacing: .02em;
     }
 
     .action-row { display: flex; gap: 8px; margin-top: 18px; align-items: stretch; }
@@ -605,11 +661,18 @@
     .skip-link:focus { top: 6px; }
 
     @media (max-width: 600px) {
-      .thumb-grid { grid-template-columns: repeat(4, 1fr); }
       .action-row { flex-wrap: wrap; }
       .action-row .btn-primary { flex: 1 1 100%; order: -1; }
       .qty-selector { flex: 1; justify-content: space-between; }
       .hero { height: 58vh; min-height: 320px; }
+      .product-layout { gap: 16px; padding-top: 0; }
+      .product-info { max-width: none; }
+      .view-section { padding-bottom: 48px; }
+      .header-actions .icon-btn#nav-wishlist-btn { display: none !important; }
+    }
+    @media (max-width: 380px) {
+      .logo { font-size: 11px; letter-spacing: .14em; }
+      .icon-btn { font-size: 9px; }
     }
 </style>
 </head>
@@ -718,10 +781,13 @@
       <div class="product-layout">
         <!-- Gallery -->
         <div class="product-gallery" id="product-gallery">
-          <div class="main-img-wrap">
-            <img id="pd-main-img" src="" alt="" loading="eager">
+          <div class="pd-gallery-scroll" id="pd-gallery-scroll" aria-label="Product images">
+            <!-- slides injected by renderGallery -->
           </div>
-          <div class="thumb-grid" id="pd-thumbs"></div>
+          <div class="pd-gallery-dots" id="pd-gallery-dots" aria-hidden="true"></div>
+          <!-- kept for JS compatibility; hidden -->
+          <img id="pd-main-img" src="" alt="" hidden>
+          <div id="pd-thumbs" hidden></div>
         </div>
         <!-- Info -->
         <div class="product-info">
@@ -1679,8 +1745,12 @@
       document.getElementById('pd-price-block').innerHTML = '';
       document.getElementById('pd-desc').innerHTML = '';
       document.getElementById('pd-options').innerHTML = '';
-      document.getElementById('pd-thumbs').innerHTML = '';
-      document.getElementById('pd-main-img').src = '';
+      const _gs = document.getElementById('pd-gallery-scroll');
+      const _gd = document.getElementById('pd-gallery-dots');
+      if (_gs) _gs.innerHTML = '';
+      if (_gd) _gd.innerHTML = '';
+      const _mi = document.getElementById('pd-main-img');
+      if (_mi) _mi.src = '';
       document.getElementById('pd-stock').style.display = 'none';
       document.getElementById('pd-attributes').style.display = 'none';
       document.getElementById('pd-related-section').style.display = 'none';
@@ -1802,29 +1872,101 @@
     }
 
     function renderGallery(images) {
+      const track = document.getElementById('pd-gallery-scroll');
+      const dots  = document.getElementById('pd-gallery-dots');
       const mainImg = document.getElementById('pd-main-img');
-      const thumbs  = document.getElementById('pd-thumbs');
-      thumbs.innerHTML = '';
+      if (!track) return;
 
-      if (!images?.length) { mainImg.src = ''; return; }
+      track.innerHTML = '';
+      if (dots) dots.innerHTML = '';
 
-      mainImg.src = images[0].url;
-      mainImg.alt = images[0].alt || '';
+      const list = (images && images.length) ? images : [];
+      if (!list.length) {
+        if (mainImg) mainImg.src = '';
+        return;
+      }
 
-      images.forEach((img, i) => {
+      if (mainImg) {
+        mainImg.src = list[0].url || '';
+        mainImg.alt = list[0].alt || '';
+      }
+
+      list.forEach((img, i) => {
+        const slide = document.createElement('div');
+        slide.className = 'pd-gallery-slide';
         const el = document.createElement('img');
-        el.className = 'thumb-img' + (i === 0 ? ' active' : '');
-        el.src = img.url;
+        el.src = img.url || '';
         el.alt = img.alt || '';
-        el.loading = 'lazy';
-        el.addEventListener('click', () => {
-          thumbs.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
-          el.classList.add('active');
-          mainImg.src = img.url;
-          mainImg.alt = img.alt || '';
-        });
-        thumbs.appendChild(el);
+        el.loading = i === 0 ? 'eager' : 'lazy';
+        el.draggable = false;
+        slide.appendChild(el);
+        track.appendChild(slide);
+
+        if (dots) {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'pd-gallery-dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Image ' + (i + 1));
+          dot.addEventListener('click', () => {
+            track.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' });
+          });
+          dots.appendChild(dot);
+        }
       });
+
+      // Sync dots on scroll
+      if (dots && list.length > 1) {
+        track.onscroll = () => {
+          const idx = Math.round(track.scrollLeft / Math.max(track.clientWidth, 1));
+          dots.querySelectorAll('.pd-gallery-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === idx);
+          });
+        };
+      } else if (track) {
+        track.onscroll = null;
+      }
+
+      track.scrollLeft = 0;
+    }
+
+    /** Map Color option / variantGroup names → CSS colour for solid swatches.
+     *  Product schema uses options.Color (e.g. "Black") and variantGroup (e.g. "black").
+     *  Hex can also live on variant.color / variant.hex / options if present. */
+    function resolveVariantColor(variant, groupId) {
+      if (!variant && !groupId) return null;
+      const direct =
+        variant?.color || variant?.hex || variant?.colorHex ||
+        variant?.options?.hex || variant?.options?.Hex ||
+        variant?.options?.['Color Hex'] || variant?.options?.colorHex;
+      if (typeof direct === 'string' && /^#|[a-z]+\(/i.test(direct)) return direct;
+
+      const name = (
+        variant?.options?.Color ||
+        variant?.options?.colour ||
+        variant?.options?.Colour ||
+        groupId ||
+        ''
+      ).toString().trim().toLowerCase();
+
+      const map = {
+        black: '#0d0d0d', white: '#f5f5f5', ivory: '#fffff0', cream: '#f5f0e6',
+        offwhite: '#f7f7f2', 'off-white': '#f7f7f2', beige: '#d4c4a8', taupe: '#b3a18c',
+        grey: '#9a9a9a', gray: '#9a9a9a', charcoal: '#36454f', silver: '#c0c0c0',
+        red: '#c62828', burgundy: '#6d1a2a', wine: '#722f37', pink: '#e8a0bf',
+        rose: '#e8b4b8', coral: '#ff7f50', orange: '#e85d04', yellow: '#f4d35e',
+        gold: '#c9a227', mustard: '#e1ad01', green: '#2d6a4f', olive: '#6b705c',
+        sage: '#9caf88', mint: '#98d4bb', teal: '#008080', blue: '#1d4e89',
+        navy: '#1a2a4a', denim: '#3d5a80', sky: '#87ceeb', purple: '#6b3fa0',
+        lilac: '#c8a2c8', lavender: '#b57edc', brown: '#6f4e37', chocolate: '#3d2314',
+        tan: '#d2b48c', camel: '#c19a6b', nude: '#e3bc9a', khaki: '#c3b091',
+        multi: null, multicolor: null, print: null
+      };
+      if (map[name] !== undefined) return map[name];
+      // partial match e.g. "washed black"
+      for (const [k, v] of Object.entries(map)) {
+        if (name.includes(k) && v) return v;
+      }
+      return null;
     }
 
     /** Available values for one option key given the *other* selections.
@@ -1886,11 +2028,20 @@
           const sw = document.createElement('button');
           sw.type = 'button';
           sw.className = 'color-swatch' + (isSelected ? ' selected' : '') + (!hasStock ? ' disabled' : '');
-          sw.setAttribute('aria-label', 'Select color: ' + gid);
+          const sample = groupVariants[0];
+          const colorLabel = (sample && (sample.options.Color || sample.options.color || sample.options.Colour)) || gid;
+          sw.setAttribute('aria-label', 'Select color: ' + colorLabel);
           sw.setAttribute('aria-pressed', String(isSelected));
-          if (swatchImg) {
+          const solid = resolveVariantColor(groupVariants[0], gid);
+          if (solid) {
+            sw.style.background = solid;
+            // light colours need a visible edge
+            if (/^(#fff|#f5f5f5|#fffff0|#f7f7f2|#f5f0e6|white|ivory)/i.test(solid)) {
+              sw.style.borderColor = '#ccc';
+            }
+          } else if (swatchImg) {
             const swImg = document.createElement('img');
-            swImg.src = swatchImg; swImg.alt = gid; swImg.loading = 'lazy';
+            swImg.src = swatchImg; swImg.alt = colorLabel; swImg.loading = 'lazy';
             sw.appendChild(swImg);
           } else {
             sw.style.background = '#ccc';
@@ -1917,9 +2068,7 @@
           });
           const lbl = document.createElement('span');
           lbl.className = 'color-swatch-label';
-          // Prefer human Color option value over raw group id
-          const sample = groupVariants[0];
-          lbl.textContent = (sample && (sample.options.Color || sample.options.color)) || gid;
+          lbl.textContent = colorLabel;
           swWrapItem.appendChild(sw); swWrapItem.appendChild(lbl);
           swWrap.appendChild(swWrapItem);
         });
@@ -2007,9 +2156,18 @@
         priceEl.textContent = '$' + variant.price.toFixed(2);
       }
 
-      // Gallery: if single-group product, swap image on variant select
-      if (_pdState.groupIds.length <= 1 && variant.image) {
-        document.getElementById('pd-main-img').src = variant.image;
+      // Gallery: prefer scrolling to a slide that matches the variant image
+      if (variant.image) {
+        const mainImg = document.getElementById('pd-main-img');
+        if (mainImg) mainImg.src = variant.image;
+        const track = document.getElementById('pd-gallery-scroll');
+        if (track) {
+          const slides = [...track.querySelectorAll('.pd-gallery-slide img')];
+          const idx = slides.findIndex(img => img.src === variant.image || (img.getAttribute('src') === variant.image));
+          if (idx >= 0) {
+            track.scrollTo({ left: track.clientWidth * idx, behavior: 'smooth' });
+          }
+        }
       }
 
       // Stock
