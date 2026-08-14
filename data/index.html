@@ -1872,47 +1872,80 @@
     }
 
     /**
-     * Gallery images for a variant group via StoreClient.getMediaForGroup.
-     * Client returns images tagged with that variantGroup plus shared
-     * (variantGroup null). If the product has no media entries at all,
-     * fall back to unique variants[].image for that group.
+     * Gallery for the selected variantGroup ONLY.
+     *
+     * StoreClient.getMediaForGroup() also merges shared images
+     * (variantGroup == null). That is useful for common packshots, but if
+     * media is untagged it returns every image for every group — which is
+     * wrong for the product page carousel.
+     *
+     * Order of preference:
+     *   1. media.images with variantGroup === groupId  (strict)
+     *   2. unique variants[].image for SKUs in that group
+     *   3. shared media only (variantGroup null) — last resort
+     *   4. never images belonging to a *different* group
      */
     function getGalleryImages(product, groupId) {
       if (!product) return [];
+      const all = product.media?.images || [];
+      const byOrder = (a, b) => (a.order ?? 0) - (b.order ?? 0);
+      const hasGroupTags = all.some(img => img.variantGroup != null && img.variantGroup !== '');
 
-      if (groupId != null && groupId !== '') {
-        const fromClient = client.getMediaForGroup(product, groupId) || [];
-        if (fromClient.length) return fromClient;
-
-        // No media[] rows — use stills on variants in this group
+      const stillsForGroup = (gid) => {
         const groups = client.getVariantGroups(product);
-        const variants = groups[groupId] || [];
+        const variants = (gid != null && gid !== '')
+          ? (groups[gid] || [])
+          : (product.variants || []);
         const seen = new Set();
         const stills = [];
         for (const v of variants) {
           if (v.image && !seen.has(v.image)) {
             seen.add(v.image);
-            stills.push({ url: v.image, alt: product.identity?.name || product.name || '', variantGroup: groupId });
+            stills.push({
+              url: v.image,
+              alt: product.identity?.name || product.name || '',
+              variantGroup: gid || v.variantGroup || null
+            });
           }
         }
         return stills;
-      }
+      };
 
-      // No group selected: shared-only if possible, else all media, else all variant stills
-      const shared = client.getMediaForGroup(product, null) || [];
-      if (shared.length) return shared;
-      const all = product.media?.images || [];
-      if (all.length) return [...all].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+      if (groupId != null && groupId !== '') {
+        // Always prefer images explicitly tagged to this group
+        const tagged = all.filter(img => img.variantGroup === groupId).sort(byOrder);
+        if (tagged.length) return tagged;
 
-      const seen = new Set();
-      const stills = [];
-      for (const v of product.variants || []) {
-        if (v.image && !seen.has(v.image)) {
-          seen.add(v.image);
-          stills.push({ url: v.image, alt: product.identity?.name || product.name || '' });
+        // Multi-group product without tags: never dump the whole media array
+        const groupCount = Object.keys(client.getVariantGroups(product))
+          .filter(g => g !== 'null').length;
+        const stills = stillsForGroup(groupId);
+        if (stills.length) return stills;
+
+        // Shared packshots only when other images are group-tagged
+        if (hasGroupTags) {
+          return all
+            .filter(img => img.variantGroup == null || img.variantGroup === undefined)
+            .sort(byOrder);
         }
+
+        // Untagged single-look product with multiple groups but no stills:
+        // show nothing from other groups — empty is better than wrong
+        if (groupCount > 1) return [];
+
+        // True single-group / ungrouped catalogue photo set
+        return [...all].sort(byOrder);
       }
-      return stills;
+
+      // No group id
+      if (hasGroupTags) {
+        const shared = all
+          .filter(img => img.variantGroup == null || img.variantGroup === undefined)
+          .sort(byOrder);
+        if (shared.length) return shared;
+      }
+      if (all.length) return [...all].sort(byOrder);
+      return stillsForGroup(null);
     }
 
     function renderGallery(images) {
@@ -1971,7 +2004,7 @@
         variant?.color || variant?.hex || variant?.colorHex ||
         variant?.options?.hex || variant?.options?.Hex ||
         variant?.options?.['Color Hex'] || variant?.options?.colorHex;
-      if (typeof direct === 'string' && /^#|[a-z]+\(/i.test(direct)) return direct;
+      if (typeof direct === 'string' && (/^#/.test(direct) || /^(rgb|hsl)a?\(/i.test(direct))) return direct;
 
       const name = (
         variant?.options?.Color ||
