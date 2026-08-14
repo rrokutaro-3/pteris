@@ -52,11 +52,11 @@ export async function handleAdmin(request, env, { path, method }) {
 
   // ─── PRODUCTS (read from static JSON, not D1) ───
   if (path === '/api/admin/products' && method === 'GET') {
-    // Products are static files — admin reads from CDN or source
+    // Products are static files — admin UI lists them from Pages index.json
     return json({
       message: 'Products are managed via static JSON files in data/source/products/',
       note: 'Edit the JSON files and push to GitHub to trigger a build.',
-      adminTip: 'Use GET /api/admin/inventory to manage stock levels.'
+      adminTip: 'The admin Products page loads the catalog from {STORE_URL}/index.json and full product JSON from {STORE_URL}/products/{id}.json. Use GET /api/admin/inventory to manage live stock levels in D1.'
     });
   }
 
@@ -135,7 +135,24 @@ export async function handleAdmin(request, env, { path, method }) {
     return json({ orders, page, limit, total });
   }
 
-  const orderMatch = path.match(/^\/api\/admin\/orders\/(.+)$/);
+  // Refund must be matched before the generic /orders/:id pattern so the
+  // order id is not polluted with a trailing "/refund" segment.
+  const refundMatch = path.match(/^\/api\/admin\/orders\/([^/]+)\/refund$/);
+  if (refundMatch && method === 'POST') {
+    const id = refundMatch[1];
+    const order = await db.getOrder(id);
+    if (!order) return json({ error: 'Not found' }, 404);
+    const body = await request.json().catch(() => ({}));
+    await db.updateOrderStatus(id, {
+      status: 'refunded',
+      refund_amount: body.amount,
+      refund_reason: body.reason || 'Refund',
+      refunded_at: new Date().toISOString()
+    });
+    return json({ success: true });
+  }
+
+  const orderMatch = path.match(/^\/api\/admin\/orders\/([^/]+)$/);
   if (orderMatch) {
     const id = orderMatch[1];
 
@@ -167,17 +184,6 @@ export async function handleAdmin(request, env, { path, method }) {
         return json({ error: 'No valid fields to update' }, 400);
       }
       await db.updateOrderStatus(id, updates);
-      return json({ success: true });
-    }
-
-    if (method === 'POST' && path.endsWith('/refund')) {
-      const body = await request.json();
-      await db.updateOrderStatus(id, {
-        status: 'refunded',
-        refund_amount: body.amount,
-        refund_reason: body.reason,
-        refunded_at: new Date().toISOString()
-      });
       return json({ success: true });
     }
   }
