@@ -300,7 +300,31 @@
     /* Skip link */
     .skip-link { position: absolute; top: -48px; left: 16px; background: var(--primary); color: #fff; padding: 8px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 600; z-index: 1000; transition: top 0.2s; }
     .skip-link:focus { top: 8px; }
-  </style>
+  
+    /* Refined product options */
+    .opt-btn { min-width: 48px; min-height: 40px; }
+    .opt-btn.selected { box-shadow: 0 0 0 1px var(--primary); }
+    .color-swatch { width: 42px; height: 42px; }
+    .color-swatch.selected { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--primary); }
+    .color-swatch.disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* Checkout polish */
+    .checkout-layout { max-width: 520px; margin: 0 auto; }
+    .checkout-section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 28px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .error-msg { background: #fff0f0; color: var(--danger); padding: 12px 14px; border-radius: var(--radius); margin-bottom: 16px; font-size: 14px; display: none; }
+
+    /* Product page refinements */
+    @media (max-width: 768px) {
+      .product-layout { grid-template-columns: 1fr; gap: 28px; }
+      .product-gallery { position: static; }
+      .hero { height: 55vh; min-height: 320px; }
+      .main-nav { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (min-width: 769px) {
+      .hamburger { display: none; }
+    }
+</style>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -504,6 +528,14 @@
           <label for="co-zip">ZIP / Postal Code</label>
           <input type="text" id="co-zip" autocomplete="postal-code" placeholder="10001">
         </div>
+        <div class="checkout-section-title">Shipping Method</div>
+        <div class="input-group">
+          <label for="co-shipping-method">Method</label>
+          <select id="co-shipping-method">
+            <option value="">Auto (recommended for destination)</option>
+          </select>
+          <p id="co-shipping-hint" style="font-size:12px;color:var(--text-muted);margin-top:6px;"></p>
+        </div>
         <div class="checkout-section-title">Discount</div>
         <div class="input-group">
           <label for="co-coupon">Gift card or discount code <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>
@@ -622,7 +654,11 @@
     const client    = new StoreClient(STORE_URL, { apiUrl: API_URL });
 
     function requireApi() {
-      if (!API_URL) { showToast('Store temporarily unavailable.'); return false; }
+      if (!API_URL) {
+        showToast('Checkout unavailable — Store API is not configured (missing window.__API_URL__).');
+        console.error('[Pteris] API_URL is null. Ensure /store-config.js sets window.__API_URL__ to your Worker URL (e.g. https://lean-store-api.xxx.workers.dev).');
+        return false;
+      }
       return true;
     }
 
@@ -1480,6 +1516,34 @@
       });
     }
 
+    /** Available values for one option key given the *other* selections.
+     *  Excluding the current key is required so that e.g. all sizes for the
+     *  selected colour remain choosable (not only the currently picked size). */
+    function availableValuesForKey(product, selected, key) {
+      const partial = { ...selected };
+      delete partial[key];
+      const avail = client.getAvailableOptions(product, partial);
+      return avail[key] || [];
+    }
+
+    function resolveSelectedGroup(product, options, groupIds) {
+      if (!groupIds.length) return null;
+      // Prefer matching by Color option value → variantGroup
+      const colorVal = options.Color || options.color;
+      if (colorVal) {
+        const match = product.variants.find(v =>
+          (v.options.Color || v.options.color) === colorVal
+        );
+        if (match?.variantGroup) return match.variantGroup;
+      }
+      // Fallback: case-insensitive match of any option value to a group id
+      for (const val of Object.values(options)) {
+        const hit = groupIds.find(g => String(g).toLowerCase() === String(val).toLowerCase());
+        if (hit) return hit;
+      }
+      return groupIds[0];
+    }
+
     function renderPdOptions() {
       const container = document.getElementById('pd-options');
       container.innerHTML = '';
@@ -1488,24 +1552,31 @@
       const groupIds   = _pdState.groupIds;
       const groups     = _pdState.variantGroups;
       const { optionKeys } = client.buildVariantMatrix(product);
-      const available  = client.getAvailableOptions(product, _pdState.options);
+      const selectedGroup = resolveSelectedGroup(product, _pdState.options, groupIds);
 
-      // Color swatches (only when multiple groups exist)
+      // Color / variantGroup swatches (only when multiple groups exist)
       if (groupIds.length > 1) {
+        const colorKey = optionKeys.find(k => k.toLowerCase() === 'color') || 'Color';
+        const displayColor = _pdState.options[colorKey] || selectedGroup || '';
         const grpEl = document.createElement('div');
         grpEl.className = 'option-group';
-        const selectedGroupColor = Object.values(_pdState.options)[0] || groupIds[0];
-        grpEl.innerHTML = '<div class="option-label">Color <em>— ' + (selectedGroupColor || '') + '</em></div>';
+        grpEl.innerHTML = '<div class="option-label">Color <em>— ' + displayColor + '</em></div>';
         const swWrap = document.createElement('div');
-        swWrap.style.cssText = 'display:flex;gap:10px;flex-wrap:wrap;';
+        swWrap.style.cssText = 'display:flex;gap:12px;flex-wrap:wrap;';
         groupIds.forEach(gid => {
+          const groupVariants = groups[gid] || [];
           const groupImgs = client.getMediaForGroup(product, gid);
-          const swatchImg = groups[gid][0]?.image || groupImgs[0]?.url || '';
+          const swatchImg = groupVariants[0]?.image || groupImgs[0]?.url || '';
+          const hasStock = groupVariants.some(v => (v.stock || 0) > 0 || v.backorder);
+          const isSelected = selectedGroup === gid;
+
           const swWrapItem = document.createElement('div');
           swWrapItem.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:4px;';
           const sw = document.createElement('button');
-          sw.className = 'color-swatch' + (Object.values(_pdState.options).some(v => v.toLowerCase() === gid.toLowerCase()) ? ' selected' : '');
+          sw.type = 'button';
+          sw.className = 'color-swatch' + (isSelected ? ' selected' : '') + (!hasStock ? ' disabled' : '');
           sw.setAttribute('aria-label', 'Select color: ' + gid);
+          sw.setAttribute('aria-pressed', String(isSelected));
           if (swatchImg) {
             const swImg = document.createElement('img');
             swImg.src = swatchImg; swImg.alt = gid; swImg.loading = 'lazy';
@@ -1514,21 +1585,30 @@
             sw.style.background = '#ccc';
           }
           sw.addEventListener('click', () => {
+            if (!hasStock && !groupVariants.length) return;
             renderGallery(client.getMediaForGroup(product, gid));
-            // Try to preserve current size selection for new group
+            // Preserve size when switching colour if that size exists in the new group
             const sizeKey = optionKeys.find(k => k.toLowerCase() !== 'color');
             const currentSize = sizeKey ? _pdState.options[sizeKey] : null;
-            const matchingVar = currentSize
-              ? (groups[gid].find(v => v.options[sizeKey] === currentSize && (v.stock > 0 || v.backorder)) || groups[gid].find(v => v.stock > 0 || v.backorder))
-              : groups[gid].find(v => v.stock > 0 || v.backorder);
-            const target = matchingVar || groups[gid][0];
-            _pdState.options = { ...target.options };
+            let target = null;
+            if (currentSize) {
+              target = groupVariants.find(v => v.options[sizeKey] === currentSize && ((v.stock || 0) > 0 || v.backorder))
+                    || groupVariants.find(v => v.options[sizeKey] === currentSize);
+            }
+            if (!target) {
+              target = groupVariants.find(v => (v.stock || 0) > 0 || v.backorder) || groupVariants[0];
+            }
+            if (target) {
+              _pdState.options = { ...target.options };
+            }
             renderPdOptions();
             refreshPdVariantState();
           });
           const lbl = document.createElement('span');
           lbl.className = 'color-swatch-label';
-          lbl.textContent = gid;
+          // Prefer human Color option value over raw group id
+          const sample = groupVariants[0];
+          lbl.textContent = (sample && (sample.options.Color || sample.options.color)) || gid;
           swWrapItem.appendChild(sw); swWrapItem.appendChild(lbl);
           swWrap.appendChild(swWrapItem);
         });
@@ -1536,30 +1616,47 @@
         container.appendChild(grpEl);
       }
 
-      // Other option selectors (Size etc.)
+      // Other option selectors (Size, etc.) — skip Color when using group swatches
       optionKeys.forEach(key => {
         if (groupIds.length > 1 && key.toLowerCase() === 'color') return;
 
+        // Critical fix: availability for this key ignores the current value of this key
+        const availableVals = availableValuesForKey(product, _pdState.options, key);
         const values = [...new Set(product.variants.map(v => v.options[key]))];
+
         const grpEl  = document.createElement('div');
         grpEl.className = 'option-group';
         const lbl = document.createElement('div');
         lbl.className = 'option-label';
-        lbl.innerHTML = key + ' <em>— ' + (_pdState.options[key] || '') + '</em>';
+        lbl.innerHTML = key + ' <em>— ' + (_pdState.options[key] || 'Select') + '</em>';
         grpEl.appendChild(lbl);
         const btnWrap = document.createElement('div');
         btnWrap.className = 'option-buttons';
         values.forEach(val => {
           const isSelected  = _pdState.options[key] === val;
-          const isAvailable = available[key]?.includes(val);
+          const isAvailable = availableVals.includes(val);
           const btn = document.createElement('button');
+          btn.type = 'button';
           btn.className = 'opt-btn' + (isSelected ? ' selected' : '') + (!isAvailable ? ' disabled' : '');
           btn.textContent = val;
-          btn.setAttribute('aria-pressed', isSelected);
+          btn.setAttribute('aria-pressed', String(isSelected));
           if (!isAvailable) btn.setAttribute('aria-disabled', 'true');
           btn.addEventListener('click', () => {
             if (btn.classList.contains('disabled')) return;
-            _pdState.options[key] = val;
+            _pdState.options = { ..._pdState.options, [key]: val };
+            // If the new combination is invalid, snap to a valid variant
+            const exact = product.variants.find(v =>
+              Object.entries(_pdState.options).every(([k, val2]) => v.options[k] === val2)
+            );
+            if (!exact) {
+              const partial = { ..._pdState.options };
+              // Prefer keeping color / group
+              const match = product.variants.find(v =>
+                Object.entries(partial).every(([k, val2]) => k === key || v.options[k] === val2) &&
+                ((v.stock || 0) > 0 || v.backorder)
+              ) || product.variants.find(v => v.options[key] === val);
+              if (match) _pdState.options = { ...match.options };
+            }
             renderPdOptions();
             refreshPdVariantState();
           });
@@ -1662,10 +1759,34 @@
     }
 
     // ─── View: Checkout ───
-    function renderCheckout() {
+    async function renderCheckout() {
       if (!appState.state.cart.length) { navigate('/', { replace: true }); return; }
       document.getElementById('view-checkout').classList.add('active');
       updateMeta('Checkout');
+
+      // Populate shipping methods from shipping.json (compatible with Worker)
+      const sel = document.getElementById('co-shipping-method');
+      const hint = document.getElementById('co-shipping-hint');
+      if (sel && sel.options.length <= 1) {
+        try {
+          const shippingCfg = await client.getConfig('shipping');
+          const profiles = shippingCfg?.profiles || [];
+          profiles.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.id;
+            opt.textContent = p.name + (p.deliveryTime ? ' — ' + p.deliveryTime : '');
+            sel.appendChild(opt);
+          });
+          if (shippingCfg?.defaultProfile) {
+            // Prefer leaving "Auto" selected; user can override
+          }
+          if (hint) {
+            hint.textContent = 'Leave on Auto to let the server pick a profile that serves your country. Rates use weight tiers from shipping.json.';
+          }
+        } catch (e) {
+          console.warn('[Pteris] Could not load shipping config for method list:', e);
+        }
+      }
     }
 
     document.getElementById('co-submit').addEventListener('click', async () => {
@@ -1705,16 +1826,35 @@
         image:     i.image
       }));
 
+      const methodEl = document.getElementById('co-shipping-method');
+      const shippingMethod = methodEl ? methodEl.value : undefined;
+
       try {
+        const shippingPayload = {
+          country, state, address1, address2: address2 || undefined, city, zip
+        };
+        if (shippingMethod) shippingPayload.method = shippingMethod;
+
         const result = await client.createCheckout(
           cartPayload,
           { email, name: fname + ' ' + lname, firstName: fname, lastName: lname },
-          { country, state, address1, address2, city, zip },
+          shippingPayload,
           coupon
         );
+        if (!result?.checkoutUrl) {
+          throw new Error('Checkout response missing checkoutUrl');
+        }
         window.location.href = result.checkoutUrl;
       } catch (err) {
-        errEl.textContent = err.message || 'Checkout failed. Please check your details and try again.';
+        const msg = (err && err.message) ? String(err.message) : 'Checkout failed. Please check your details and try again.';
+        // Friendlier messages for common failure modes
+        if (/failed to fetch|network|cors/i.test(msg)) {
+          errEl.textContent = 'Cannot reach the Store API. Check that window.__API_URL__ points to your Worker and CORS is enabled.';
+        } else if (/api.?url|not configured|unavailable/i.test(msg)) {
+          errEl.textContent = 'Store API is not available. Deploy the Worker and set window.__API_URL__ in store-config.js.';
+        } else {
+          errEl.textContent = msg;
+        }
         errEl.style.display = 'block';
         btn.disabled    = false;
         btn.textContent = 'Proceed to Payment';
