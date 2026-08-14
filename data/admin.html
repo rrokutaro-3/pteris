@@ -3,23 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pteris Admin</title>
+<title>Pteris Admin Console</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a0a;
-  --surface: #121212;
+  --bg: #050505;
+  --surface: #101010;
   --elevated: #1a1a1a;
-  --text: #ececec;
+  --elevated-hover: #222222;
+  --text: #ededed;
   --muted: #888;
   --line: #2a2a2a;
   --line2: #3d3d3d;
   --danger: #d48484;
   --ok: #8fbf9a;
   --warn: #c4a574;
-  --sidebar-w: 200px;
+  --dirty: rgba(143, 191, 154, 0.12);
+  --sidebar-w: 220px;
   --font: Inter, system-ui, sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,253 +29,278 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   font-family: var(--font); font-weight: 300; font-size: 12px;
   color: var(--text); background: var(--bg); line-height: 1.45;
-  -webkit-font-smoothing: antialiased; min-height: 100vh;
+  -webkit-font-smoothing: antialiased; min-height: 100vh; overflow-y: hidden;
 }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; border: 0; background: none; }
 a { color: var(--text); }
 code { font-size: 11px; color: var(--muted); }
-table { width: 100%; border-collapse: collapse; }
-th, td { text-align: left; padding: 9px 11px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-th { font-size: 9px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* Tables */
+table { width: 100%; border-collapse: separate; border-spacing: 0; }
+th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* Connect Screen */
 #connect {
   min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;
 }
 .connect-card {
-  width: min(380px, 100%); background: var(--surface); border: 1px solid var(--line); padding: 28px 24px;
+  width: min(400px, 100%); background: var(--surface); border: 1px solid var(--line); padding: 32px 28px; border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 .connect-card h1 {
-  font-size: 11px; font-weight: 400; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 8px;
+  font-size: 12px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 8px;
 }
-.connect-card > p { color: var(--muted); margin-bottom: 22px; font-size: 12px; }
-.field { margin-bottom: 12px; }
+.connect-card > p { color: var(--muted); margin-bottom: 24px; font-size: 12px; line-height: 1.5; }
+.field { margin-bottom: 14px; }
 .field label {
   display: block; font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 6px;
+  color: var(--muted); margin-bottom: 6px; font-weight: 500;
 }
 .field input, .field select, .field textarea {
-  width: 100%; padding: 11px 12px; border: 1px solid var(--line);
-  background: var(--bg); outline: none;
+  width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px;
+  background: var(--bg); outline: none; transition: border-color 0.2s, box-shadow 0.2s;
 }
-.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--line2); }
+.field input:focus, .field select:focus, .field textarea:focus { 
+  border-color: #666; box-shadow: 0 0 0 2px rgba(255,255,255,0.05); 
+}
 .field textarea { min-height: 72px; resize: vertical; }
 .err {
-  display: none; margin-top: 12px; padding: 10px 12px;
-  border: 1px solid var(--line); color: var(--danger); font-size: 11px;
+  display: none; margin-top: 14px; padding: 10px 12px; border-radius: 4px;
+  background: rgba(212, 132, 132, 0.1); border: 1px solid rgba(212, 132, 132, 0.3); 
+  color: var(--danger); font-size: 11px;
 }
 .err.show { display: block; }
 
-#app { display: none; min-height: 100vh; }
+/* Main App Layout */
+#app { display: none; height: 100vh; overflow: hidden; }
 #app.open { display: grid; grid-template-columns: var(--sidebar-w) 1fr; }
-.scrim {
-  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 35;
-}
+.scrim { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 35; backdrop-filter: blur(2px); }
 .scrim.open { display: block; }
+
 @media (max-width: 880px) {
   #app.open { grid-template-columns: 1fr; }
   #sidebar {
     position: fixed; inset: 0 auto 0 0; width: min(280px, 90vw); z-index: 40;
-    transform: translateX(-105%); transition: transform .15s linear;
+    transform: translateX(-105%); transition: transform .2s cubic-bezier(0.4, 0, 0.2, 1);
     border-right: 1px solid var(--line);
   }
   #sidebar.open { transform: translateX(0); }
   .mobile-bar { display: flex !important; }
 }
 
+/* Sidebar */
 #sidebar {
   background: var(--surface); border-right: 1px solid var(--line);
-  display: flex; flex-direction: column; padding: 16px 0; min-height: 100vh;
+  display: flex; flex-direction: column; padding: 24px 0; height: 100vh;
 }
 .side-brand {
-  padding: 0 16px 14px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
-  border-bottom: 1px solid var(--line); margin-bottom: 8px;
+  padding: 0 20px 16px; font-size: 12px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+  border-bottom: 1px solid var(--line); margin-bottom: 16px;
 }
 .side-meta {
-  padding: 0 16px 12px; font-size: 10px; color: var(--muted);
-  word-break: break-all; line-height: 1.4;
+  padding: 0 20px 16px; font-size: 10px; color: var(--muted);
+  word-break: break-all; line-height: 1.5;
 }
 .nav-btn {
-  width: 100%; padding: 10px 16px; text-align: left;
-  font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
-  display: flex; align-items: center; gap: 8px;
+  width: 100%; padding: 10px 20px; text-align: left;
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+  display: flex; align-items: center; gap: 8px; transition: background 0.15s, color 0.15s;
 }
-.nav-btn:hover, .nav-btn.active { color: var(--text); background: var(--bg); }
+.nav-btn:hover, .nav-btn.active { color: var(--text); background: var(--elevated); }
+.nav-btn.active { font-weight: 500; border-left: 2px solid var(--text); padding-left: 18px; }
 .nav-btn .dot {
-  width: 5px; height: 5px; border-radius: 50%; background: var(--danger);
+  width: 6px; height: 6px; border-radius: 50%; background: var(--danger);
   margin-left: auto; display: none;
 }
 .nav-btn .dot.show { display: block; }
-.side-foot { margin-top: auto; padding: 12px 16px; border-top: 1px solid var(--line); }
+.side-foot { margin-top: auto; padding: 16px 20px; border-top: 1px solid var(--line); }
 .side-foot button {
   font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  transition: color 0.15s;
 }
 .side-foot button:hover { color: var(--danger); }
 
-main { min-width: 0; }
+/* Main Content Area */
+main { min-width: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: var(--bg); }
 .mobile-bar {
   display: none; align-items: center; justify-content: space-between;
-  padding: 12px 14px; background: var(--surface); border-bottom: 1px solid var(--line);
+  padding: 14px 18px; background: var(--surface); border-bottom: 1px solid var(--line);
 }
-.mobile-bar button { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.mobile-bar button { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
 .top {
   display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
-  padding: 14px 18px; border-bottom: 1px solid var(--line); background: var(--surface);
+  padding: 20px 24px; border-bottom: 1px solid var(--line); background: var(--surface); flex-shrink: 0;
 }
-.top h1 { font-size: 11px; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; }
-.content { padding: 16px 18px 48px; max-width: 1120px; }
+.top h1 { font-size: 13px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
+.content { padding: 24px; max-width: 1200px; width: 100%; margin: 0 auto; overflow-y: auto; flex: 1; }
 
+/* Buttons */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 10px 14px; font-size: 10px; font-weight: 400;
+  padding: 9px 16px; font-size: 10px; font-weight: 500;
   letter-spacing: .1em; text-transform: uppercase; border: 1px solid transparent;
+  border-radius: 4px; transition: all 0.15s;
 }
 .btn-primary { background: #ececec; color: #0a0a0a; border-color: #ececec; }
-.btn-primary:hover { background: #fff; }
+.btn-primary:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(255,255,255,0.1); }
 .btn-outline { background: transparent; border-color: var(--line2); color: var(--text); }
-.btn-outline:hover { border-color: #666; }
+.btn-outline:hover { border-color: var(--muted); background: var(--surface); }
 .btn-ghost { color: var(--muted); }
-.btn-ghost:hover { color: var(--text); }
+.btn-ghost:hover { color: var(--text); background: var(--elevated); }
 .btn-danger { color: var(--danger); border: 1px solid var(--line); }
-.btn-sm { padding: 7px 10px; font-size: 9px; }
-.btn:disabled { opacity: .35; cursor: not-allowed; }
+.btn-danger:hover { background: rgba(212, 132, 132, 0.1); }
+.btn-success { background: var(--ok); color: var(--bg); border-color: var(--ok); }
+.btn-sm { padding: 6px 12px; font-size: 9px; }
+.btn:disabled { opacity: .4; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
+/* Dashboard Cards */
 .cards {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
-  gap: 8px; margin-bottom: 16px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px; margin-bottom: 24px;
 }
-.card { background: var(--surface); border: 1px solid var(--line); padding: 14px; }
-.card .k { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-.card .v { font-size: 18px; font-weight: 300; }
-.card .s { font-size: 10px; color: var(--muted); margin-top: 4px; }
+.card { background: var(--surface); border: 1px solid var(--line); padding: 20px; border-radius: 6px; }
+.card .k { font-size: 9px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.card .v { font-size: 24px; font-weight: 300; }
+.card .s { font-size: 11px; color: var(--muted); margin-top: 8px; }
 
-.panel { background: var(--surface); border: 1px solid var(--line); margin-bottom: 12px; }
+/* Panels & Sticky Tables */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 16px; display: flex; flex-direction: column; overflow: hidden; }
 .panel-h {
-  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
-  padding: 11px 13px; border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 16px; border-bottom: 1px solid var(--line); background: var(--surface); z-index: 2;
 }
-.panel-h h2 { font-size: 10px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; }
-.panel-b { overflow-x: auto; }
+.panel-h h2 { font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
+.panel-b { overflow-x: auto; max-height: calc(100vh - 280px); overflow-y: auto; }
+.panel-b thead th { position: sticky; top: 0; background: var(--elevated); z-index: 10; border-bottom: 1px solid var(--line2); }
 
-.tabs { display: flex; flex-wrap: wrap; gap: 0; }
+/* Dirty Row Indicator */
+.dirty-row td { background: var(--dirty) !important; }
+tr { transition: background 0.15s; }
+tr:hover td { background: var(--elevated); }
+
+/* Badges & Utilities */
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; }
 .tab {
-  padding: 8px 11px; font-size: 10px; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--muted); border-bottom: 1px solid transparent;
+  padding: 6px 14px; font-size: 10px; font-weight: 500; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted); border-radius: 4px; transition: all 0.15s;
 }
-.tab.active { color: var(--text); border-bottom-color: #ececec; }
+.tab:hover { background: var(--elevated); color: var(--text); }
+.tab.active { color: var(--bg); background: var(--text); }
 
 .badge {
-  display: inline-block; padding: 2px 7px; font-size: 9px;
-  letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--line);
+  display: inline-block; padding: 4px 8px; font-size: 9px; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 3px;
 }
-.badge.paid, .badge.shipped { color: var(--ok); border-color: #2a3a2e; }
-.badge.pending { color: var(--warn); border-color: #3a3220; }
-.badge.cancelled, .badge.refunded { color: var(--danger); border-color: #3a2a2a; }
-.badge.low { color: var(--warn); }
+.badge.paid, .badge.shipped, .badge.active-status { color: var(--ok); background: rgba(143, 191, 154, 0.1); border-color: rgba(143, 191, 154, 0.3); }
+.badge.pending, .badge.draft-status { color: var(--warn); background: rgba(196, 165, 116, 0.1); border-color: rgba(196, 165, 116, 0.3); }
+.badge.cancelled, .badge.refunded { color: var(--danger); background: rgba(212, 132, 132, 0.1); border-color: rgba(212, 132, 132, 0.3); }
+.badge.archived-status { color: var(--muted); background: var(--elevated); }
+.badge.low { color: var(--warn); font-weight: 600; }
 
-.empty { padding: 28px 14px; text-align: center; color: var(--muted); }
+.empty { padding: 40px 20px; text-align: center; color: var(--muted); font-size: 11px; }
 .muted { color: var(--muted); }
-.mono { font-variant-numeric: tabular-nums; word-break: break-all; }
-.hint { color: var(--muted); margin-bottom: 12px; line-height: 1.55; font-size: 11px; }
-.search, .input-sm {
-  padding: 8px 10px; border: 1px solid var(--line); background: var(--bg);
-}
-.search { min-width: 140px; }
-.input-sm { width: 72px; }
+.mono { font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; }
+.hint { color: var(--muted); margin-bottom: 16px; line-height: 1.6; font-size: 12px; max-width: 800px; }
+.copy-text { cursor: pointer; border-bottom: 1px dashed var(--muted); transition: color 0.15s, border-color 0.15s; }
+.copy-text:hover { color: var(--text); border-bottom-color: var(--text); }
 
-.overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.55);
-  z-index: 50; opacity: 0; pointer-events: none;
-}
-.overlay.open { opacity: 1; pointer-events: all; }
+.search, .input-sm { padding: 8px 12px; border: 1px solid var(--line); background: var(--bg); border-radius: 4px; outline: none; transition: border-color 0.2s; }
+.search:focus, .input-sm:focus { border-color: #666; }
+.search { min-width: 240px; }
+.input-sm { width: 80px; text-align: center; }
+
+/* Drawer */
 .drawer {
-  position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100vw);
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(480px, 100vw);
   background: var(--surface); z-index: 60; border-left: 1px solid var(--line);
-  transform: translateX(100%); transition: transform .15s linear;
-  display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex; flex-direction: column; box-shadow: -4px 0 32px rgba(0,0,0,0.6);
 }
 .drawer.open { transform: translateX(0); }
 .drawer-h, .drawer-f {
   display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;
-  padding: 12px 14px; border-bottom: 1px solid var(--line);
+  padding: 16px 20px; background: var(--elevated);
 }
-.drawer-f { border-bottom: 0; border-top: 1px solid var(--line); }
-.drawer-h h2 { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; font-weight: 400; }
-.drawer-b { flex: 1; overflow-y: auto; padding: 14px; }
-.dl { margin-bottom: 14px; }
+.drawer-h { border-bottom: 1px solid var(--line); }
+.drawer-f { border-top: 1px solid var(--line); margin-top: auto; }
+.drawer-h h2 { font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
+.drawer-b { flex: 1; overflow-y: auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 24px; }
+
 .dl h3 {
-  font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 6px; font-weight: 400;
+  font-size: 9px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 8px;
 }
-.dl ul { list-style: none; }
+.dl p { margin-bottom: 6px; font-size: 12px; }
+.order-items-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+.order-item-row { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid var(--line2); }
+.order-item-row:last-child { border-bottom: none; padding-bottom: 0; }
+.order-item-img { width: 56px; height: 70px; object-fit: cover; border-radius: 4px; background: var(--elevated); border: 1px solid var(--line); }
+.order-item-details { flex: 1; min-width: 0; }
+.order-item-title { font-size: 12px; margin-bottom: 6px; line-height: 1.4; font-weight: 500; }
+.order-item-meta { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
 
+/* Toasts */
 .toast {
-  position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
-  background: #ececec; color: #0a0a0a; padding: 10px 14px; font-size: 11px;
-  z-index: 100; opacity: 0; pointer-events: none; max-width: calc(100vw - 24px);
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--text); color: var(--bg); padding: 12px 24px; font-size: 12px; font-weight: 500;
+  border-radius: 6px; z-index: 100; opacity: 0; pointer-events: none; max-width: calc(100vw - 40px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 }
-.toast.show { opacity: 1; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.error { background: var(--danger); color: #fff; }
 
-.page { display: none; }
+.page { display: none; animation: fadeIn 0.25s ease; }
 .page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-.tools-grid {
-  display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-}
-.tool-card { background: var(--surface); border: 1px solid var(--line); padding: 16px; }
-.tool-card h3 {
-  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
-  font-weight: 400; margin-bottom: 8px;
-}
-.tool-card p { color: var(--muted); margin-bottom: 12px; font-size: 11px; }
-
+/* Product Editor Specifics */
 .upload-zone {
-  border: 1px dashed var(--line2); padding: 20px; text-align: center;
-  background: var(--bg); color: var(--muted); margin: 12px 13px;
+  border: 1px dashed var(--line2); padding: 32px 20px; text-align: center; border-radius: 6px;
+  background: var(--elevated); color: var(--muted); margin: 16px; transition: all 0.2s;
 }
-.upload-zone.drag { border-color: #888; color: var(--text); }
+.upload-zone.drag { border-color: var(--text); color: var(--text); background: var(--line); }
 
-.media-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-  gap: 10px; padding: 13px;
-}
+.table-img { width: 40px; height: 50px; object-fit: cover; border-radius: 4px; background: var(--elevated); }
+
+.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; padding: 16px; }
 .media-card {
-  border: 1px solid var(--line); background: var(--bg); overflow: hidden;
-  display: flex; flex-direction: column;
+  border: 1px solid var(--line); background: var(--bg); border-radius: 6px; overflow: hidden;
+  display: flex; flex-direction: column; transition: border-color 0.2s;
 }
+.media-card:hover { border-color: var(--line2); }
 .media-thumb {
-  aspect-ratio: 1; background: var(--elevated);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--muted); font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
-  overflow: hidden;
+  aspect-ratio: 1; background: var(--elevated); display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; overflow: hidden;
 }
 .media-thumb img, .media-thumb video { width: 100%; height: 100%; object-fit: cover; }
-.media-meta { padding: 8px; font-size: 10px; }
-.media-meta .name {
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px;
-}
-.media-actions { display: flex; gap: 4px; flex-wrap: wrap; padding: 0 8px 8px; }
+.media-meta { padding: 12px; font-size: 11px; }
+.media-meta .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; font-weight: 500; }
+.media-actions { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 12px 12px; }
 
 .media-row {
-  display: grid; gap: 8px; padding: 12px; margin-bottom: 8px;
-  border: 1px solid var(--line); background: var(--bg);
-  grid-template-columns: 1fr;
+  display: grid; gap: 12px; padding: 16px; margin-bottom: 10px; border-radius: 6px;
+  border: 1px solid var(--line); background: var(--elevated); grid-template-columns: 1fr;
 }
 @media (min-width: 700px) {
-  .media-row { grid-template-columns: 56px 1fr minmax(100px,140px) 64px auto; align-items: start; }
+  .media-row { grid-template-columns: 60px 1fr minmax(120px,160px) 70px auto; align-items: center; }
 }
-.media-row .thumb {
-  width: 56px; height: 56px; background: var(--elevated); overflow: hidden;
-}
+.media-row .thumb { width: 60px; height: 60px; background: var(--bg); border-radius: 4px; overflow: hidden; border: 1px solid var(--line); }
 .media-row .thumb img { width: 100%; height: 100%; object-fit: cover; }
-.media-row input {
-  width: 100%; padding: 8px 10px; border: 1px solid var(--line); background: var(--surface);
-}
 .json-out {
-  width: 100%; min-height: 160px; padding: 12px; border: 1px solid var(--line);
-  background: var(--bg); color: var(--text); font-size: 11px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.4;
+  width: 100%; min-height: 280px; padding: 16px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--elevated); color: var(--text); font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.5;
+  outline: none; transition: border-color 0.2s; resize: vertical;
 }
+.json-out:focus { border-color: var(--muted); }
 </style>
 </head>
 <body>
@@ -284,7 +311,7 @@ main { min-width: 0; }
     <p>Monochrome ops console. Connect with your Worker admin key.</p>
     <div class="field">
       <label for="conn-api">API URL</label>
-      <input id="conn-api" type="url" value="https://lean-store-api.rrokutaro.workers.dev/api" autocomplete="url">
+      <input id="conn-api" type="url" value="" autocomplete="url" placeholder="https://your-worker.workers.dev/api">
     </div>
     <div class="field">
       <label for="conn-key">Admin API key</label>
@@ -292,9 +319,9 @@ main { min-width: 0; }
     </div>
     <div class="field">
       <label for="conn-store">Store URL (Pages)</label>
-      <input id="conn-store" type="url" value="https://pteris-store.pages.dev" autocomplete="url">
+      <input id="conn-store" type="url" value="" autocomplete="url" placeholder="https://your-store.pages.dev">
     </div>
-    <button type="button" class="btn btn-primary" style="width:100%;margin-top:6px" id="conn-btn">Connect</button>
+    <button type="button" class="btn btn-primary" style="width:100%;margin-top:10px" id="conn-btn">Connect</button>
     <div class="err" id="conn-err"></div>
   </div>
 </div>
@@ -330,102 +357,147 @@ main { min-width: 0; }
     </div>
     <div class="content">
 
+      <!-- DASHBOARD PAGE -->
       <section class="page active" id="page-dashboard">
-        <div class="cards" id="stat-cards"><div class="empty">Loading…</div></div>
+        <div class="cards" id="stat-cards"><div class="empty">Loading stats…</div></div>
         <div class="panel">
-          <div class="panel-h"><h2>Quick</h2></div>
-          <div class="panel-b" style="padding:12px;display:flex;gap:8px;flex-wrap:wrap">
-            <button type="button" class="btn btn-outline btn-sm" data-goto="products">Products</button>
-            <button type="button" class="btn btn-outline btn-sm" data-goto="inventory">Inventory</button>
-            <button type="button" class="btn btn-outline btn-sm" data-goto="orders">Orders</button>
-            <button type="button" class="btn btn-outline btn-sm" data-goto="media">Media</button>
-            <button type="button" class="btn btn-outline btn-sm" id="dash-cleanup">Clean reservations</button>
+          <div class="panel-h"><h2>Quick Actions</h2></div>
+          <div class="panel-b" style="padding:20px;display:flex;gap:12px;flex-wrap:wrap">
+            <button type="button" class="btn btn-outline" data-goto="products">Manage Products</button>
+            <button type="button" class="btn btn-outline" data-goto="inventory">Update Stock</button>
+            <button type="button" class="btn btn-outline" data-goto="orders">View Orders</button>
+            <button type="button" class="btn btn-outline" id="dash-cleanup">Clean Expired Reservations</button>
           </div>
         </div>
       </section>
 
+      <!-- PRODUCTS PAGE -->
       <section class="page" id="page-products">
-        <p class="hint">
-          Load a product from Pages, bulk-upload media, set <strong>variantGroup</strong> / alt / order,
-          then download JSON into <code>data/source/products/</code>. Uploads are kept in the Media library on this device.
-          Worker upload allows images &amp; video only.
-        </p>
-        <div class="panel">
-          <div class="panel-h">
-            <h2>Load product</h2>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <input class="search" id="prod-id" placeholder="Product id e.g. p-pp-008" style="min-width:180px">
-              <button type="button" class="btn btn-outline btn-sm" id="prod-load">Load</button>
+        
+        <!-- Products List View -->
+        <div id="prod-list-view">
+          <p class="hint">
+            Products are sourced from your compiled catalog (`index.json`). Note: Draft or archived products do not appear in the public index and must be loaded by ID.
+          </p>
+          <div class="panel">
+            <div class="panel-h">
+              <h2>Catalog</h2>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                <input class="search" id="prod-search-filter" placeholder="Search catalog...">
+                <div style="width:1px;height:16px;background:var(--line);margin:0 4px;"></div>
+                <input class="input-sm" id="prod-id" placeholder="Load ID" style="width:120px;">
+                <button type="button" class="btn btn-outline btn-sm" id="prod-load">Load</button>
+                <div style="width:1px;height:16px;background:var(--line);margin:0 4px;"></div>
+                <button type="button" class="btn btn-outline btn-sm" id="prod-new">+ New Product</button>
+                <button type="button" class="btn btn-primary btn-sm" id="prod-list-refresh">Refresh</button>
+              </div>
+            </div>
+            <div class="panel-b">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:56px">Img</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th style="width:110px"></th>
+                  </tr>
+                </thead>
+                <tbody id="prod-list-body">
+                  <tr><td colspan="5" class="empty">Loading catalog...</td></tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-        <div id="prod-editor" style="display:none">
+
+        <!-- Product Editor View -->
+        <div id="prod-editor-view" style="display:none">
+          <button type="button" class="btn btn-ghost btn-sm" id="pe-back" style="margin-bottom: 16px;">← Back to Catalog</button>
+          
           <div class="panel">
             <div class="panel-h"><h2>Identity</h2></div>
-            <div class="panel-b" style="padding:14px;display:grid;gap:10px;max-width:480px">
-              <div class="field"><label>Name</label><input id="pe-name"></div>
-              <div class="field"><label>Slug</label><input id="pe-slug"></div>
-              <div class="field"><label>Brand</label><input id="pe-brand"></div>
-              <p class="muted" id="pe-groups"></p>
+            <div class="panel-b" style="padding:20px;display:grid;gap:14px;max-width:500px">
+              <div class="field" style="margin:0"><label>Name</label><input id="pe-name"></div>
+              <div class="field" style="margin:0"><label>Slug</label><input id="pe-slug"></div>
+              <div class="field" style="margin:0"><label>Brand</label><input id="pe-brand"></div>
+              <p class="muted" id="pe-groups" style="font-size:11px;margin-top:4px;"></p>
             </div>
           </div>
+          
           <div class="panel">
             <div class="panel-h">
-              <h2>Media</h2>
-              <button type="button" class="btn btn-outline btn-sm" id="pe-add-url">Add URL row</button>
+              <h2>Media Library</h2>
+              <button type="button" class="btn btn-outline btn-sm" id="pe-add-url">+ Add URL row</button>
             </div>
             <div class="upload-zone" id="pe-drop">
               Drop images/videos or
-              <label style="text-decoration:underline;cursor:pointer;margin-left:4px">choose files
+              <label style="text-decoration:underline;cursor:pointer;margin-left:4px;color:var(--text);">choose files
                 <input type="file" id="pe-files" accept="image/*,video/*" multiple hidden>
               </label>
-              <div style="margin-top:8px;font-size:10px">Creates rows — set variantGroup on each</div>
+              <div style="margin-top:10px;font-size:11px">Creates new rows — assign <strong>variantGroup</strong> and <strong>order</strong> to each.</div>
             </div>
-            <div id="pe-media-list" style="padding:0 13px 13px"></div>
+            <div id="pe-media-list" style="padding:0 20px 20px"></div>
           </div>
+          
           <div class="panel">
             <div class="panel-h">
-              <h2>Export</h2>
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <h2>Raw JSON Payload</h2>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button type="button" class="btn btn-outline btn-sm" id="pe-apply-json">Format & Update UI</button>
                 <button type="button" class="btn btn-outline btn-sm" id="pe-copy">Copy JSON</button>
                 <button type="button" class="btn btn-primary btn-sm" id="pe-download">Download JSON</button>
               </div>
             </div>
-            <div class="panel-b" style="padding:13px">
-              <textarea class="json-out" id="pe-json" readonly></textarea>
+            <div class="panel-b" style="padding:20px">
+              <textarea class="json-out" id="pe-json" spellcheck="false"></textarea>
+              <p class="muted" style="margin-top:16px;font-size:12px;">
+                Replace or create the file in <code>data/source/products/</code> with this payload and commit to GitHub to deploy updates.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- INVENTORY PAGE -->
       <section class="page" id="page-inventory">
         <div class="panel">
           <div class="panel-h">
-            <h2>Stock</h2>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-              <input class="search" id="inv-search" placeholder="Filter product id…">
-              <label class="muted" style="display:flex;gap:6px;align-items:center;font-size:10px;letter-spacing:.06em;text-transform:uppercase">
+            <h2>Stock Levels</h2>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+              <input class="search" id="inv-search" placeholder="Filter product ID or name…">
+              <label class="muted" style="display:flex;gap:6px;align-items:center;font-size:10px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;">
                 <input type="checkbox" id="inv-low-only"> Low only
               </label>
+              <div style="width:1px;height:16px;background:var(--line);"></div>
               <button type="button" class="btn btn-outline btn-sm" id="inv-refresh">Refresh</button>
             </div>
           </div>
           <div class="panel-b">
             <table>
               <thead>
-                <tr><th>Product</th><th>Variant</th><th>Qty</th><th>Res</th><th>Avail</th><th>BO</th><th></th></tr>
+                <tr>
+                  <th>Product</th>
+                  <th>Variant SKU / ID</th>
+                  <th style="width:90px">In Stock</th>
+                  <th style="width:70px">Rsrvd</th>
+                  <th style="width:70px">Avail</th>
+                  <th style="width:60px">B.O.</th>
+                  <th style="width:90px"></th>
+                </tr>
               </thead>
-              <tbody id="inv-body"><tr><td colspan="7" class="empty">—</td></tr></tbody>
+              <tbody id="inv-body"><tr><td colspan="7" class="empty">Loading inventory...</td></tr></tbody>
             </table>
           </div>
         </div>
       </section>
 
+      <!-- ORDERS PAGE -->
       <section class="page" id="page-orders">
         <div class="panel">
           <div class="panel-h">
-            <h2>Orders</h2>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <h2>Order History</h2>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
               <div class="tabs" id="order-tabs">
                 <button type="button" class="tab active" data-status="">All</button>
                 <button type="button" class="tab" data-status="pending">Pending</button>
@@ -440,21 +512,29 @@ main { min-width: 0; }
           <div class="panel-b">
             <table>
               <thead>
-                <tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th><th></th></tr>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th style="width:90px"></th>
+                </tr>
               </thead>
-              <tbody id="orders-body"><tr><td colspan="6" class="empty">—</td></tr></tbody>
+              <tbody id="orders-body"><tr><td colspan="6" class="empty">Loading orders...</td></tr></tbody>
             </table>
           </div>
           <div class="panel-h" style="border-top:1px solid var(--line);border-bottom:0">
             <span class="muted" id="orders-meta">—</span>
-            <div>
-              <button type="button" class="btn btn-ghost btn-sm" id="orders-prev" disabled>Prev</button>
-              <button type="button" class="btn btn-ghost btn-sm" id="orders-next" disabled>Next</button>
+            <div style="display:flex;gap:8px;">
+              <button type="button" class="btn btn-outline btn-sm" id="orders-prev" disabled>Previous</button>
+              <button type="button" class="btn btn-outline btn-sm" id="orders-next" disabled>Next</button>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- MEDIA PAGE -->
       <section class="page" id="page-media">
         <p class="hint">
           Assets uploaded from this browser are listed here (files live on R2; URLs are stored locally so links survive a restart).
@@ -462,7 +542,7 @@ main { min-width: 0; }
         </p>
         <div class="panel">
           <div class="panel-h">
-            <h2>Library</h2>
+            <h2>Asset Library</h2>
             <div class="tabs" id="media-filters">
               <button type="button" class="tab active" data-kind="all">All</button>
               <button type="button" class="tab" data-kind="image">Images</button>
@@ -475,7 +555,7 @@ main { min-width: 0; }
           </div>
           <div class="upload-zone" id="lib-drop">
             Drop files or
-            <label style="text-decoration:underline;cursor:pointer;margin-left:4px">upload
+            <label style="text-decoration:underline;cursor:pointer;margin-left:4px;color:var(--text)">upload manually
               <input type="file" id="lib-files" accept="image/*,video/*" multiple hidden>
             </label>
           </div>
@@ -483,35 +563,47 @@ main { min-width: 0; }
         </div>
       </section>
 
+      <!-- TOOLS PAGE -->
       <section class="page" id="page-tools">
         <div class="tools-grid">
           <div class="tool-card">
-            <h3>Clean reservations</h3>
-            <p>Release expired checkout stock holds.</p>
-            <button type="button" class="btn btn-outline btn-sm" id="tool-cleanup">Run</button>
+            <h3>Clean Reservations</h3>
+            <p>Manually trigger the release of expired checkout stock holds.</p>
+            <button type="button" class="btn btn-outline btn-sm" id="tool-cleanup">Run Cleanup</button>
           </div>
           <div class="tool-card">
-            <h3>Products API</h3>
-            <p>File-managed catalogue note from Worker.</p>
-            <button type="button" class="btn btn-outline btn-sm" id="tool-products">Check</button>
+            <h3>Products API Note</h3>
+            <p>Fetch the informational note from the Worker regarding product management.</p>
+            <button type="button" class="btn btn-outline btn-sm" id="tool-products">Check Note</button>
           </div>
           <div class="tool-card">
-            <h3>Build note</h3>
-            <p>Informational only — deploys via Git / Actions.</p>
-            <button type="button" class="btn btn-outline btn-sm" id="tool-build">Call</button>
+            <h3>Build Note</h3>
+            <p>Informational only — deploying the catalog requires Git / GitHub Actions.</p>
+            <button type="button" class="btn btn-outline btn-sm" id="tool-build">Call Build Note</button>
           </div>
         </div>
-        <pre id="tool-out" class="muted" style="margin-top:14px;padding:12px;border:1px solid var(--line);background:var(--surface);display:none;white-space:pre-wrap"></pre>
+        <pre id="tool-out" class="muted" style="margin-top:20px;padding:20px;border:1px solid var(--line);background:var(--surface);border-radius:6px;display:none;white-space:pre-wrap;font-family:ui-monospace, SFMono-Regular, Menlo, monospace;"></pre>
       </section>
 
+      <!-- SETTINGS PAGE -->
       <section class="page" id="page-settings">
         <div class="panel">
-          <div class="panel-h"><h2>Connection</h2></div>
-          <div class="panel-b" style="padding:14px;max-width:400px">
-            <div class="field"><label>API URL</label><input id="set-api" type="url"></div>
-            <div class="field"><label>Admin key</label><input id="set-key" type="password"></div>
-            <div class="field"><label>Store URL</label><input id="set-store" type="url"></div>
-            <button type="button" class="btn btn-primary btn-sm" id="set-save">Save</button>
+          <div class="panel-h"><h2>Connection Settings</h2></div>
+          <div class="panel-b" style="padding:24px;max-width:500px">
+            <div class="field">
+              <label>Worker API URL</label>
+              <input id="set-api" type="url" placeholder="https://your-worker.workers.dev/api">
+            </div>
+            <div class="field">
+              <label>Admin API Key</label>
+              <input id="set-key" type="password" placeholder="••••••••••••••••">
+            </div>
+            <div class="field">
+              <label>Store URL (Pages)</label>
+              <input id="set-store" type="url" placeholder="https://your-store.pages.dev">
+              <p class="muted" style="font-size:10px;margin-top:6px;">Used to load product JSON files dynamically into the editor.</p>
+            </div>
+            <button type="button" class="btn btn-primary" id="set-save" style="margin-top:14px;">Save & Reconnect</button>
           </div>
         </div>
       </section>
@@ -520,11 +612,12 @@ main { min-width: 0; }
   </main>
 </div>
 
+<!-- Drawer / Modal System -->
 <div class="overlay" id="overlay"></div>
 <div class="drawer" id="order-drawer">
   <div class="drawer-h">
     <h2 id="od-title">Order</h2>
-    <button type="button" class="btn btn-ghost btn-sm" id="od-close">Close</button>
+    <button type="button" class="btn btn-ghost btn-sm" id="od-close">✕ Close</button>
   </div>
   <div class="drawer-b" id="od-body"></div>
   <div class="drawer-f" id="od-footer"></div>
@@ -541,6 +634,7 @@ main { min-width: 0; }
     page: 'dashboard',
     orders: { page: 1, limit: 20, status: '', total: 0 },
     inventory: [],
+    catalog: {},
     mediaKind: 'all',
     library: [],
     product: null
@@ -555,16 +649,43 @@ main { min-width: 0; }
     if (!s) return '—';
     try { return new Date(s).toLocaleString(); } catch { return String(s); }
   };
+  
+  // Hardened HTML escaping including single quotes to prevent attribute injection
   const esc = (s) => String(s ?? '')
-    .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 
-  function toast(msg) {
+  // Debounce Utility
+  function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+
+  // Copy to Clipboard Utility (Now globally exposed for dynamic bindings if needed, but we avoid inline execution)
+  async function copyToClipboard(text, msg = 'Copied to clipboard') {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast(msg);
+    } catch (e) {
+      toast('Failed to copy', true);
+    }
+  }
+
+  function toast(msg, isError = false) {
     const el = $('toast');
     el.textContent = msg;
+    if (isError) el.classList.add('error');
+    else el.classList.remove('error');
+    
     el.classList.add('show');
     clearTimeout(toast._t);
-    toast._t = setTimeout(() => el.classList.remove('show'), 2800);
+    toast._t = setTimeout(() => el.classList.remove('show'), 3000);
   }
 
   function normalizeApiUrl(u) {
@@ -583,11 +704,55 @@ main { min-width: 0; }
       if (!d) return false;
       state.apiUrl = normalizeApiUrl(d.apiUrl || '');
       state.key = d.key || '';
-      state.storeUrl = (d.storeUrl || '').replace(/\/$/, '');
+      state.storeUrl = (d.storeUrl || '').trim().replace(/\/$/, '');
       return !!(state.apiUrl && state.key);
     } catch { return false; }
   }
 
+  // Global 401 Handler
+  function handleUnauthorized() {
+    $('app').classList.remove('open');
+    $('connect').style.display = 'flex';
+    toast('Session expired or invalid Admin Key. Please reconnect.', true);
+  }
+
+  // API Wrapper
+  async function api(path, opts = {}) {
+    try {
+      const res = await fetch(state.apiUrl.replace(/\/$/, '') + path, {
+        ...opts,
+        headers: {
+          Authorization: 'Bearer ' + state.key,
+          ...(opts.body && !(opts.body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}),
+          ...(opts.headers || {})
+        }
+      });
+      
+      if (res.status === 401) {
+        handleUnauthorized();
+        throw new Error('Unauthorized');
+      }
+
+      const text = await res.text();
+      let data = null;
+      try { data = text ? JSON.parse(text) : null; } catch { data = { raw: text }; }
+      
+      if (!res.ok) {
+        const err = new Error((data && data.error) || res.statusText || 'Request failed');
+        err.status = res.status;
+        err.data = data;
+        throw err;
+      }
+      return data;
+    } catch (err) {
+      if (err.message !== 'Unauthorized') {
+        console.error('[API Error]', err);
+      }
+      throw err;
+    }
+  }
+
+  // Library / Uploads Handling
   function loadLibrary() {
     try { state.library = JSON.parse(localStorage.getItem(LS_MEDIA) || '[]'); }
     catch { state.library = []; }
@@ -615,30 +780,10 @@ main { min-width: 0; }
       kind: classify(meta.contentType, meta.name || meta.key),
       at: new Date().toISOString()
     };
+    // Ensure newest is first
     state.library = [entry, ...state.library.filter(x => x.url !== entry.url)];
     saveLibrary();
     return entry;
-  }
-
-  async function api(path, opts = {}) {
-    const res = await fetch(state.apiUrl.replace(/\/$/, '') + path, {
-      ...opts,
-      headers: {
-        Authorization: 'Bearer ' + state.key,
-        ...(opts.body && !(opts.body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}),
-        ...(opts.headers || {})
-      }
-    });
-    const text = await res.text();
-    let data = null;
-    try { data = text ? JSON.parse(text) : null; } catch { data = { raw: text }; }
-    if (!res.ok) {
-      const err = new Error((data && data.error) || res.statusText || 'Request failed');
-      err.status = res.status;
-      err.data = data;
-      throw err;
-    }
-    return data;
   }
 
   async function uploadFile(file) {
@@ -649,6 +794,12 @@ main { min-width: 0; }
       headers: { Authorization: 'Bearer ' + state.key },
       body: fd
     });
+    
+    if (res.status === 401) {
+      handleUnauthorized();
+      throw new Error('Unauthorized');
+    }
+
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || 'Upload failed');
     return rememberAsset({
@@ -665,6 +816,7 @@ main { min-width: 0; }
     $('scrim').classList.remove('open');
   }
 
+  // Core Pages / Routing 
   function showPage(name) {
     state.page = name;
     document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + name));
@@ -675,7 +827,9 @@ main { min-width: 0; }
     };
     $('page-title').textContent = titles[name] || name;
     closeMobile();
+    
     if (name === 'dashboard') loadDashboard();
+    if (name === 'products') loadProductsList();
     if (name === 'inventory') loadInventory();
     if (name === 'orders') loadOrders();
     if (name === 'media') renderLibrary();
@@ -716,15 +870,15 @@ main { min-width: 0; }
       return;
     }
     try {
-      await api('/admin/stats');
+      await api('/admin/stats'); // Auth validation ping
       saveConn();
       enterApp();
-      toast('Connected');
+      toast('Connected successfully');
     } catch (e) {
-      err.textContent = e.status === 401
-        ? 'Unauthorized — check ADMIN_API_KEY.'
-        : (e.message || 'Could not connect');
-      err.classList.add('show');
+      if (e.message !== 'Unauthorized') {
+        err.textContent = e.message || 'Could not connect. Verify your URL.';
+        err.classList.add('show');
+      }
     }
   }
   $('conn-btn').addEventListener('click', () => connect(true));
@@ -733,74 +887,297 @@ main { min-width: 0; }
     location.reload();
   });
 
+  // Global Catalog Fetcher 
+  let catalogCache = null;
+  async function getCatalogCache() {
+    if (catalogCache) return catalogCache;
+    if (!state.storeUrl) return {};
+    try {
+      const res = await fetch(state.storeUrl + '/index.json?t=' + Date.now());
+      if (res.ok) {
+        const data = await res.json();
+        catalogCache = data.products || {};
+      } else catalogCache = {};
+    } catch (e) { catalogCache = {}; }
+    return catalogCache;
+  }
+
+  // Dashboard 
   async function loadDashboard() {
     const box = $('stat-cards');
-    box.innerHTML = '<div class="empty">Loading…</div>';
+    box.innerHTML = '<div class="empty">Loading stats…</div>';
     try {
       const s = await api('/admin/stats');
       const low = s.inventory?.lowStock ?? 0;
       $('inv-dot').classList.toggle('show', low > 0);
       box.innerHTML =
-        '<div class="card"><div class="k">Products</div><div class="v">' + (s.products?.total ?? '—') + '</div></div>' +
-        '<div class="card"><div class="k">Orders today</div><div class="v">' + (s.orders?.today ?? 0) + '</div>' +
-        '<div class="s">W ' + (s.orders?.thisWeek ?? 0) + ' · M ' + (s.orders?.thisMonth ?? 0) + '</div></div>' +
-        '<div class="card"><div class="k">Revenue today</div><div class="v mono">' + money(s.revenue?.today) + '</div>' +
-        '<div class="s">W ' + money(s.revenue?.thisWeek) + '</div></div>' +
-        '<div class="card"><div class="k">Low stock</div><div class="v">' + low + '</div></div>';
+        '<div class="card"><div class="k">Catalog Products</div><div class="v mono">' + (s.products?.total ?? '—') + '</div></div>' +
+        '<div class="card"><div class="k">Orders (Today)</div><div class="v mono">' + (s.orders?.today ?? 0) + '</div>' +
+        '<div class="s">W: ' + (s.orders?.thisWeek ?? 0) + ' / M: ' + (s.orders?.thisMonth ?? 0) + '</div></div>' +
+        '<div class="card"><div class="k">Revenue (Today)</div><div class="v mono">' + money(s.revenue?.today) + '</div>' +
+        '<div class="s">W: ' + money(s.revenue?.thisWeek) + '</div></div>' +
+        '<div class="card"><div class="k">Low Stock Variants</div><div class="v mono">' + low + '</div></div>';
     } catch (e) {
-      box.innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+      if (e.message !== 'Unauthorized') {
+        box.innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+      }
     }
   }
   $('dash-cleanup').addEventListener('click', runCleanup);
 
+  // Products Section
+  async function loadProductsList() {
+    $('prod-editor-view').style.display = 'none';
+    $('prod-list-view').style.display = 'block';
+
+    const list = $('prod-list-body');
+    if (!state.storeUrl) {
+      list.innerHTML = '<tr><td colspan="5" class="empty">Store URL not configured. Go to Settings.</td></tr>';
+      return;
+    }
+    list.innerHTML = '<tr><td colspan="5" class="empty">Fetching catalog from Pages...</td></tr>';
+    
+    try {
+      // Force refresh of the global catalog cache
+      catalogCache = null; 
+      state.catalog = await getCatalogCache();
+      renderCatalogRows();
+    } catch (e) {
+      list.innerHTML = `<tr><td colspan="5" class="empty">${esc(e.message)}</td></tr>`;
+    }
+  }
+
+  function renderCatalogRows() {
+    const list = $('prod-list-body');
+    const filter = ($('prod-search-filter').value || '').toLowerCase();
+    
+    const rows = Object.entries(state.catalog).filter(([id, p]) => {
+      if (!filter) return true;
+      const searchStr = (id + ' ' + p.name).toLowerCase();
+      return searchStr.includes(filter);
+    }).map(([id, p]) => {
+      const imgHtml = p.image 
+        ? `<img src="${esc(p.image)}" class="table-img" alt="">` 
+        : `<div class="table-img"></div>`;
+      
+      // Index.json implicitly means the product is active.
+      const stockBadge = p.inStock ? `<span class="badge paid">In Stock</span>` : `<span class="badge cancelled">Out of Stock</span>`;
+      const statusBadge = `<span class="badge active-status">Active</span>`;
+      
+      return `<tr>
+        <td>${imgHtml}</td>
+        <td>
+          <div class="mono" style="font-size:10px;color:var(--muted);margin-bottom:2px;">
+            ${esc(id)} 
+            <span class="copy-text catalog-id-copy" data-id="${esc(id)}" style="margin-left:6px;" title="Copy ID">📋</span>
+          </div>
+          <div style="font-weight:500;">${esc(p.name)}</div>
+        </td>
+        <td class="mono">${money(p.price)}</td>
+        <td><div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;">${statusBadge}${stockBadge}</div></td>
+        <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm edit-product-btn" data-id="${esc(id)}">Edit JSON</button></td>
+      </tr>`;
+    });
+    
+    list.innerHTML = rows.length ? rows.join('') : '<tr><td colspan="5" class="empty">No products match.</td></tr>';
+
+    // Bind event listeners securely
+    list.querySelectorAll('.catalog-id-copy').forEach(el => {
+      el.addEventListener('click', () => copyToClipboard(el.dataset.id, 'ID Copied'));
+    });
+    list.querySelectorAll('.edit-product-btn').forEach(el => {
+      el.addEventListener('click', () => loadProductEditor(el.dataset.id));
+    });
+  }
+
+  $('prod-search-filter').addEventListener('input', debounce(renderCatalogRows, 250));
+  $('prod-list-refresh').addEventListener('click', loadProductsList);
+
+  $('prod-load').addEventListener('click', () => {
+    const id = $('prod-id').value.trim();
+    if (!id) return toast('Enter product id', true);
+    if (!state.storeUrl) return toast('Set Store URL in Settings', true);
+    loadProductEditor(id);
+  });
+
+  // Create New Product
+  $('prod-new').addEventListener('click', () => {
+    const emptyProduct = {
+      id: "p-new",
+      type: "physical",
+      identity: { name: "New Product", slug: "new-product", sku: "SKU-NEW", status: "draft" },
+      pricing: { currency: "USD", price: 0 },
+      description: { short: "", full: "" },
+      categories: [],
+      variants: [
+        { id: "v-new-1", sku: "SKU-NEW-1", options: { "Default": "Standard" }, price: 0, stock: 0 }
+      ],
+      media: { images: [] },
+      shipping: { requiresShipping: true },
+      seo: { title: "", description: "" },
+      meta: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
+    };
+    
+    state.product = emptyProduct;
+    $('prod-list-view').style.display = 'none';
+    $('prod-editor-view').style.display = 'block';
+    
+    $('pe-name').value = state.product.identity.name;
+    $('pe-slug').value = state.product.identity.slug;
+    $('pe-brand').value = state.product.identity.brand || '';
+    $('pe-groups').textContent = 'No variantGroups defined.';
+    
+    renderMediaRows();
+    syncProductJson();
+    toast('New product template loaded');
+  });
+
+  async function loadProductEditor(id) {
+    if (!id) return;
+    toast('Loading ' + id + '...');
+    try {
+      const res = await fetch(state.storeUrl + '/products/' + encodeURIComponent(id) + '.json?t=' + Date.now());
+      if (!res.ok) throw new Error(`Product JSON not found on store URL (${res.status}). Is it deployed?`);
+      state.product = await res.json();
+      
+      $('prod-list-view').style.display = 'none';
+      $('prod-editor-view').style.display = 'block';
+      
+      // Populate UI
+      $('pe-name').value = state.product.identity?.name || '';
+      $('pe-slug').value = state.product.identity?.slug || '';
+      $('pe-brand').value = state.product.identity?.brand || '';
+      
+      const g = groupIdsFromProduct(state.product);
+      $('pe-groups').textContent = g.length
+        ? 'variantGroups currently defined on variants: ' + g.join(', ')
+        : 'No variantGroup defined on variants — you can still tag media.';
+        
+      if (!state.product.media) state.product.media = { images: [] };
+      if (!state.product.media.images) state.product.media.images = [];
+      
+      renderMediaRows();
+      syncProductJson(); // populate the textarea initially
+    } catch (e) {
+      toast(e.message, true);
+    }
+  }
+
+  $('pe-back').addEventListener('click', () => {
+    $('prod-editor-view').style.display = 'none';
+    $('prod-list-view').style.display = 'block';
+  });
+
+  // Use 'change' instead of 'input' to avoid aggressive JSON overwriting mid-typing
+  ['pe-name', 'pe-slug', 'pe-brand'].forEach(id => {
+    $(id).addEventListener('change', syncProductJson);
+  });
+
+  $('pe-apply-json').addEventListener('click', () => {
+    try {
+      const parsed = JSON.parse($('pe-json').value);
+      state.product = parsed;
+      $('pe-name').value = state.product.identity?.name || '';
+      $('pe-slug').value = state.product.identity?.slug || '';
+      $('pe-brand').value = state.product.identity?.brand || '';
+      renderMediaRows();
+      
+      // Auto-format the textarea
+      $('pe-json').value = JSON.stringify(parsed, null, 2);
+      toast('UI Updated and JSON Formatted');
+    } catch(err) {
+      toast('Invalid JSON format in editor', true);
+    }
+  });
+
+  // Inventory Section
   async function loadInventory() {
     const body = $('inv-body');
-    body.innerHTML = '<tr><td colspan="7" class="empty">Loading…</td></tr>';
+    body.innerHTML = '<tr><td colspan="7" class="empty">Loading inventory...</td></tr>';
     try {
+      state.catalog = await getCatalogCache();
       const q = $('inv-low-only').checked ? '?lowStock=true' : '';
       const data = await api('/admin/inventory' + q);
       state.inventory = data.inventory || [];
       renderInventory();
+      
       const lowCount = state.inventory.filter(row =>
         Object.values(row.variants || {}).some(v => ((v.qty || 0) - (v.reserved || 0)) <= 5)
       ).length;
       $('inv-dot').classList.toggle('show', lowCount > 0);
     } catch (e) {
-      body.innerHTML = '<tr><td colspan="7" class="empty">' + esc(e.message) + '</td></tr>';
+      if (e.message !== 'Unauthorized') {
+        body.innerHTML = '<tr><td colspan="7" class="empty">' + esc(e.message) + '</td></tr>';
+      }
     }
   }
+
   function renderInventory() {
     const filter = ($('inv-search').value || '').toLowerCase();
     const body = $('inv-body');
     const rows = [];
+    
     for (const item of state.inventory) {
-      if (filter && !String(item.productId).toLowerCase().includes(filter)) continue;
+      const pName = state.catalog[item.productId]?.name || '';
+      const searchStr = (item.productId + ' ' + pName).toLowerCase();
+      
+      if (filter && !searchStr.includes(filter)) continue;
+      
       const variants = item.variants || {};
       const ids = Object.keys(variants);
+      
       if (!ids.length) {
-        rows.push('<tr><td class="mono">' + esc(item.productId) + '</td><td colspan="6" class="muted">No variants</td></tr>');
+        rows.push(
+          `<tr>
+            <td>
+              <div class="mono" style="font-weight:500;">${esc(item.productId)}</div>
+              <div style="font-size:10px;color:var(--muted);">${esc(pName)}</div>
+            </td>
+            <td colspan="6" class="muted">No variants synced</td>
+          </tr>`
+        );
         continue;
       }
+      
       ids.forEach((vid, i) => {
         const v = variants[vid] || {};
         const avail = (v.qty || 0) - (v.reserved || 0);
+        
+        let productCell = '';
+        if (i === 0) {
+          productCell = `
+            <div class="mono" style="font-weight:500;margin-bottom:2px;">${esc(item.productId)}</div>
+            <div style="font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;">${esc(pName)}</div>
+          `;
+        }
+
         rows.push(
-          '<tr data-pid="' + esc(item.productId) + '" data-vid="' + esc(vid) + '">' +
-          '<td class="mono">' + (i === 0 ? esc(item.productId) : '') + '</td>' +
-          '<td class="mono">' + esc(vid) + '</td>' +
-          '<td><input class="input-sm inv-qty" type="number" min="0" value="' + (v.qty ?? 0) + '"></td>' +
-          '<td class="mono">' + (v.reserved ?? 0) + '</td>' +
-          '<td class="mono">' + (avail <= 5 ? '<span class="badge low">' + avail + '</span>' : avail) + '</td>' +
-          '<td><input type="checkbox" class="inv-bo"' + (v.backorder ? ' checked' : '') + '></td>' +
-          '<td><button type="button" class="btn btn-outline btn-sm inv-save">Save</button></td></tr>'
+          `<tr data-pid="${esc(item.productId)}" data-vid="${esc(vid)}">
+            <td>${productCell}</td>
+            <td class="mono">${esc(vid)}</td>
+            <td><input class="input-sm inv-qty" type="number" min="0" value="${v.qty ?? 0}"></td>
+            <td class="mono muted">${v.reserved ?? 0}</td>
+            <td class="mono" style="font-weight:500;">${avail <= 5 ? '<span class="badge low">' + avail + '</span>' : avail}</td>
+            <td><input type="checkbox" class="inv-bo"${v.backorder ? ' checked' : ''}></td>
+            <td><button type="button" class="btn btn-outline btn-sm inv-save">Save</button></td>
+          </tr>`
         );
       });
     }
-    body.innerHTML = rows.length ? rows.join('') : '<tr><td colspan="7" class="empty">None</td></tr>';
+    body.innerHTML = rows.length ? rows.join('') : '<tr><td colspan="7" class="empty">No inventory items matched.</td></tr>';
+    
+    // Add dirty row detection
+    body.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('input', (e) => {
+        e.target.closest('tr').classList.add('dirty-row');
+      });
+    });
+
     body.querySelectorAll('.inv-save').forEach(btn => {
       btn.addEventListener('click', async () => {
         const tr = btn.closest('tr');
         btn.disabled = true;
+        btn.textContent = 'Saving...';
         try {
           await api('/admin/inventory/' + encodeURIComponent(tr.dataset.pid), {
             method: 'PUT',
@@ -813,50 +1190,94 @@ main { min-width: 0; }
               }
             })
           });
-          toast('Saved');
-          loadInventory();
+          
+          btn.textContent = 'Saved!';
+          btn.classList.remove('btn-outline');
+          btn.classList.add('btn-success');
+          tr.classList.remove('dirty-row');
+          
+          setTimeout(() => {
+            btn.textContent = 'Save';
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-outline');
+            btn.disabled = false;
+          }, 2000);
+
+          // Silent background refresh for new math
+          const q = $('inv-low-only').checked ? '?lowStock=true' : '';
+          const data = await api('/admin/inventory' + q);
+          state.inventory = data.inventory || [];
+          
+          // Update the specific row's Avail cell natively without rebuilding the DOM
+          const updatedItem = state.inventory.find(i => i.productId === tr.dataset.pid);
+          const updatedVar = updatedItem?.variants?.[tr.dataset.vid];
+          if (updatedVar) {
+            const avail = Math.max(0, (updatedVar.qty || 0) - (updatedVar.reserved || 0));
+            const availCell = tr.querySelectorAll('td')[4]; 
+            availCell.innerHTML = avail <= 5 ? `<span class="badge low">${avail}</span>` : avail;
+          }
+
         } catch (e) {
-          toast(e.message);
+          if (e.message !== 'Unauthorized') toast(e.message, true);
           btn.disabled = false;
+          btn.textContent = 'Save';
         }
       });
     });
   }
+  
   $('inv-refresh').addEventListener('click', loadInventory);
   $('inv-low-only').addEventListener('change', loadInventory);
-  $('inv-search').addEventListener('input', renderInventory);
+  $('inv-search').addEventListener('input', debounce(renderInventory, 250));
 
+  // Orders Section
   async function loadOrders() {
     const body = $('orders-body');
-    body.innerHTML = '<tr><td colspan="6" class="empty">Loading…</td></tr>';
+    body.innerHTML = '<tr><td colspan="6" class="empty">Loading orders...</td></tr>';
     try {
       const { page, limit, status } = state.orders;
       let path = '/admin/orders?page=' + page + '&limit=' + limit;
       if (status) path += '&status=' + encodeURIComponent(status);
+      
       const data = await api(path);
       const orders = data.orders || [];
       state.orders.total = data.total ?? orders.length;
+      
       body.innerHTML = orders.length ? orders.map(o =>
-        '<tr>' +
-        '<td class="mono">' + esc(o.id) + '</td>' +
-        '<td>' + esc(o.customer?.email || '—') + '<div class="muted">' + esc(o.customer?.name || '') + '</div></td>' +
-        '<td class="mono">' + money(o.total) + '</td>' +
-        '<td><span class="badge ' + esc(o.status || '') + '">' + esc(o.status || '—') + '</span></td>' +
-        '<td class="muted">' + esc(fmtDate(o.createdAt || o.created_at)) + '</td>' +
-        '<td><button type="button" class="btn btn-ghost btn-sm" data-order="' + esc(o.id) + '">View</button></td>' +
-        '</tr>'
-      ).join('') : '<tr><td colspan="6" class="empty">None</td></tr>';
-      body.querySelectorAll('[data-order]').forEach(b => {
+        `<tr>
+          <td class="mono" style="font-weight:500;">
+            ${esc(o.id)}
+            <span class="copy-text order-id-copy" style="margin-left:6px;font-size:10px;" data-id="${esc(o.id)}" title="Copy Order ID">📋</span>
+          </td>
+          <td>
+            <div style="font-weight:500;margin-bottom:2px;">${esc(o.customer?.name || 'Guest')}</div>
+            <div class="muted" style="font-size:10px;">${esc(o.customer?.email || '—')}</div>
+          </td>
+          <td class="mono" style="font-weight:500;">${money(o.total)}</td>
+          <td><span class="badge ${esc(o.status || '')}">${esc(o.status || '—')}</span></td>
+          <td class="muted">${esc(fmtDate(o.createdAt || o.created_at))}</td>
+          <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm view-order-btn" data-order="${esc(o.id)}">View</button></td>
+        </tr>`
+      ).join('') : '<tr><td colspan="6" class="empty">No orders found.</td></tr>';
+      
+      body.querySelectorAll('.view-order-btn').forEach(b => {
         b.addEventListener('click', () => openOrder(b.dataset.order));
       });
+      body.querySelectorAll('.order-id-copy').forEach(el => {
+        el.addEventListener('click', () => copyToClipboard(el.dataset.id, 'Order ID Copied'));
+      });
+      
       const pages = Math.max(1, Math.ceil(state.orders.total / limit));
-      $('orders-meta').textContent = 'Page ' + page + ' / ' + pages + ' · ' + state.orders.total + ' total';
+      $('orders-meta').textContent = 'Page ' + page + ' of ' + pages + ' (' + state.orders.total + ' total)';
       $('orders-prev').disabled = page <= 1;
       $('orders-next').disabled = page >= pages;
     } catch (e) {
-      body.innerHTML = '<tr><td colspan="6" class="empty">' + esc(e.message) + '</td></tr>';
+      if (e.message !== 'Unauthorized') {
+        body.innerHTML = '<tr><td colspan="6" class="empty">' + esc(e.message) + '</td></tr>';
+      }
     }
   }
+  
   $('order-tabs').addEventListener('click', (e) => {
     const t = e.target.closest('.tab');
     if (!t) return;
@@ -866,6 +1287,7 @@ main { min-width: 0; }
     state.orders.page = 1;
     loadOrders();
   });
+  
   $('orders-refresh').addEventListener('click', loadOrders);
   $('orders-prev').addEventListener('click', () => {
     if (state.orders.page > 1) { state.orders.page--; loadOrders(); }
@@ -876,47 +1298,94 @@ main { min-width: 0; }
   });
 
   async function openOrder(id) {
-    $('od-title').textContent = id;
-    $('od-body').innerHTML = '<p class="muted">Loading…</p>';
+    $('od-title').textContent = 'Order ' + id;
+    $('od-body').innerHTML = '<div class="empty">Loading details…</div>';
     $('od-footer').innerHTML = '';
     $('overlay').classList.add('open');
     $('order-drawer').classList.add('open');
     try {
       const o = await api('/admin/orders/' + encodeURIComponent(id));
       const items = o.items || [];
+      
+      const itemsHtml = items.map(it => {
+        const img = it.image ? `<img src="${esc(it.image)}" class="order-item-img">` : `<div class="order-item-img"></div>`;
+        return `
+          <li class="order-item-row">
+            ${img}
+            <div class="order-item-details">
+              <div class="order-item-title">${esc(it.name || it.sku || it.variantId)}</div>
+              <div class="order-item-meta mono">Variant: ${esc(it.variantId || '')}</div>
+              <div class="order-item-meta">Qty: ${esc(it.qty)}</div>
+            </div>
+            <div class="mono" style="font-weight:500;">${money(it.price)}</div>
+          </li>`;
+      }).join('');
+
       $('od-body').innerHTML =
-        '<div class="dl"><h3>Status</h3><p><span class="badge ' + esc(o.status) + '">' + esc(o.status) + '</span></p></div>' +
-        '<div class="dl"><h3>Customer</h3><p>' + esc(o.customer?.name || '—') + '</p><p class="muted">' + esc(o.customer?.email || '') + '</p></div>' +
-        '<div class="dl"><h3>Ship to</h3><p>' + esc(o.shipping?.address1 || '') + '</p>' +
-        '<p>' + esc([o.shipping?.city, o.shipping?.state, o.shipping?.zip].filter(Boolean).join(', ')) + '</p>' +
-        '<p>' + esc(o.shipping?.country || '') + '</p></div>' +
-        '<div class="dl"><h3>Items</h3><ul>' + items.map(it =>
-          '<li>' + esc(it.qty) + '× ' + esc(it.name || it.sku || it.variantId) +
-          ' <span class="muted mono">' + money(it.price) + '</span>' +
-          '<div class="muted mono">' + esc(it.variantId || '') + '</div></li>'
-        ).join('') + '</ul></div>' +
-        '<div class="dl"><h3>Totals</h3>' +
-        '<p>Sub ' + money(o.subtotal) + ' · Ship ' + money(o.shippingCost ?? o.shipping_cost) + ' · Tax ' + money(o.tax) + '</p>' +
-        '<p><strong>' + money(o.total) + '</strong></p></div>' +
-        '<div class="dl"><h3>Fulfillment</h3>' +
-        '<div class="field"><label>Status</label><select id="od-status">' +
-        ['pending','paid','shipped','cancelled','refunded'].map(s =>
-          '<option value="' + s + '"' + (o.status === s ? ' selected' : '') + '>' + s + '</option>'
-        ).join('') + '</select></div>' +
-        '<div class="field"><label>Carrier</label><input id="od-carrier" value="' + esc(o.carrier || '') + '"></div>' +
-        '<div class="field"><label>Tracking</label><input id="od-tracking" value="' + esc(o.trackingNumber || o.tracking_number || '') + '"></div>' +
-        '<div class="field"><label>Notes</label><textarea id="od-notes">' + esc(o.notes || '') + '</textarea></div></div>' +
-        '<div class="dl"><h3>Refund (DB record only)</h3>' +
-        '<div class="field"><label>Amount</label><input id="od-refund-amt" type="number" step="0.01" min="0" value="' + (o.total || 0) + '"></div>' +
-        '<div class="field"><label>Reason</label><input id="od-refund-reason" placeholder="Reason"></div></div>';
+        `<div class="dl">
+          <h3>Customer Details</h3>
+          <p><strong>${esc(o.customer?.name || 'Guest')}</strong></p>
+          <p class="muted copy-text customer-email-copy" style="display:inline-block;" data-email="${esc(o.customer?.email || '')}">${esc(o.customer?.email || '')}</p>
+        </div>
+        
+        <div class="dl">
+          <h3>Shipping Address</h3>
+          <p>${esc(o.shipping?.address1 || '')}</p>
+          <p>${esc([o.shipping?.city, o.shipping?.state, o.shipping?.zip].filter(Boolean).join(', '))}</p>
+          <p>${esc(o.shipping?.country || '')}</p>
+        </div>
+        
+        <div class="dl">
+          <h3>Fulfillment</h3>
+          <div style="display:flex;gap:12px;margin-bottom:12px;">
+            <div class="field" style="flex:1;margin:0"><label>Status</label><select id="od-status">
+              ${['pending','paid','shipped','cancelled','refunded'].map(s => `<option value="${s}" ${o.status === s ? 'selected' : ''}>${s}</option>`).join('')}
+            </select></div>
+            <div class="field" style="flex:1;margin:0"><label>Carrier</label><input id="od-carrier" value="${esc(o.carrier || '')}"></div>
+          </div>
+          <div class="field"><label>Tracking Number</label><input id="od-tracking" value="${esc(o.trackingNumber || o.tracking_number || '')}"></div>
+          <div class="field" style="margin:0"><label>Internal Notes</label><textarea id="od-notes">${esc(o.notes || '')}</textarea></div>
+        </div>
+
+        <div class="dl">
+          <h3>Line Items</h3>
+          <ul class="order-items-list">${itemsHtml}</ul>
+        </div>
+        
+        <div class="dl">
+          <h3>Financial Summary</h3>
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:11px;"><span class="muted">Subtotal</span> <span class="mono">${money(o.subtotal)}</span></div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:11px;"><span class="muted">Shipping</span> <span class="mono">${money(o.shippingCost ?? o.shipping_cost)}</span></div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:11px; padding-bottom:10px; border-bottom:1px solid var(--line);"><span class="muted">Tax</span> <span class="mono">${money(o.tax)}</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600;"><span>Total</span> <span class="mono">${money(o.total)}</span></div>
+        </div>
+        
+        <div class="dl" style="padding-top:12px; border-top:1px dashed var(--line2);">
+          <h3 style="color:var(--danger)">Issue Refund (DB Record Only)</h3>
+          <p class="muted" style="margin-bottom:12px;">This does not refund Stripe automatically. Use this to update the store database after issuing the refund in Stripe.</p>
+          <div style="display:flex;gap:12px;">
+            <div class="field" style="width:110px;margin:0"><label>Amount</label><input id="od-refund-amt" type="number" step="0.01" min="0" max="${o.total || 0}" value="${o.total || 0}"></div>
+            <div class="field" style="flex:1;margin:0"><label>Reason</label><input id="od-refund-reason" placeholder="e.g. Returned item"></div>
+          </div>
+        </div>`;
 
       $('od-footer').innerHTML =
-        '<button type="button" class="btn btn-primary btn-sm" id="od-save">Save</button>' +
-        '<button type="button" class="btn btn-danger btn-sm" id="od-refund">Refund</button>';
+        `<button type="button" class="btn btn-danger" id="od-refund">Mark Refunded</button>
+         <button type="button" class="btn btn-primary" id="od-save">Save Changes</button>`;
 
-      $('od-save').onclick = async () => {
+      // Secure Event Listeners
+      $('od-body').querySelectorAll('.customer-email-copy').forEach(el => {
+        el.addEventListener('click', () => copyToClipboard(el.dataset.email, 'Email Copied'));
+      });
+
+      // PATCH status
+      $('od-save').addEventListener('click', async () => {
         try {
-          await api('/admin/orders/' + encodeURIComponent(id), {
+          const btn = $('od-save');
+          btn.disabled = true;
+          btn.textContent = 'Saving...';
+          
+          await api('/admin/orders/' + encodeURIComponent(id) + '/status', {
             method: 'PATCH',
             body: JSON.stringify({
               status: $('od-status').value,
@@ -925,14 +1394,23 @@ main { min-width: 0; }
               notes: $('od-notes').value.trim() || undefined
             })
           });
-          toast('Order updated');
+          toast('Order updated successfully');
           loadOrders();
-          openOrder(id);
-        } catch (e) { toast(e.message); }
-      };
-      $('od-refund').onclick = async () => {
-        if (!confirm('Record refund in database? Issue the Stripe refund separately.')) return;
+          closeDrawer();
+        } catch (e) {
+          toast(e.message, true);
+          $('od-save').disabled = false;
+          $('od-save').textContent = 'Save Changes';
+        }
+      });
+      
+      // Refund Record API
+      $('od-refund').addEventListener('click', async () => {
+        if (!confirm('Record refund in database? You MUST issue the actual refund in your Stripe Dashboard separately.')) return;
         try {
+          const btn = $('od-refund');
+          btn.disabled = true;
+          
           await api('/admin/orders/' + encodeURIComponent(id) + '/refund', {
             method: 'POST',
             body: JSON.stringify({
@@ -942,13 +1420,19 @@ main { min-width: 0; }
           });
           toast('Refund recorded');
           loadOrders();
-          openOrder(id);
-        } catch (e) { toast(e.message); }
-      };
+          closeDrawer();
+        } catch (e) {
+          toast(e.message, true);
+          $('od-refund').disabled = false;
+        }
+      });
     } catch (e) {
-      $('od-body').innerHTML = '<p class="err show">' + esc(e.message) + '</p>';
+      if (e.message !== 'Unauthorized') {
+        $('od-body').innerHTML = '<p class="err show">' + esc(e.message) + '</p>';
+      }
     }
   }
+  
   function closeDrawer() {
     $('overlay').classList.remove('open');
     $('order-drawer').classList.remove('open');
@@ -956,12 +1440,13 @@ main { min-width: 0; }
   $('od-close').addEventListener('click', closeDrawer);
   $('overlay').addEventListener('click', closeDrawer);
 
-  /* Products */
+  /* Products Sync and Render */
   function groupIdsFromProduct(p) {
     const set = new Set();
     (p.variants || []).forEach(v => { if (v.variantGroup) set.add(v.variantGroup); });
     return [...set];
   }
+  
   function collectMediaRows() {
     return [...document.querySelectorAll('#pe-media-list .media-row')].map((row, i) => {
       const url = row.querySelector('.m-url').value.trim();
@@ -973,6 +1458,7 @@ main { min-width: 0; }
       return img;
     }).filter(x => x.url);
   }
+  
   function syncProductJson() {
     if (!state.product) return;
     state.product.identity = state.product.identity || {};
@@ -983,42 +1469,60 @@ main { min-width: 0; }
     state.product.media.images = collectMediaRows();
     $('pe-json').value = JSON.stringify(state.product, null, 2);
   }
+  
   function renderMediaRows() {
     const list = $('pe-media-list');
     const images = state.product?.media?.images || [];
     const groups = groupIdsFromProduct(state.product);
-    const datalist = groups.map(g => '<option value="' + esc(g) + '">').join('');
+    const datalist = groups.map(g => `<option value="${esc(g)}">`).join('');
+    
     list.innerHTML = images.length ? images.map((img, idx) => {
       const vg = img.variantGroup == null ? '' : String(img.variantGroup);
       return (
-        '<div class="media-row" data-idx="' + idx + '">' +
-        '<div class="thumb">' + (img.url ? '<img src="' + esc(img.url) + '" alt="">' : '') + '</div>' +
-        '<div style="display:grid;gap:6px">' +
-        '<input class="m-url" value="' + esc(img.url || '') + '" placeholder="URL">' +
-        '<input class="m-alt" value="' + esc(img.alt || '') + '" placeholder="Alt text">' +
-        '</div>' +
-        '<div><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">variantGroup</div>' +
-        '<input class="m-vg" list="vg-list" value="' + esc(vg) + '" placeholder="e.g. black">' +
-        '<datalist id="vg-list">' + datalist + '</datalist></div>' +
-        '<div><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">order</div>' +
-        '<input class="m-order input-sm" type="number" value="' + (img.order ?? idx) + '"></div>' +
-        '<div><button type="button" class="btn btn-ghost btn-sm m-del">Remove</button></div>' +
-        '</div>'
+        `<div class="media-row" data-idx="${idx}">
+          <div class="thumb">${img.url ? '<img src="' + esc(img.url) + '" alt="">' : ''}</div>
+          <div style="display:grid;gap:10px">
+            <input class="m-url" value="${esc(img.url || '')}" placeholder="Image URL">
+            <input class="m-alt" value="${esc(img.alt || '')}" placeholder="Alt text">
+          </div>
+          <div>
+            <div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">variantGroup</div>
+            <input class="m-vg" list="vg-list" value="${esc(vg)}" placeholder="e.g. black">
+            <datalist id="vg-list">${datalist}</datalist>
+          </div>
+          <div>
+            <div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">Order</div>
+            <input class="m-order input-sm" type="number" value="${img.order ?? idx}">
+          </div>
+          <div>
+            <button type="button" class="btn btn-outline btn-sm m-del" style="height:100%; width:100%;">Del</button>
+          </div>
+        </div>`
       );
-    }).join('') : '<p class="empty">No media rows</p>';
+    }).join('') : '<p class="empty" style="padding:10px 0;">No media rows. Add one or upload files.</p>';
 
     list.querySelectorAll('.m-del').forEach(btn => {
       btn.addEventListener('click', () => {
         const idx = Number(btn.closest('.media-row').dataset.idx);
         state.product.media.images.splice(idx, 1);
         renderMediaRows();
+        syncProductJson();
       });
     });
+    
     list.querySelectorAll('input').forEach(inp => {
-      inp.addEventListener('change', syncProductJson);
+      inp.addEventListener('change', (e) => {
+        if (e.target.classList.contains('m-url')) {
+          const row = e.target.closest('.media-row');
+          const thumb = row.querySelector('.thumb');
+          const val = e.target.value.trim();
+          thumb.innerHTML = val ? `<img src="${esc(val)}" alt="">` : '';
+        }
+        syncProductJson();
+      });
     });
-    syncProductJson();
   }
+  
   function addMediaRow(partial) {
     state.product.media = state.product.media || { images: [] };
     state.product.media.images = state.product.media.images || [];
@@ -1029,43 +1533,14 @@ main { min-width: 0; }
       order: partial.order ?? state.product.media.images.length
     });
     renderMediaRows();
+    syncProductJson();
   }
 
-  $('prod-load').addEventListener('click', async () => {
-    const id = ($('prod-id').value || '').trim();
-    if (!id) return toast('Enter product id');
-    if (!state.storeUrl) return toast('Set Store URL in Settings');
-    try {
-      const res = await fetch(state.storeUrl + '/products/' + encodeURIComponent(id) + '.json?t=' + Date.now());
-      if (!res.ok) throw new Error('Product not found (' + res.status + ')');
-      state.product = await res.json();
-      $('prod-editor').style.display = 'block';
-      $('pe-name').value = state.product.identity?.name || '';
-      $('pe-slug').value = state.product.identity?.slug || '';
-      $('pe-brand').value = state.product.identity?.brand || '';
-      const g = groupIdsFromProduct(state.product);
-      $('pe-groups').textContent = g.length
-        ? 'variantGroups on variants: ' + g.join(', ')
-        : 'No variantGroup on variants — you can still tag media.';
-      if (!state.product.media) state.product.media = { images: [] };
-      if (!state.product.media.images) state.product.media.images = [];
-      renderMediaRows();
-      toast('Loaded ' + id);
-    } catch (e) { toast(e.message); }
-  });
-  ['pe-name', 'pe-slug', 'pe-brand'].forEach(id => {
-    $(id).addEventListener('input', syncProductJson);
-  });
   $('pe-add-url').addEventListener('click', () => addMediaRow({}));
-  $('pe-copy').addEventListener('click', async () => {
-    syncProductJson();
-    try {
-      await navigator.clipboard.writeText($('pe-json').value);
-      toast('JSON copied');
-    } catch { toast('Copy failed'); }
-  });
+  
+  $('pe-copy').addEventListener('click', () => copyToClipboard($('pe-json').value, 'JSON payload copied'));
+  
   $('pe-download').addEventListener('click', () => {
-    syncProductJson();
     const id = state.product?.id || 'product';
     const blob = new Blob([$('pe-json').value], { type: 'application/json' });
     const a = document.createElement('a');
@@ -1073,13 +1548,13 @@ main { min-width: 0; }
     a.download = id + '.json';
     a.click();
     URL.revokeObjectURL(a.href);
-    toast('Downloaded ' + id + '.json');
+    toast(`Downloaded ${id}.json`);
   });
 
   async function bulkUpload(files, intoProduct) {
     for (const file of files) {
       try {
-        toast('Uploading ' + file.name + '…');
+        toast(`Uploading ${file.name}…`);
         const asset = await uploadFile(file);
         if (intoProduct && state.product) {
           addMediaRow({
@@ -1089,12 +1564,13 @@ main { min-width: 0; }
           });
         }
       } catch (e) {
-        toast(file.name + ': ' + e.message);
+        if (e.message !== 'Unauthorized') toast(`${file.name}: ${e.message}`, true);
       }
     }
-    if (intoProduct) toast('Set variantGroup on each row');
+    if (intoProduct) toast('Files added to product. Set variantGroups.');
     else renderLibrary();
   }
+  
   function bindDrop(zone, input, intoProduct) {
     zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag'); });
     zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
@@ -1110,6 +1586,7 @@ main { min-width: 0; }
       input.value = '';
     });
   }
+  
   bindDrop($('pe-drop'), $('pe-files'), true);
   bindDrop($('lib-drop'), $('lib-files'), false);
 
@@ -1122,37 +1599,38 @@ main { min-width: 0; }
     }
     grid.innerHTML = items.map((a, i) => {
       let thumb = '<span>' + esc(a.kind) + '</span>';
-      if (a.kind === 'image') thumb = '<img src="' + esc(a.url) + '" alt="" loading="lazy">';
-      else if (a.kind === 'video') thumb = '<video src="' + esc(a.url) + '" muted></video>';
+      if (a.kind === 'image') thumb = `<img src="${esc(a.url)}" alt="" loading="lazy">`;
+      else if (a.kind === 'video') thumb = `<video src="${esc(a.url)}" muted></video>`;
       return (
-        '<div class="media-card">' +
-        '<div class="media-thumb">' + thumb + '</div>' +
-        '<div class="media-meta"><div class="name" title="' + esc(a.name || '') + '">' + esc(a.name || 'file') + '</div>' +
-        '<div class="muted">' + esc(a.kind) + (a.size ? ' · ' + Math.round(a.size / 1024) + ' KB' : '') + '</div></div>' +
-        '<div class="media-actions">' +
-        '<button type="button" class="btn btn-outline btn-sm" data-copy="' + i + '">Copy</button>' +
-        '<a class="btn btn-ghost btn-sm" href="' + esc(a.url) + '" target="_blank" rel="noopener">Open</a>' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-del="' + i + '">×</button>' +
-        '</div></div>'
+        `<div class="media-card">
+          <div class="media-thumb">${thumb}</div>
+          <div class="media-meta">
+            <div class="name" title="${esc(a.name || '')}">${esc(a.name || 'file')}</div>
+            <div class="muted">${esc(a.kind)}${a.size ? ' · ' + Math.round(a.size / 1024) + ' KB' : ''}</div>
+          </div>
+          <div class="media-actions">
+            <button type="button" class="btn btn-outline btn-sm copy-asset-btn" data-url="${esc(a.url)}" style="flex:1">Copy URL</button>
+            <a class="btn btn-ghost btn-sm" href="${esc(a.url)}" target="_blank" rel="noopener">Open</a>
+            <button type="button" class="btn btn-ghost btn-sm delete-asset-btn" data-idx="${i}">✕</button>
+          </div>
+        </div>`
       );
     }).join('');
-    grid.querySelectorAll('[data-copy]').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(items[Number(btn.dataset.copy)].url);
-          toast('Copied');
-        } catch { toast('Copy failed'); }
-      });
+    
+    grid.querySelectorAll('.copy-asset-btn').forEach(btn => {
+      btn.addEventListener('click', () => copyToClipboard(btn.dataset.url, 'URL Copied'));
     });
-    grid.querySelectorAll('[data-del]').forEach(btn => {
+    
+    grid.querySelectorAll('.delete-asset-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const a = items[Number(btn.dataset.del)];
+        const a = items[Number(btn.dataset.idx)];
         state.library = state.library.filter(x => x.url !== a.url);
         saveLibrary();
         renderLibrary();
       });
     });
   }
+  
   $('media-filters').addEventListener('click', (e) => {
     const t = e.target.closest('.tab');
     if (!t) return;
@@ -1162,45 +1640,65 @@ main { min-width: 0; }
     renderLibrary();
   });
 
+  // Tools Actions
   async function runCleanup() {
     try {
       const r = await api('/admin/cleanup-reservations', { method: 'POST', body: '{}' });
-      toast('Cleaned ' + (r.cleaned ?? 0) + ' reservation(s)');
+      toast('Cleaned ' + (r.cleaned ?? 0) + ' expired reservation(s)');
       showToolOut(r);
-    } catch (e) { toast(e.message); }
+    } catch (e) {
+      if (e.message !== 'Unauthorized') toast(e.message, true);
+    }
   }
+  
   function showToolOut(obj) {
     const el = $('tool-out');
     el.style.display = 'block';
     el.textContent = JSON.stringify(obj, null, 2);
   }
+  
   $('tool-cleanup').addEventListener('click', runCleanup);
+  
   $('tool-products').addEventListener('click', async () => {
     try { showToolOut(await api('/admin/products')); }
-    catch (e) { toast(e.message); }
+    catch (e) { if (e.message !== 'Unauthorized') toast(e.message, true); }
   });
+  
   $('tool-build').addEventListener('click', async () => {
     try { showToolOut(await api('/admin/build', { method: 'POST', body: '{}' })); }
-    catch (e) { toast(e.message); }
+    catch (e) { if (e.message !== 'Unauthorized') toast(e.message, true); }
   });
 
+  // Settings Handlers
   function fillSettings() {
     $('set-api').value = state.apiUrl;
     $('set-key').value = state.key;
     $('set-store').value = state.storeUrl;
   }
+  
   $('set-save').addEventListener('click', async () => {
+    const btn = $('set-save');
+    btn.disabled = true;
+    btn.textContent = 'Verifying...';
+    
     state.apiUrl = normalizeApiUrl($('set-api').value);
     state.key = $('set-key').value.trim();
     state.storeUrl = ($('set-store').value || '').trim().replace(/\/$/, '');
+    
     try {
       await api('/admin/stats');
       saveConn();
       $('side-meta').textContent = state.apiUrl + (state.storeUrl ? '\n' + state.storeUrl : '');
-      toast('Saved');
-    } catch (e) { toast(e.message); }
+      toast('Settings saved and connected successfully');
+    } catch (e) {
+      if (e.message !== 'Unauthorized') toast(e.message, true);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Save & Reconnect';
+    }
   });
 
+  // Boot
   if (loadConn()) {
     $('conn-api').value = state.apiUrl;
     $('conn-key').value = state.key;
