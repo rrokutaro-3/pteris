@@ -337,18 +337,9 @@
     .load-more-wrap .btn { width: auto; min-width: 120px; }
 
     /* —— Product page (Nora / Hroa) —— */
-    .product-layout {
-      display: grid; grid-template-columns: 1fr; gap: 20px; padding-top: 12px;
-    }
-    @media (min-width: 860px) {
-      .product-layout {
-        grid-template-columns: 1.1fr 0.9fr; gap: 32px 56px;
-        padding-top: 20px; align-items: start;
-      }
-    }
     .product-gallery {
       display: flex; flex-direction: column; gap: 10px;
-      min-width: 0;
+      min-width: 0; width: 100%;
     }
     @media (min-width: 860px) {
       .product-gallery { position: sticky; top: calc(var(--hh) + 12px); }
@@ -359,32 +350,48 @@
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none; -ms-overflow-style: none;
       background: #f3f3f3;
+      width: 100%;
     }
     .pd-gallery-scroll::-webkit-scrollbar { display: none; }
     .pd-gallery-slide {
-      flex: 0 0 100%; width: 100%; aspect-ratio: 3/4;
+      flex: 0 0 100%; width: 100%; min-width: 100%;
+      aspect-ratio: 3/4;
       scroll-snap-align: start; scroll-snap-stop: always;
       background: #f3f3f3;
     }
     .pd-gallery-slide img {
       width: 100%; height: 100%; object-fit: cover; display: block;
+      pointer-events: none;
     }
     .pd-gallery-dots {
-      display: flex; justify-content: center; gap: 5px; min-height: 8px;
+      display: flex; justify-content: center; gap: 6px; min-height: 6px;
     }
+    .pd-gallery-dots:empty { display: none; }
     .pd-gallery-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: #ddd; border: 0; padding: 0; cursor: pointer;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #d5d5d5; border: 0; padding: 0; cursor: pointer;
     }
     .pd-gallery-dot.active { background: #0d0d0d; }
-    /* desktop: still horizontal scroll, slightly taller feel */
-    @media (min-width: 860px) {
-      .pd-gallery-slide { aspect-ratio: 3/4; }
-    }
-    .main-img-wrap, .thumb-grid { display: none; }
 
-    .product-info { padding-bottom: 20px; max-width: 420px; }
-    @media (min-width: 860px) { .product-info { padding-top: 8px; } }
+    /* Product page layout consistency */
+    .product-layout {
+      display: grid; grid-template-columns: 1fr; gap: 20px; padding-top: 0;
+    }
+    @media (min-width: 860px) {
+      .product-layout {
+        grid-template-columns: 1fr 1fr; gap: 40px 48px;
+        padding-top: 24px; align-items: start;
+      }
+    }
+    .product-info {
+      padding: 4px 0 28px; max-width: 440px;
+    }
+    @media (max-width: 859px) {
+      .product-info { max-width: none; padding: 4px 0 24px; }
+      .product-gallery { margin-left: -16px; margin-right: -16px; width: calc(100% + 32px); }
+      .pd-gallery-dots { padding: 0 16px; }
+    }
+
     .product-brand {
       font-size: 9px; font-weight: 400; letter-spacing: .14em;
       text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
@@ -665,8 +672,6 @@
       .action-row .btn-primary { flex: 1 1 100%; order: -1; }
       .qty-selector { flex: 1; justify-content: space-between; }
       .hero { height: 58vh; min-height: 320px; }
-      .product-layout { gap: 16px; padding-top: 0; }
-      .product-info { max-width: none; }
       .view-section { padding-bottom: 48px; }
       .header-actions .icon-btn#nav-wishlist-btn { display: none !important; }
     }
@@ -781,13 +786,8 @@
       <div class="product-layout">
         <!-- Gallery -->
         <div class="product-gallery" id="product-gallery">
-          <div class="pd-gallery-scroll" id="pd-gallery-scroll" aria-label="Product images">
-            <!-- slides injected by renderGallery -->
-          </div>
+          <div class="pd-gallery-scroll" id="pd-gallery-scroll" aria-label="Product images"></div>
           <div class="pd-gallery-dots" id="pd-gallery-dots" aria-hidden="true"></div>
-          <!-- kept for JS compatibility; hidden -->
-          <img id="pd-main-img" src="" alt="" hidden>
-          <div id="pd-thumbs" hidden></div>
         </div>
         <!-- Info -->
         <div class="product-info">
@@ -1749,8 +1749,6 @@
       const _gd = document.getElementById('pd-gallery-dots');
       if (_gs) _gs.innerHTML = '';
       if (_gd) _gd.innerHTML = '';
-      const _mi = document.getElementById('pd-main-img');
-      if (_mi) _mi.src = '';
       document.getElementById('pd-stock').style.display = 'none';
       document.getElementById('pd-attributes').style.display = 'none';
       document.getElementById('pd-related-section').style.display = 'none';
@@ -1801,11 +1799,13 @@
         let initialGroup = null;
         if (groupIds.length > 0) {
           initialGroup = groupIds.find(gid => variantGroups[gid].some(v => v.stock > 0 || v.backorder)) || groupIds[0];
-          renderGallery(client.getMediaForGroup(product, initialGroup));
+          _pdState._galleryGroup = initialGroup;
+          renderGallery(getGalleryImages(product, initialGroup));
           const firstAvail = variantGroups[initialGroup].find(v => v.stock > 0 || v.backorder) || variantGroups[initialGroup][0];
           _pdState.options = { ...firstAvail.options };
         } else {
-          renderGallery(product.media.images);
+          _pdState._galleryGroup = null;
+          renderGallery(getGalleryImages(product, null));
           const firstAvail = product.variants.find(v => v.stock > 0 || v.backorder) || product.variants[0];
           if (firstAvail) _pdState.options = { ...firstAvail.options };
         }
@@ -1871,38 +1871,73 @@
       }
     }
 
+    /**
+     * Gallery images for a variant group via StoreClient.getMediaForGroup.
+     * Client returns images tagged with that variantGroup plus shared
+     * (variantGroup null). If the product has no media entries at all,
+     * fall back to unique variants[].image for that group.
+     */
+    function getGalleryImages(product, groupId) {
+      if (!product) return [];
+
+      if (groupId != null && groupId !== '') {
+        const fromClient = client.getMediaForGroup(product, groupId) || [];
+        if (fromClient.length) return fromClient;
+
+        // No media[] rows — use stills on variants in this group
+        const groups = client.getVariantGroups(product);
+        const variants = groups[groupId] || [];
+        const seen = new Set();
+        const stills = [];
+        for (const v of variants) {
+          if (v.image && !seen.has(v.image)) {
+            seen.add(v.image);
+            stills.push({ url: v.image, alt: product.identity?.name || product.name || '', variantGroup: groupId });
+          }
+        }
+        return stills;
+      }
+
+      // No group selected: shared-only if possible, else all media, else all variant stills
+      const shared = client.getMediaForGroup(product, null) || [];
+      if (shared.length) return shared;
+      const all = product.media?.images || [];
+      if (all.length) return [...all].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+      const seen = new Set();
+      const stills = [];
+      for (const v of product.variants || []) {
+        if (v.image && !seen.has(v.image)) {
+          seen.add(v.image);
+          stills.push({ url: v.image, alt: product.identity?.name || product.name || '' });
+        }
+      }
+      return stills;
+    }
+
     function renderGallery(images) {
       const track = document.getElementById('pd-gallery-scroll');
       const dots  = document.getElementById('pd-gallery-dots');
-      const mainImg = document.getElementById('pd-main-img');
       if (!track) return;
 
       track.innerHTML = '';
       if (dots) dots.innerHTML = '';
 
       const list = (images && images.length) ? images : [];
-      if (!list.length) {
-        if (mainImg) mainImg.src = '';
-        return;
-      }
-
-      if (mainImg) {
-        mainImg.src = list[0].url || '';
-        mainImg.alt = list[0].alt || '';
-      }
+      if (!list.length) return;
 
       list.forEach((img, i) => {
         const slide = document.createElement('div');
         slide.className = 'pd-gallery-slide';
         const el = document.createElement('img');
-        el.src = img.url || '';
+        el.src = img.url || img || '';
         el.alt = img.alt || '';
         el.loading = i === 0 ? 'eager' : 'lazy';
         el.draggable = false;
         slide.appendChild(el);
         track.appendChild(slide);
 
-        if (dots) {
+        if (dots && list.length > 1) {
           const dot = document.createElement('button');
           dot.type = 'button';
           dot.className = 'pd-gallery-dot' + (i === 0 ? ' active' : '');
@@ -1914,7 +1949,6 @@
         }
       });
 
-      // Sync dots on scroll
       if (dots && list.length > 1) {
         track.onscroll = () => {
           const idx = Math.round(track.scrollLeft / Math.max(track.clientWidth, 1));
@@ -1922,10 +1956,9 @@
             d.classList.toggle('active', i === idx);
           });
         };
-      } else if (track) {
+      } else {
         track.onscroll = null;
       }
-
       track.scrollLeft = 0;
     }
 
@@ -1979,21 +2012,77 @@
       return avail[key] || [];
     }
 
+    /** Which option key drives variantGroup (Color, Material, Metal, …). */
+    function getGroupOptionKey(product, optionKeys, groupIds) {
+      if (!groupIds?.length || !optionKeys?.length) return null;
+      const colorish = optionKeys.find(k => /^(color|colour)$/i.test(k));
+      if (colorish) return colorish;
+
+      // Key whose values line up with variantGroup ids
+      for (const key of optionKeys) {
+        const vals = new Set(
+          product.variants.map(v => String(v.options?.[key] ?? '').toLowerCase())
+        );
+        const hits = groupIds.filter(g => vals.has(String(g).toLowerCase()));
+        if (hits.length >= Math.min(2, groupIds.length)) return key;
+      }
+
+      // Key constant within each group, different across groups (classic matrix)
+      for (const key of optionKeys) {
+        const across = new Set();
+        let ok = true;
+        for (const gid of groupIds) {
+          const vs = product.variants.filter(v => v.variantGroup === gid);
+          const set = new Set(vs.map(v => v.options?.[key]));
+          if (set.size !== 1) { ok = false; break; }
+          across.add([...set][0]);
+        }
+        if (ok && across.size === groupIds.length) return key;
+      }
+      return optionKeys[0] || null;
+    }
+
+    function isColorLikeKey(key) {
+      return /^(color|colour)$/i.test(key || '');
+    }
+
+    function optionLabelForVariant(variant, key, fallback) {
+      if (!variant) return fallback;
+      return (
+        variant.options?.[key] ||
+        variant.options?.Color ||
+        variant.options?.color ||
+        variant.options?.Colour ||
+        variant.options?.Material ||
+        variant.options?.material ||
+        fallback
+      );
+    }
+
     function resolveSelectedGroup(product, options, groupIds) {
       if (!groupIds.length) return null;
-      // Prefer matching by Color option value → variantGroup
-      const colorVal = options.Color || options.color;
-      if (colorVal) {
+      const { optionKeys } = client.buildVariantMatrix(product);
+      const groupKey = getGroupOptionKey(product, optionKeys, groupIds);
+
+      if (groupKey && options[groupKey] != null) {
         const match = product.variants.find(v =>
-          (v.options.Color || v.options.color) === colorVal
+          v.options?.[groupKey] === options[groupKey] && v.variantGroup
         );
         if (match?.variantGroup) return match.variantGroup;
       }
-      // Fallback: case-insensitive match of any option value to a group id
+
+      // Any selected option value matching a group id
       for (const val of Object.values(options)) {
         const hit = groupIds.find(g => String(g).toLowerCase() === String(val).toLowerCase());
         if (hit) return hit;
       }
+
+      // Variant that matches full selection
+      const exact = product.variants.find(v =>
+        Object.entries(options).every(([k, val]) => v.options?.[k] === val)
+      );
+      if (exact?.variantGroup) return exact.variantGroup;
+
       return groupIds[0];
     }
 
@@ -2001,120 +2090,184 @@
       const container = document.getElementById('pd-options');
       container.innerHTML = '';
 
-      const product    = _pdState.product;
-      const groupIds   = _pdState.groupIds;
-      const groups     = _pdState.variantGroups;
+      const product  = _pdState.product;
+      const groupIds = _pdState.groupIds;
+      const groups   = _pdState.variantGroups;
       const { optionKeys } = client.buildVariantMatrix(product);
+      const groupKey = getGroupOptionKey(product, optionKeys, groupIds);
       const selectedGroup = resolveSelectedGroup(product, _pdState.options, groupIds);
+      const useGroupPicker = groupIds.length > 1;
 
-      // Color / variantGroup swatches (only when multiple groups exist)
-      if (groupIds.length > 1) {
-        const colorKey = optionKeys.find(k => k.toLowerCase() === 'color') || 'Color';
-        const displayColor = _pdState.options[colorKey] || selectedGroup || '';
+      // Primary group picker (Color, Material, Metal, Style, …) when multiple variantGroups
+      if (useGroupPicker) {
+        const labelName = groupKey || 'Option';
+        const displayVal =
+          (groupKey && _pdState.options[groupKey]) ||
+          optionLabelForVariant(
+            (groups[selectedGroup] || [])[0],
+            groupKey,
+            selectedGroup
+          ) ||
+          selectedGroup ||
+          '';
+
         const grpEl = document.createElement('div');
         grpEl.className = 'option-group';
-        grpEl.innerHTML = '<div class="option-label">Color <em>— ' + displayColor + '</em></div>';
+        grpEl.innerHTML =
+          '<div class="option-label">' +
+          labelName +
+          ' <em>— ' +
+          displayVal +
+          '</em></div>';
+
         const swWrap = document.createElement('div');
-        swWrap.style.cssText = 'display:flex;gap:12px;flex-wrap:wrap;';
+        swWrap.style.cssText = 'display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;';
+        const colorMode = isColorLikeKey(groupKey);
+
         groupIds.forEach(gid => {
           const groupVariants = groups[gid] || [];
           const groupImgs = client.getMediaForGroup(product, gid);
           const swatchImg = groupVariants[0]?.image || groupImgs[0]?.url || '';
           const hasStock = groupVariants.some(v => (v.stock || 0) > 0 || v.backorder);
           const isSelected = selectedGroup === gid;
+          const sample = groupVariants[0];
+          const valueLabel = optionLabelForVariant(sample, groupKey, gid);
 
           const swWrapItem = document.createElement('div');
           swWrapItem.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:4px;';
-          const sw = document.createElement('button');
-          sw.type = 'button';
-          sw.className = 'color-swatch' + (isSelected ? ' selected' : '') + (!hasStock ? ' disabled' : '');
-          const sample = groupVariants[0];
-          const colorLabel = (sample && (sample.options.Color || sample.options.color || sample.options.Colour)) || gid;
-          sw.setAttribute('aria-label', 'Select color: ' + colorLabel);
-          sw.setAttribute('aria-pressed', String(isSelected));
-          const solid = resolveVariantColor(groupVariants[0], gid);
-          if (solid) {
-            sw.style.background = solid;
-            // light colours need a visible edge
-            if (/^(#fff|#f5f5f5|#fffff0|#f7f7f2|#f5f0e6|white|ivory)/i.test(solid)) {
-              sw.style.borderColor = '#ccc';
+
+          if (colorMode || resolveVariantColor(sample, gid)) {
+            // Circular swatch (colour or mapped material e.g. gold/silver)
+            const sw = document.createElement('button');
+            sw.type = 'button';
+            sw.className =
+              'color-swatch' +
+              (isSelected ? ' selected' : '') +
+              (!hasStock ? ' disabled' : '');
+            sw.setAttribute('aria-label', 'Select ' + labelName + ': ' + valueLabel);
+            sw.setAttribute('aria-pressed', String(isSelected));
+            const solid = resolveVariantColor(sample, gid);
+            if (solid) {
+              sw.style.background = solid;
+              if (/^(#fff|#f5f5f5|#fffff0|#f7f7f2|#f5f0e6)/i.test(solid)) {
+                sw.style.borderColor = '#ccc';
+              }
+            } else if (swatchImg) {
+              const swImg = document.createElement('img');
+              swImg.src = swatchImg;
+              swImg.alt = valueLabel;
+              swImg.loading = 'lazy';
+              sw.appendChild(swImg);
+            } else {
+              sw.style.background = '#ccc';
             }
-          } else if (swatchImg) {
-            const swImg = document.createElement('img');
-            swImg.src = swatchImg; swImg.alt = colorLabel; swImg.loading = 'lazy';
-            sw.appendChild(swImg);
+            if (hasStock) {
+              sw.addEventListener('click', () => {
+                if (groupKey) {
+                  _pdState.options = { ..._pdState.options, [groupKey]: valueLabel };
+                }
+                // Keep secondary options if still valid in this group; else pick first in-stock
+                const inGroup = groupVariants.filter(v => (v.stock || 0) > 0 || v.backorder);
+                const keep = inGroup.find(v =>
+                  Object.entries(_pdState.options).every(
+                    ([k, val]) => k === groupKey || v.options?.[k] === val
+                  )
+                ) || inGroup[0] || groupVariants[0];
+                if (keep) _pdState.options = { ...keep.options };
+                _pdState._galleryGroup = gid; renderGallery(getGalleryImages(product, gid));
+                renderPdOptions();
+                refreshPdVariantState();
+              });
+            }
+            swWrapItem.appendChild(sw);
+            const lbl = document.createElement('span');
+            lbl.className = 'color-swatch-label';
+            lbl.textContent = valueLabel;
+            swWrapItem.appendChild(lbl);
           } else {
-            sw.style.background = '#ccc';
+            // Text / image pill for Material, Finish, Style, etc.
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className =
+              'opt-btn' +
+              (isSelected ? ' selected' : '') +
+              (!hasStock ? ' disabled' : '');
+            btn.textContent = valueLabel;
+            btn.setAttribute('aria-pressed', String(isSelected));
+            if (swatchImg && !colorMode) {
+              // optional: small preview not required for jewelry text pills
+            }
+            if (hasStock) {
+              btn.addEventListener('click', () => {
+                if (groupKey) {
+                  _pdState.options = { ..._pdState.options, [groupKey]: valueLabel };
+                }
+                const inGroup = groupVariants.filter(v => (v.stock || 0) > 0 || v.backorder);
+                const keep = inGroup.find(v =>
+                  Object.entries(_pdState.options).every(
+                    ([k, val]) => k === groupKey || v.options?.[k] === val
+                  )
+                ) || inGroup[0] || groupVariants[0];
+                if (keep) _pdState.options = { ...keep.options };
+                _pdState._galleryGroup = gid; renderGallery(getGalleryImages(product, gid));
+                renderPdOptions();
+                refreshPdVariantState();
+              });
+            }
+            swWrapItem.appendChild(btn);
           }
-          sw.addEventListener('click', () => {
-            if (!hasStock && !groupVariants.length) return;
-            renderGallery(client.getMediaForGroup(product, gid));
-            // Preserve size when switching colour if that size exists in the new group
-            const sizeKey = optionKeys.find(k => k.toLowerCase() !== 'color');
-            const currentSize = sizeKey ? _pdState.options[sizeKey] : null;
-            let target = null;
-            if (currentSize) {
-              target = groupVariants.find(v => v.options[sizeKey] === currentSize && ((v.stock || 0) > 0 || v.backorder))
-                    || groupVariants.find(v => v.options[sizeKey] === currentSize);
-            }
-            if (!target) {
-              target = groupVariants.find(v => (v.stock || 0) > 0 || v.backorder) || groupVariants[0];
-            }
-            if (target) {
-              _pdState.options = { ...target.options };
-            }
-            renderPdOptions();
-            refreshPdVariantState();
-          });
-          const lbl = document.createElement('span');
-          lbl.className = 'color-swatch-label';
-          lbl.textContent = colorLabel;
-          swWrapItem.appendChild(sw); swWrapItem.appendChild(lbl);
           swWrap.appendChild(swWrapItem);
         });
+
         grpEl.appendChild(swWrap);
         container.appendChild(grpEl);
       }
 
-      // Other option selectors (Size, etc.) — skip Color when using group swatches
+      // Remaining option keys (Size, Length, …) — skip the group key when using group picker
       optionKeys.forEach(key => {
-        if (groupIds.length > 1 && key.toLowerCase() === 'color') return;
+        if (useGroupPicker && groupKey && key === groupKey) return;
+        if (useGroupPicker && isColorLikeKey(key)) return;
 
-        // Critical fix: availability for this key ignores the current value of this key
         const availableVals = availableValuesForKey(product, _pdState.options, key);
-        const values = [...new Set(product.variants.map(v => v.options[key]))];
+        const values = [...new Set(product.variants.map(v => v.options[key]).filter(Boolean))];
 
-        const grpEl  = document.createElement('div');
+        const grpEl = document.createElement('div');
         grpEl.className = 'option-group';
         const lbl = document.createElement('div');
         lbl.className = 'option-label';
-        lbl.innerHTML = key + ' <em>— ' + (_pdState.options[key] || 'Select') + '</em>';
+        lbl.innerHTML =
+          key + ' <em>— ' + (_pdState.options[key] || 'Select') + '</em>';
         grpEl.appendChild(lbl);
         const btnWrap = document.createElement('div');
         btnWrap.className = 'option-buttons';
+
         values.forEach(val => {
-          const isSelected  = _pdState.options[key] === val;
+          const isSelected = _pdState.options[key] === val;
           const isAvailable = availableVals.includes(val);
           const btn = document.createElement('button');
           btn.type = 'button';
-          btn.className = 'opt-btn' + (isSelected ? ' selected' : '') + (!isAvailable ? ' disabled' : '');
+          btn.className =
+            'opt-btn' +
+            (isSelected ? ' selected' : '') +
+            (!isAvailable ? ' disabled' : '');
           btn.textContent = val;
           btn.setAttribute('aria-pressed', String(isSelected));
           if (!isAvailable) btn.setAttribute('aria-disabled', 'true');
           btn.addEventListener('click', () => {
             if (btn.classList.contains('disabled')) return;
             _pdState.options = { ..._pdState.options, [key]: val };
-            // If the new combination is invalid, snap to a valid variant
             const exact = product.variants.find(v =>
               Object.entries(_pdState.options).every(([k, val2]) => v.options[k] === val2)
             );
             if (!exact) {
-              const partial = { ..._pdState.options };
-              // Prefer keeping color / group
-              const match = product.variants.find(v =>
-                Object.entries(partial).every(([k, val2]) => k === key || v.options[k] === val2) &&
-                ((v.stock || 0) > 0 || v.backorder)
-              ) || product.variants.find(v => v.options[key] === val);
+              const match =
+                product.variants.find(
+                  v =>
+                    Object.entries(_pdState.options).every(
+                      ([k, val2]) => k === key || v.options[k] === val2
+                    ) &&
+                    ((v.stock || 0) > 0 || v.backorder)
+                ) || product.variants.find(v => v.options[key] === val);
               if (match) _pdState.options = { ...match.options };
             }
             renderPdOptions();
@@ -2156,18 +2309,13 @@
         priceEl.textContent = '$' + variant.price.toFixed(2);
       }
 
-      // Gallery: prefer scrolling to a slide that matches the variant image
-      if (variant.image) {
-        const mainImg = document.getElementById('pd-main-img');
-        if (mainImg) mainImg.src = variant.image;
-        const track = document.getElementById('pd-gallery-scroll');
-        if (track) {
-          const slides = [...track.querySelectorAll('.pd-gallery-slide img')];
-          const idx = slides.findIndex(img => img.src === variant.image || (img.getAttribute('src') === variant.image));
-          if (idx >= 0) {
-            track.scrollTo({ left: track.clientWidth * idx, behavior: 'smooth' });
-          }
-        }
+      // Gallery: only rebuild when the variant group changes
+      const gid = variant.variantGroup || resolveSelectedGroup(
+        _pdState.product, _pdState.options, _pdState.groupIds
+      );
+      if (gid != null && gid !== _pdState._galleryGroup) {
+        _pdState._galleryGroup = gid;
+        renderGallery(getGalleryImages(_pdState.product, gid));
       }
 
       // Stock
