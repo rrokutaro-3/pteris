@@ -273,6 +273,13 @@ export class D1Store {
       stripePaymentIntentId: row.stripe_payment_intent_id,
       coupon: row.coupon,
       webhookProcessedAt: row.webhook_processed_at,
+      // Fulfillment + refund fields (admin UI reads these)
+      trackingNumber: row.tracking_number || null,
+      carrier: row.carrier || null,
+      notes: row.notes || null,
+      refundAmount: row.refund_amount ?? null,
+      refundReason: row.refund_reason || null,
+      refundedAt: row.refunded_at || null,
       createdAt: row.created_at,
       updatedAt: row.updated_at
     };
