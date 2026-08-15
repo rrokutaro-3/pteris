@@ -46,7 +46,7 @@ function normalizeRegionCode(value) {
 }
 
 /**
- * Fetch shipping config from CDN (cached in Worker)
+ * Fetch shipping config from Pages (cached in Worker)
  *
  * NOTE: the path is `/config/shipping.json`, NOT `/data/config/shipping.json`.
  * The build workflow (.github/workflows/build.yml, "Stage deploy payload")
@@ -56,14 +56,19 @@ function normalizeRegionCode(value) {
  * getCouponConfig below) previously still had the pre-flatten `/data/`
  * prefix, which 404s against the real deployed structure and would fail
  * every checkout at the shipping-calculation step.
+ *
+ * Uses PAGES_URL (not CDN_BASE_URL) because config files are always deployed
+ * to Cloudflare Pages — CDN_BASE_URL may point to an R2 bucket for media
+ * assets and would 404 for config JSON files.
  */
 async function getShippingConfig(env) {
   const cacheKey = 'shipping_config';
   const cached = await env.CACHE?.get(cacheKey);
   if (cached) return JSON.parse(cached);
 
-  const res = await fetch(`${env.CDN_BASE_URL}/config/shipping.json`);
-  if (!res.ok) throw new Error('Failed to load shipping config');
+  const baseUrl = env.PAGES_URL || env.STORE_URL;
+  const res = await fetch(`${baseUrl}/config/shipping.json`);
+  if (!res.ok) throw new Error(`Failed to load shipping config (HTTP ${res.status}) from ${baseUrl}`);
   const config = await res.json();
 
   await env.CACHE?.put(cacheKey, JSON.stringify(config), { expirationTtl: 3600 });
@@ -71,16 +76,18 @@ async function getShippingConfig(env) {
 }
 
 /**
- * Fetch tax config from CDN (cached in Worker). See the path note on
+ * Fetch tax config from Pages (cached in Worker). See the path note on
  * getShippingConfig() above — same `/config/` (not `/data/config/`) fix.
+ * Uses PAGES_URL (not CDN_BASE_URL) for the same reason.
  */
 async function getTaxConfig(env) {
   const cacheKey = 'tax_config';
   const cached = await env.CACHE?.get(cacheKey);
   if (cached) return JSON.parse(cached);
 
-  const res = await fetch(`${env.CDN_BASE_URL}/config/tax.json`);
-  if (!res.ok) throw new Error('Failed to load tax config');
+  const baseUrl = env.PAGES_URL || env.STORE_URL;
+  const res = await fetch(`${baseUrl}/config/tax.json`);
+  if (!res.ok) throw new Error(`Failed to load tax config (HTTP ${res.status}) from ${baseUrl}`);
   const config = await res.json();
 
   await env.CACHE?.put(cacheKey, JSON.stringify(config), { expirationTtl: 3600 });
@@ -209,16 +216,18 @@ function calculateTax(subtotal, taxConfig, country, state) {
 }
 
 /**
- * Fetch coupon config from CDN (cached in Worker, mirrors shipping/tax
+ * Fetch coupon config from Pages (cached in Worker, mirrors shipping/tax
  * config caching). See the path note on getShippingConfig() above — same
- * `/config/` (not `/data/config/`) fix.
+ * `/config/` (not `/data/config/`) fix. Uses PAGES_URL (not CDN_BASE_URL)
+ * for the same reason as getShippingConfig.
  */
 async function getCouponConfig(env) {
   const cacheKey = 'coupon_config';
   const cached = await env.CACHE?.get(cacheKey);
   if (cached) return JSON.parse(cached);
 
-  const res = await fetch(`${env.CDN_BASE_URL}/config/coupons.json`);
+  const baseUrl = env.PAGES_URL || env.STORE_URL;
+  const res = await fetch(`${baseUrl}/config/coupons.json`);
   if (!res.ok) return null;
   const config = await res.json();
 
