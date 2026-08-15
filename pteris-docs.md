@@ -259,7 +259,39 @@ Each product is a single JSON file named `{product-id}.json` (e.g. `p-8392.json`
     "profile": "standard",
     "weight": 0.3,
     "dimensions": { "l": 30, "w": 20, "h": 5, "unit": "cm" },
-    "requiresShipping": true
+    "requiresShipping": true,
+    "allowedCountries": ["US", "CA"],
+    "blockedCountries": [],
+    "handlingDays": { "min": 1, "max": 3 },
+    "shipsFrom": { "country": "US", "city": "Los Angeles" },
+    "note": "Optional product-level shipping note"
+  },
+
+  "sizeGuide": {
+    "title": "Dress size guide",
+    "unit": "cm",
+    "unitAlternates": ["in"],
+    "note": "When in doubt, size up.",
+    "fitNotes": ["Slim fit through the waist"],
+    "columns": ["Size", "Bust", "Waist", "Hip"],
+    "rows": [
+      { "Size": "S", "Bust": "84", "Waist": "66", "Hip": "90" },
+      { "Size": "M", "Bust": "88", "Waist": "70", "Hip": "94" }
+    ],
+    "howToMeasure": [
+      { "label": "Bust", "text": "Fullest part of the chest." }
+    ],
+    "links": []
+  },
+
+  "sourcing": {
+    "sources": [
+      { "name": "Supplier A", "url": "https://supplier.example/item/123" }
+    ],
+    "links": [
+      { "label": "Packaging video", "url": "https://..." }
+    ],
+    "notes": "Prefer first source."
   },
 
   "seo": {
@@ -278,6 +310,12 @@ Each product is a single JSON file named `{product-id}.json` (e.g. `p-8392.json`
   }
 }
 ```
+
+**Size guide:** optional on the product. SPA should use `product.sizeGuide` when present, otherwise fall back to `config/size-guide.json` (`default` / `byCategory` / `byTag`). Same object shape in both places.
+
+**Sourcing:** optional dropship/ops links. At checkout the Worker snapshots `sourcing` onto each order line item (frozen for admin). Not used for pricing.
+
+**Product shipping countries:** ISO 3166-1 alpha-2. If `allowedCountries` is non-empty, only those destinations are accepted; else `blockedCountries` is applied.
 
 ### Key fields explained
 
@@ -852,11 +890,18 @@ const result = await client.createCheckout(
   cart,        // array of cart items (see below)
   customer,    // customer info object
   shipping,    // shipping address + optional method
-  coupon       // optional coupon code string
+  coupon,      // optional coupon code string
+  note         // optional customer note (gift message, delivery instructions)
 );
 // result → { checkoutUrl: 'https://checkout.stripe.com/...', orderId: 'ord_...' }
 // Redirect to result.checkoutUrl
 ```
+
+`note` is optional (max 1000 chars, HTML stripped). Stored on the order as `customerNote` (separate from admin internal `notes`).
+
+Per-product shipping restrictions (`shipping.allowedCountries` / `blockedCountries` on the product JSON, ISO 3166-1 alpha-2) are enforced server-side. If a line cannot ship to the destination country, checkout returns `400` with `Product cannot be shipped to this destination`.
+
+Product `sourcing` (dropship links/notes) is **snapshotted** onto each order line item at checkout for admin fulfillment. The product file remains the catalog source of truth; the order copy is frozen.
 
 ---
 
