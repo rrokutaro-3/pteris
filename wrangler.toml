@@ -14,7 +14,7 @@ database_id = "your-d1-database-id"   # patched by setup.sh
 
 # ─────────────────────────────────────────────────────────────────
 # R2 asset storage — required for POST /api/admin/upload
-# Create with: npx wrangler r2 bucket create your-store-assets
+# Create with: npx wrangler r2 bucket create yur-store-assets
 # Then set the bucket_name below and configure a public domain in the
 # Cloudflare R2 dashboard (Settings → Public Access).
 # ─────────────────────────────────────────────────────────────────
