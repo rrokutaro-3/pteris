@@ -896,6 +896,11 @@
           <label for="co-coupon">Gift card or discount code <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>
           <input type="text" id="co-coupon" placeholder="WELCOME10">
         </div>
+        <div class="checkout-section-title">Order note</div>
+        <div class="input-group">
+          <label for="co-note">Delivery instructions or gift message <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>
+          <textarea id="co-note" rows="3" maxlength="1000" placeholder="e.g. Call before delivery, gift for Sarah…" style="width:100%;padding:10px 12px;border:1px solid var(--line);resize:vertical;font:inherit;"></textarea>
+        </div>
         <button class="btn btn-primary" id="co-submit" style="margin-top:8px;">Proceed to Payment</button>
       </div>
     </section>
@@ -1834,16 +1839,65 @@
           wlBtn.style.display = 'none';
         }
 
-        // Size guide btn
+        // Size guide btn — prefer product.sizeGuide, else global config, else simple fallback
         const sgBtn = document.getElementById('pd-sizeguide-btn');
-        if (appState.state.configs.store?.features?.sizeGuide) {
-          sgBtn.style.display = 'inline-flex';
-          sgBtn.onclick = () => {
-            document.getElementById('simple-modal-content').innerHTML = '<h2 style="margin-bottom:14px;">Size Guide</h2><p style="color:var(--text-muted);">Standard sizing. Measurements may vary. When in doubt, size up.</p>';
-            appState.set('ui', { modalOpen: true });
-          };
-        } else {
-          sgBtn.style.display = 'none';
+        const renderSizeGuideHtml = (guide) => {
+          if (!guide) {
+            return '<h2 style="margin-bottom:14px;">Size Guide</h2><p style="color:var(--text-muted);">Standard sizing. Measurements may vary. When in doubt, size up.</p>';
+          }
+          let html = '<h2 style="margin-bottom:14px;">' + (guide.title || 'Size Guide') + '</h2>';
+          if (guide.note) html += '<p style="color:var(--text-muted);margin-bottom:12px;">' + guide.note + '</p>';
+          if (Array.isArray(guide.fitNotes) && guide.fitNotes.length) {
+            html += '<ul style="margin:0 0 12px 18px;color:var(--text-muted);">' +
+              guide.fitNotes.map(n => '<li>' + n + '</li>').join('') + '</ul>';
+          }
+          if (Array.isArray(guide.columns) && Array.isArray(guide.rows) && guide.rows.length) {
+            html += '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr>' +
+              guide.columns.map(c => '<th style="text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);">' + c + '</th>').join('') +
+              '</tr></thead><tbody>' +
+              guide.rows.map(row => '<tr>' + guide.columns.map(c =>
+                '<td style="padding:6px 8px;border-bottom:1px solid var(--line);">' + (row[c] ?? '') + '</td>'
+              ).join('') + '</tr>').join('') +
+              '</tbody></table></div>';
+            if (guide.unit) html += '<p style="margin-top:8px;color:var(--text-muted);font-size:11px;">Unit: ' + guide.unit +
+              (Array.isArray(guide.unitAlternates) && guide.unitAlternates.length ? ' (also ' + guide.unitAlternates.join(', ') + ')' : '') + '</p>';
+          }
+          if (Array.isArray(guide.howToMeasure) && guide.howToMeasure.length) {
+            html += '<div style="margin-top:14px;"><strong style="font-size:12px;">How to measure</strong><ul style="margin:8px 0 0 18px;color:var(--text-muted);">' +
+              guide.howToMeasure.map(h => '<li><strong>' + (h.label || '') + ':</strong> ' + (h.text || '') + '</li>').join('') +
+              '</ul></div>';
+          }
+          return html;
+        };
+        const resolveSizeGuide = async (product) => {
+          if (product?.sizeGuide) return product.sizeGuide;
+          try {
+            const cfg = await client.getConfig('size-guide');
+            if (!cfg) return null;
+            const cats = product?.categories || [];
+            for (const c of cats) {
+              if (cfg.byCategory && cfg.byCategory[c]) return cfg.byCategory[c];
+            }
+            const tags = product?.tags || [];
+            for (const t of tags) {
+              if (cfg.byTag && cfg.byTag[t]) return cfg.byTag[t];
+            }
+            return cfg.default || null;
+          } catch {
+            return null;
+          }
+        };
+        if (sgBtn) {
+          // Show when product has a guide, or store enables size guides, or global config exists
+          const showSg = !!(product?.sizeGuide || appState.state.configs.store?.features?.sizeGuide);
+          sgBtn.style.display = showSg ? 'inline-flex' : 'none';
+          if (showSg) {
+            sgBtn.onclick = async () => {
+              const guide = await resolveSizeGuide(product);
+              document.getElementById('simple-modal-content').innerHTML = renderSizeGuideHtml(guide);
+              appState.set('ui', { modalOpen: true });
+            };
+          }
         }
 
         // Reviews
@@ -2452,6 +2506,8 @@
       const state    = document.getElementById('co-state').value.trim();
       const zip      = document.getElementById('co-zip').value.trim();
       const coupon   = document.getElementById('co-coupon').value.trim() || null;
+      const noteEl   = document.getElementById('co-note');
+      const note     = noteEl ? (noteEl.value.trim() || null) : null;
 
       const errEl = document.getElementById('checkout-error');
       errEl.style.display = 'none';
@@ -2489,7 +2545,8 @@
           cartPayload,
           { email, name: fname + ' ' + lname, firstName: fname, lastName: lname },
           shippingPayload,
-          coupon
+          coupon,
+          note
         );
         if (!result?.checkoutUrl) {
           throw new Error('Checkout response missing checkoutUrl');

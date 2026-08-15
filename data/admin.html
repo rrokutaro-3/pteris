@@ -1164,17 +1164,43 @@ input[type="datetime-local"], input[type="number"], input[type="range"], select 
     try {
       const o = await api('/admin/orders/' + encodeURIComponent(id));
       const items = o.items || [];
+      const customerNote = o.customerNote || o.customer_note || '';
       $('od-body').innerHTML =
         '<div class="dl"><h3>Status</h3><p><span class="badge ' + esc(o.status) + '">' + esc(o.status) + '</span></p></div>' +
         '<div class="dl"><h3>Customer</h3><p>' + esc(o.customer?.name || '—') + '</p><p class="muted">' + esc(o.customer?.email || '') + '</p></div>' +
+        (customerNote
+          ? '<div class="dl"><h3>Customer note</h3><p>' + esc(customerNote) + '</p></div>'
+          : '') +
         '<div class="dl"><h3>Ship to</h3><p>' + esc(o.shipping?.address1 || '') + '</p>' +
         '<p>' + esc([o.shipping?.city, o.shipping?.state, o.shipping?.zip].filter(Boolean).join(', ')) + '</p>' +
         '<p>' + esc(o.shipping?.country || '') + '</p></div>' +
-        '<div class="dl"><h3>Items</h3><ul>' + items.map(it =>
-          '<li>' + esc(it.qty) + '× ' + esc(it.name || it.sku || it.variantId) +
-          ' <span class="muted mono">' + money(it.price) + '</span>' +
-          '<div class="muted mono">' + esc(it.variantId || '') + '</div></li>'
-        ).join('') + '</ul></div>' +
+        '<div class="dl"><h3>Items</h3><ul>' + items.map(it => {
+          const src = it.sourcing;
+          let srcHtml = '';
+          if (src) {
+            const parts = [];
+            if (Array.isArray(src.sources) && src.sources.length) {
+              parts.push(src.sources.map(s =>
+                s.url
+                  ? '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.name || s.url) + '</a>'
+                  : esc(s.name || '')
+              ).join(' · '));
+            }
+            if (Array.isArray(src.links) && src.links.length) {
+              parts.push(src.links.map(l =>
+                l.url
+                  ? '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || l.url) + '</a>'
+                  : esc(l.label || '')
+              ).join(' · '));
+            }
+            if (src.notes) parts.push('<span class="muted">' + esc(src.notes) + '</span>');
+            if (parts.length) srcHtml = '<div class="muted" style="margin-top:4px">Sourcing: ' + parts.join(' | ') + '</div>';
+          }
+          return '<li>' + esc(it.qty) + '× ' + esc(it.name || it.sku || it.variantId) +
+            ' <span class="muted mono">' + money(it.price) + '</span>' +
+            '<div class="muted mono">' + esc(it.variantId || '') + '</div>' +
+            srcHtml + '</li>';
+        }).join('') + '</ul></div>' +
         '<div class="dl"><h3>Totals</h3>' +
         '<p>Sub ' + money(o.subtotal) + ' · Ship ' + money(o.shippingCost ?? o.shipping_cost) + ' · Tax ' + money(o.tax) + '</p>' +
         '<p><strong>' + money(o.total) + '</strong></p></div>' +
@@ -1185,7 +1211,7 @@ input[type="datetime-local"], input[type="number"], input[type="range"], select 
         ).join('') + '</select></div>' +
         '<div class="field"><label>Carrier</label><input id="od-carrier" value="' + esc(o.carrier || '') + '"></div>' +
         '<div class="field"><label>Tracking</label><input id="od-tracking" value="' + esc(o.trackingNumber || o.tracking_number || '') + '"></div>' +
-        '<div class="field"><label>Notes</label><textarea id="od-notes">' + esc(o.notes || '') + '</textarea></div></div>' +
+        '<div class="field"><label>Internal notes</label><textarea id="od-notes">' + esc(o.notes || '') + '</textarea></div></div>' +
         '<div class="dl"><h3>Refund (DB record only)</h3>' +
         '<div class="field"><label>Amount</label><input id="od-refund-amt" type="number" step="0.01" min="0" value="' + (o.total || 0) + '"></div>' +
         '<div class="field"><label>Reason</label><input id="od-refund-reason" placeholder="Reason"></div></div>';
