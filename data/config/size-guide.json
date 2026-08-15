@@ -1,0 +1,33 @@
+{
+  "default": {
+    "title": "Size guide",
+    "unit": "cm",
+    "unitAlternates": ["in"],
+    "note": "Measure yourself and compare to the chart. When in doubt, size up.",
+    "fitNotes": [],
+    "columns": ["Size", "Chest", "Waist", "Hip"],
+    "rows": [
+      { "Size": "XS", "Chest": "82", "Waist": "64", "Hip": "88" },
+      { "Size": "S",  "Chest": "86", "Waist": "68", "Hip": "92" },
+      { "Size": "M",  "Chest": "90", "Waist": "72", "Hip": "96" },
+      { "Size": "L",  "Chest": "96", "Waist": "78", "Hip": "102" },
+      { "Size": "XL", "Chest": "102", "Waist": "84", "Hip": "108" }
+    ],
+    "alternateUnitRows": [
+      { "Size": "XS", "Chest": "32.3", "Waist": "25.2", "Hip": "34.6" },
+      { "Size": "S",  "Chest": "33.9", "Waist": "26.8", "Hip": "36.2" },
+      { "Size": "M",  "Chest": "35.4", "Waist": "28.3", "Hip": "37.8" },
+      { "Size": "L",  "Chest": "37.8", "Waist": "30.7", "Hip": "40.2" },
+      { "Size": "XL", "Chest": "40.2", "Waist": "33.1", "Hip": "42.5" }
+    ],
+    "howToMeasure": [
+      { "label": "Chest", "text": "Measure around the fullest part of your chest." },
+      { "label": "Waist", "text": "Measure around the narrowest part of your torso." },
+      { "label": "Hip", "text": "Measure around the fullest part of your hips." }
+    ],
+    "image": null,
+    "links": []
+  },
+  "byCategory": {},
+  "byTag": {}
+}
