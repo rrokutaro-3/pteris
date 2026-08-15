@@ -25,8 +25,8 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; }
 body {
-  font-family: var(--font); font-weight: 300; font-size: 12px;
-  color: var(--text); background: var(--bg); line-height: 1.45;
+  font-family: var(--font); font-weight: 400; font-size: 11px;
+  color: var(--text); background: var(--bg); line-height: 1.4;
   -webkit-font-smoothing: antialiased; min-height: 100vh;
 }
 button, input, select, textarea { font: inherit; color: inherit; }
@@ -34,8 +34,8 @@ button { cursor: pointer; border: 0; background: none; }
 a { color: var(--text); }
 code { font-size: 11px; color: var(--muted); }
 table { width: 100%; border-collapse: collapse; }
-th, td { text-align: left; padding: 9px 11px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-th { font-size: 9px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; font-size: 11px; }
+th { font-size: 9px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 
 #connect {
   min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;
@@ -53,8 +53,8 @@ th { font-size: 9px; font-weight: 400; letter-spacing: .12em; text-transform: up
   color: var(--muted); margin-bottom: 6px;
 }
 .field input, .field select, .field textarea {
-  width: 100%; padding: 11px 12px; border: 1px solid var(--line);
-  background: var(--bg); outline: none;
+  width: 100%; padding: 8px 10px; border: 1px solid var(--line);
+  background: var(--bg); outline: none; font-size: 11px;
 }
 .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--line2); }
 .field textarea { min-height: 72px; resize: vertical; }
@@ -121,11 +121,11 @@ main { min-width: 0; }
   padding: 14px 18px; border-bottom: 1px solid var(--line); background: var(--surface);
 }
 .top h1 { font-size: 11px; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; }
-.content { padding: 16px 18px 48px; max-width: 1120px; }
+.content { padding: 14px 16px 28px; max-width: 1100px; }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 10px 14px; font-size: 10px; font-weight: 400;
+  padding: 7px 11px; font-size: 10px; font-weight: 400;
   letter-spacing: .1em; text-transform: uppercase; border: 1px solid transparent;
 }
 .btn-primary { background: #ececec; color: #0a0a0a; border-color: #ececec; }
@@ -144,7 +144,7 @@ main { min-width: 0; }
 }
 .card { background: var(--surface); border: 1px solid var(--line); padding: 14px; }
 .card .k { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-.card .v { font-size: 18px; font-weight: 300; }
+.card .v { font-size: 16px; font-weight: 400; }
 .card .s { font-size: 10px; color: var(--muted); margin-top: 4px; }
 
 .panel { background: var(--surface); border: 1px solid var(--line); margin-bottom: 12px; }
@@ -166,15 +166,15 @@ main { min-width: 0; }
   display: inline-block; padding: 2px 7px; font-size: 9px;
   letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--line);
 }
-.badge.paid, .badge.shipped { color: var(--ok); border-color: #2a3a2e; }
+.badge.paid, .badge.shipped, .badge.approved { color: var(--ok); border-color: #2a3a2e; }
 .badge.pending { color: var(--warn); border-color: #3a3220; }
-.badge.cancelled, .badge.refunded { color: var(--danger); border-color: #3a2a2a; }
+.badge.cancelled, .badge.refunded, .badge.rejected { color: var(--danger); border-color: #3a2a2a; }
 .badge.low { color: var(--warn); }
 
 .empty { padding: 28px 14px; text-align: center; color: var(--muted); }
 .muted { color: var(--muted); }
 .mono { font-variant-numeric: tabular-nums; word-break: break-all; }
-.hint { color: var(--muted); margin-bottom: 12px; line-height: 1.55; font-size: 11px; }
+.hint { color: var(--muted); margin-bottom: 10px; line-height: 1.45; font-size: 10px; }
 .search, .input-sm {
   padding: 8px 10px; border: 1px solid var(--line); background: var(--bg);
 }
@@ -278,20 +278,40 @@ main { min-width: 0; }
 html { color-scheme: dark; }
 input[type="checkbox"] {
   -webkit-appearance: none; appearance: none;
-  width: 14px; height: 14px; margin: 0; flex-shrink: 0;
-  border: 1px solid var(--line2); border-radius: 3px;
-  background: var(--surface); cursor: pointer; position: relative;
+  width: 18px; height: 18px; margin: 0; flex-shrink: 0;
+  border: 1.5px solid var(--line2); border-radius: 4px;
+  background: var(--elevated); cursor: pointer; position: relative;
   vertical-align: middle;
+  transition: background 0.1s, border-color 0.1s;
 }
+input[type="checkbox"]:hover { border-color: #666; }
 input[type="checkbox"]:checked {
   background: var(--text); border-color: var(--text);
 }
+/* Larger, clearer checkmark */
 input[type="checkbox"]:checked::after {
-  content: ''; position: absolute; left: 4px; top: 1px;
-  width: 3px; height: 7px; border: solid var(--bg); border-width: 0 1.5px 1.5px 0;
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--bg);
+  border-width: 0 2.5px 2.5px 0;
   transform: rotate(45deg);
 }
-input[type="datetime-local"], input[type="number"], input[type="range"] { color-scheme: dark; }
+input[type="datetime-local"], input[type="number"], input[type="range"], select { color-scheme: dark; }
+.field select, select {
+  width: 100%; padding: 11px 12px; border: 1px solid var(--line);
+  background: var(--bg); outline: none; color: var(--text);
+  cursor: pointer;
+}
+.field select:focus, select:focus { border-color: var(--line2); }
+/* Compact selects inside media / variant rows */
+.media-row select, .variant-box select {
+  width: 100%; padding: 8px 10px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--text);
+}
 
 .prod-toolbar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
 .prod-toolbar .search { flex:1; min-width:160px; }
@@ -309,6 +329,86 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
 .editor-grid { display:grid; gap:10px; max-width:720px; }
 .editor-grid.cols-2 { grid-template-columns: 1fr 1fr; }
 @media (max-width: 640px) { .editor-grid.cols-2 { grid-template-columns: 1fr; } }
+
+/* Horizontal media carousels — single row, scroll sideways */
+.carousel {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch;
+  gap: 8px;
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  padding: 10px 12px 14px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.carousel::-webkit-scrollbar { height: 5px; }
+.carousel::-webkit-scrollbar-track { background: var(--bg); }
+.carousel::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 2px; }
+.carousel-item {
+  flex: 0 0 128px !important;
+  width: 128px !important;
+  min-width: 128px !important;
+  max-width: 128px !important;
+  scroll-snap-align: start;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.carousel-item .thumb {
+  width: 128px;
+  height: 128px;
+  flex-shrink: 0;
+  background: var(--elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.carousel-item .thumb img,
+.carousel-item .thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.carousel-item .cap {
+  padding: 5px 6px;
+  font-size: 9px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-top: 1px solid var(--line);
+}
+.carousel-item .carousel-actions {
+  display: flex; gap: 4px; padding: 4px 6px 6px; flex-wrap: wrap;
+}
+.carousel-empty {
+  flex: 0 0 auto;
+  padding: 12px;
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+/* Denser chrome */
+.panel-h { padding: 9px 12px; }
+.panel-b { padding: 10px 12px !important; }
+.prod-toolbar { gap: 6px; margin-bottom: 8px; }
+.prod-toolbar .search, .search {
+  padding: 7px 10px; font-size: 11px;
+}
+.json-out { min-height: 120px; font-size: 10px; padding: 10px; }
+.input-sm { padding: 5px 7px !important; font-size: 11px !important; max-width: 72px; }
+#pd-summary .editor-grid { gap: 8px; }
+#pd-summary .muted { font-size: 8px !important; }
 </style>
 </head>
 <body>
@@ -329,14 +429,7 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
       <label for="conn-store">Store URL (Pages)</label>
       <input id="conn-store" type="url" value="https://pteris-store.pages.dev" autocomplete="url">
     </div>
-    <div class="field">
-      <label for="conn-gh-token">GitHub token (optional — product add/edit)</label>
-      <input id="conn-gh-token" type="password" placeholder="github_pat_… Contents: R/W" autocomplete="off">
-    </div>
-    <div class="field">
-      <label for="conn-gh-repo">GitHub repo</label>
-      <input id="conn-gh-repo" type="text" placeholder="owner/repo" autocomplete="off">
-    </div>
+    <!-- GitHub optional; products are view-only from the published store -->
     <button type="button" class="btn btn-primary" style="width:100%;margin-top:6px" id="conn-btn">Connect</button>
     <div class="err" id="conn-err"></div>
   </div>
@@ -353,7 +446,8 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
       <button type="button" class="nav-btn" data-page="products">Products</button>
       <button type="button" class="nav-btn" data-page="inventory">Inventory <span class="dot" id="inv-dot"></span></button>
       <button type="button" class="nav-btn" data-page="orders">Orders</button>
-      <button type="button" class="nav-btn" data-page="media">Media</button>
+      <button type="button" class="nav-btn" data-page="reviews">Reviews <span class="dot" id="rev-dot"></span></button>
+      <button type="button" class="nav-btn" data-page="subscribers">Subscribers</button>
       <button type="button" class="nav-btn" data-page="tools">Tools</button>
       <button type="button" class="nav-btn" data-page="settings">Settings</button>
     </nav>
@@ -374,6 +468,7 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
     <div class="content">
 
       <section class="page active" id="page-dashboard">
+        <p class="hint">Orders, revenue, low stock from the Worker.</p>
         <div class="cards" id="stat-cards"><div class="empty">Loading…</div></div>
         <div class="panel">
           <div class="panel-h"><h2>Quick</h2></div>
@@ -381,29 +476,21 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
             <button type="button" class="btn btn-outline btn-sm" data-goto="products">Products</button>
             <button type="button" class="btn btn-outline btn-sm" data-goto="inventory">Inventory</button>
             <button type="button" class="btn btn-outline btn-sm" data-goto="orders">Orders</button>
-            <button type="button" class="btn btn-outline btn-sm" data-goto="media">Media</button>
-            <button type="button" class="btn btn-outline btn-sm" id="dash-cleanup">Clean reservations</button>
+                        <button type="button" class="btn btn-outline btn-sm" id="dash-cleanup">Clean reservations</button>
           </div>
         </div>
       </section>
 
       <section class="page" id="page-products">
-        <p class="hint">
-          Catalogue is read from the live store <code>index.json</code>.
-          <strong>Add / Edit</strong> writes <code>data/source/products/{id}.json</code> via GitHub
-          (token + repo in Settings). Download JSON still works without GitHub.
-        </p>
-
-        <!-- Catalog -->
+        <p class="hint">Published catalogue from the store. Stock lives under Inventory.</p>
         <div id="prod-catalog">
           <div class="prod-toolbar">
             <input class="search" id="prod-search" placeholder="Search name, id, tags…">
             <button type="button" class="btn btn-outline btn-sm" id="prod-refresh">Refresh</button>
-            <button type="button" class="btn btn-primary btn-sm" id="prod-add">Add product</button>
           </div>
           <div class="panel">
             <div class="panel-h">
-              <h2>Catalogue</h2>
+              <h2>Published catalogue</h2>
               <span class="muted" id="prod-count">—</span>
             </div>
             <div class="table-wrap">
@@ -412,7 +499,7 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Status</th>
+                    <th>Stock</th>
                     <th>Price</th>
                     <th></th>
                   </tr>
@@ -425,114 +512,49 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
           </div>
         </div>
 
-        <!-- Editor -->
-        <div id="prod-editor" style="display:none">
+        <div id="prod-detail" style="display:none">
           <div class="prod-toolbar">
-            <button type="button" class="btn btn-outline btn-sm" id="pe-back">← Catalogue</button>
-            <strong id="pe-title" style="flex:1">Product</strong>
-            <button type="button" class="btn btn-outline btn-sm" id="pe-copy">Copy JSON</button>
-            <button type="button" class="btn btn-outline btn-sm" id="pe-download">Download</button>
-            <button type="button" class="btn btn-outline btn-sm" id="pe-delete" style="color:var(--danger)">Delete</button>
-            <button type="button" class="btn btn-primary btn-sm" id="pe-save">Save to GitHub</button>
+            <button type="button" class="btn btn-outline btn-sm" id="pd-back">← Catalogue</button>
+            <strong id="pd-title" style="flex:1">Product</strong>
+            <button type="button" class="btn btn-outline btn-sm" id="pd-inventory">Open in Inventory</button>
+            <button type="button" class="btn btn-outline btn-sm" id="pd-copy">Copy JSON</button>
+            <button type="button" class="btn btn-outline btn-sm" id="pd-download">Download JSON</button>
           </div>
-
           <div class="panel">
-            <div class="panel-h"><h2>Identity</h2></div>
-            <div class="panel-b" style="padding:14px">
-              <div class="editor-grid cols-2">
-                <div class="field"><label>Product ID</label><input id="pe-id" placeholder="p-xxxx (locked when editing)"></div>
-                <div class="field"><label>Status</label>
-                  <select id="pe-status">
-                    <option value="active">active</option>
-                    <option value="draft">draft</option>
-                    <option value="archived">archived</option>
-                  </select>
-                </div>
-                <div class="field" style="grid-column:1/-1"><label>Name</label><input id="pe-name"></div>
-                <div class="field"><label>Slug</label><input id="pe-slug" placeholder="auto from name"></div>
-                <div class="field"><label>SKU</label><input id="pe-sku"></div>
-                <div class="field"><label>Brand</label><input id="pe-brand"></div>
-                <div class="field"><label>Barcode</label><input id="pe-barcode"></div>
-              </div>
-            </div>
+            <div class="panel-h"><h2>Summary</h2></div>
+            <div class="panel-b" style="padding:14px" id="pd-summary"></div>
           </div>
-
           <div class="panel">
-            <div class="panel-h"><h2>Pricing</h2></div>
-            <div class="panel-b" style="padding:14px">
-              <div class="editor-grid cols-2">
-                <div class="field"><label>Base price ($)</label><input id="pe-price" type="number" step="0.01"></div>
-                <div class="field"><label>Compare at ($)</label><input id="pe-compare" type="number" step="0.01"></div>
-                <div class="field"><label>Cost ($)</label><input id="pe-cost" type="number" step="0.01"></div>
-                <div class="field"><label>Currency</label><input id="pe-currency" value="USD"></div>
-              </div>
+            <div class="panel-h"><h2>Variants</h2><span class="muted" id="pd-var-count">—</span></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>ID</th><th>SKU</th><th>Group</th><th>Options</th><th>Price</th><th>Stock (source)</th></tr></thead>
+                <tbody id="pd-variants"><tr><td colspan="6" class="empty">—</td></tr></tbody>
+              </table>
             </div>
           </div>
-
           <div class="panel">
-            <div class="panel-h"><h2>Description</h2></div>
-            <div class="panel-b" style="padding:14px">
-              <div class="field"><label>Short</label><input id="pe-desc-short"></div>
-              <div class="field"><label>Full (HTML ok)</label><textarea id="pe-desc-full" style="min-height:100px"></textarea></div>
-              <div class="field"><label>Categories (comma-separated)</label><input id="pe-categories" placeholder="dresses, dresses/mini"></div>
-              <div class="field"><label>Tags (comma-separated)</label><input id="pe-tags" placeholder="silk, black"></div>
-            </div>
+            <div class="panel-h"><h2>Images</h2><span class="muted" id="pd-img-count">—</span></div>
+            <div class="carousel" id="pd-images" style="display:flex;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:8px;padding:10px 12px 14px;-webkit-overflow-scrolling:touch;width:100%;max-width:100%;box-sizing:border-box"><div class="carousel-empty">No images</div></div>
           </div>
-
-          <div class="panel">
-            <div class="panel-h">
-              <h2>Variants</h2>
-              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-                <input class="search" id="pe-opt-keys" placeholder="Option keys e.g. color, size" style="min-width:180px">
-                <button type="button" class="btn btn-outline btn-sm" id="pe-add-variant">Add variant</button>
-              </div>
-            </div>
-            <div class="panel-b" style="padding:14px" id="pe-variants"></div>
+          <div class="panel" id="pd-videos-panel" style="display:none">
+            <div class="panel-h"><h2>Videos</h2><span class="muted" id="pd-vid-count">—</span></div>
+            <div class="carousel" id="pd-videos" style="display:flex;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:8px;padding:10px 12px 14px;-webkit-overflow-scrolling:touch;width:100%;max-width:100%;box-sizing:border-box"><div class="carousel-empty">No videos</div></div>
           </div>
-
-          <div class="panel">
-            <div class="panel-h">
-              <h2>Media</h2>
-              <button type="button" class="btn btn-outline btn-sm" id="pe-add-url">Add URL row</button>
+          <details class="panel" style="border:1px solid var(--line);background:var(--surface)">
+            <summary class="panel-h" style="cursor:pointer;list-style:none">
+              <h2 style="display:inline">Raw JSON</h2>
+              <span class="muted" style="margin-left:8px">click to expand</span>
+            </summary>
+            <div class="panel-b" style="padding:12px">
+              <textarea class="json-out" id="pd-json" readonly></textarea>
             </div>
-            <div class="upload-zone" id="pe-drop">
-              Drop images/videos or
-              <label style="text-decoration:underline;cursor:pointer;margin-left:4px">choose files
-                <input type="file" id="pe-files" accept="image/*,video/*" multiple hidden>
-              </label>
-              <div style="margin-top:8px;font-size:10px">Set <strong>variantGroup</strong> (e.g. black) to match variants</div>
-            </div>
-            <div id="pe-media-list" style="padding:0 13px 13px"></div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-h"><h2>Shipping &amp; SEO</h2></div>
-            <div class="panel-b" style="padding:14px">
-              <div class="editor-grid cols-2">
-                <div class="field"><label>Weight (kg)</label><input id="pe-weight" type="number" step="0.01"></div>
-                <div class="field"><label>Shipping profile</label><input id="pe-ship-profile" value="standard"></div>
-                <div class="field" style="grid-column:1/-1">
-                  <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-                    <input type="checkbox" id="pe-requires-ship" checked>
-                    Requires shipping
-                  </label>
-                </div>
-                <div class="field" style="grid-column:1/-1"><label>SEO title</label><input id="pe-seo-title"></div>
-                <div class="field" style="grid-column:1/-1"><label>SEO description</label><input id="pe-seo-desc"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-h"><h2>JSON preview</h2></div>
-            <div class="panel-b" style="padding:13px">
-              <textarea class="json-out" id="pe-json" readonly></textarea>
-            </div>
-          </div>
+          </details>
         </div>
       </section>
 
       <section class="page" id="page-inventory">
+        <p class="hint">Live D1 stock — edit qty / backorder, then Save. Product JSON stock is not live inventory.</p>
         <div class="panel">
           <div class="panel-h">
             <h2>Stock</h2>
@@ -556,6 +578,7 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
       </section>
 
       <section class="page" id="page-orders">
+        <p class="hint">Worker / D1 orders. Open a row for fulfillment or refund record (Stripe is separate).</p>
         <div class="panel">
           <div class="panel-h">
             <h2>Orders</h2>
@@ -589,31 +612,53 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
         </div>
       </section>
 
-      <section class="page" id="page-media">
-        <p class="hint">
-          Assets uploaded from this browser are listed here (files live on R2; URLs are stored locally so links survive a restart).
-          Filters by type. Upload API currently accepts images &amp; video only.
-        </p>
+      <section class="page" id="page-reviews">
+        <p class="hint">Moderate customer reviews. Only approved reviews are returned by the public API.</p>
         <div class="panel">
           <div class="panel-h">
-            <h2>Library</h2>
-            <div class="tabs" id="media-filters">
-              <button type="button" class="tab active" data-kind="all">All</button>
-              <button type="button" class="tab" data-kind="image">Images</button>
-              <button type="button" class="tab" data-kind="video">Video</button>
-              <button type="button" class="tab" data-kind="audio">Audio</button>
-              <button type="button" class="tab" data-kind="document">Docs</button>
-              <button type="button" class="tab" data-kind="font">Fonts</button>
-              <button type="button" class="tab" data-kind="other">Other</button>
+            <h2>Reviews</h2>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+              <div class="tabs" id="rev-tabs">
+                <button type="button" class="tab active" data-status="pending">Pending</button>
+                <button type="button" class="tab" data-status="approved">Approved</button>
+                <button type="button" class="tab" data-status="rejected">Rejected</button>
+                <button type="button" class="tab" data-status="">All</button>
+              </div>
+              <button type="button" class="btn btn-outline btn-sm" id="rev-refresh">Refresh</button>
             </div>
           </div>
-          <div class="upload-zone" id="lib-drop">
-            Drop files or
-            <label style="text-decoration:underline;cursor:pointer;margin-left:4px">upload
-              <input type="file" id="lib-files" accept="image/*,video/*" multiple hidden>
-            </label>
+          <div class="panel-b">
+            <table>
+              <thead>
+                <tr><th>Product</th><th>Name</th><th>Rating</th><th>Review</th><th>Status</th><th>Date</th><th></th></tr>
+              </thead>
+              <tbody id="rev-tbody"><tr><td colspan="7" class="empty">—</td></tr></tbody>
+            </table>
           </div>
-          <div class="media-grid" id="media-grid"><div class="empty">No assets yet</div></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-subscribers">
+        <p class="hint">Newsletter list in D1. Soft-unsubscribe keeps the row; Remove deletes it.</p>
+        <div class="panel">
+          <div class="panel-h">
+            <h2>Subscribers</h2>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+              <label class="muted" style="display:flex;gap:6px;align-items:center;font-size:10px;letter-spacing:.06em;text-transform:uppercase">
+                <input type="checkbox" id="sub-active-only" checked> Active only
+              </label>
+              <button type="button" class="btn btn-outline btn-sm" id="sub-refresh">Refresh</button>
+            </div>
+          </div>
+          <div class="panel-b">
+            <p class="muted" id="sub-count" style="padding:0 0 8px;font-size:10px;letter-spacing:.06em"></p>
+            <table>
+              <thead>
+                <tr><th>Email</th><th>Source</th><th>Subscribed</th><th>Status</th><th></th></tr>
+              </thead>
+              <tbody id="sub-tbody"><tr><td colspan="5" class="empty">—</td></tr></tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -649,12 +694,13 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
           </div>
         </div>
         <div class="panel" style="margin-top:12px">
-          <div class="panel-h"><h2>GitHub (product add / edit)</h2></div>
-          <div class="panel-b" style="padding:14px;max-width:400px">
-            <p class="muted" style="margin-bottom:12px">Fine-grained PAT with <strong>Contents: Read and Write</strong> on the store repo.</p>
-            <div class="field"><label>Token</label><input id="set-gh-token" type="password" placeholder="github_pat_…"></div>
-            <div class="field"><label>Repo</label><input id="set-gh-repo" type="text" placeholder="owner/repo"></div>
-            <button type="button" class="btn btn-primary btn-sm" id="set-save-gh">Save GitHub</button>
+          <div class="panel-h"><h2>About catalogue data</h2></div>
+          <div class="panel-b" style="padding:14px;max-width:520px">
+            <p class="muted" style="line-height:1.6;margin:0">
+              Products listed here come from the live store build (<code>index.json</code>).
+              Edit source product files in the repo when needed; after deploy, hit Refresh on Products.
+              Day-to-day ops: <strong>Inventory</strong> and <strong>Orders</strong>.
+            </p>
           </div>
         </div>
       </section>
@@ -677,7 +723,6 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
 <script>
 (() => {
   const LS_CONN = 'pteris_admin_v3_conn';
-  const LS_MEDIA = 'pteris_admin_v3_media';
 
   const state = {
     apiUrl: '', key: '', storeUrl: '',
@@ -685,15 +730,15 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
     page: 'dashboard',
     orders: { page: 1, limit: 20, status: '', total: 0 },
     inventory: [],
-    mediaKind: 'all',
-    library: [],
     product: null,
     productSha: null,
     isNewProduct: false,
     catalog: [],
     catalogQ: '',
     variants: [],
-    mediaImages: []
+    mediaImages: [],
+    mediaVideos: [],
+    attributes: []
   };
 
   const $ = (id) => document.getElementById(id);
@@ -741,75 +786,9 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
     } catch { return false; }
   }
 
-  async function ghFetch(path, opts = {}) {
-    if (!state.ghToken || !state.ghRepo) throw new Error('GitHub not configured — set token + repo in Settings');
-    const url = 'https://api.github.com/repos/' + state.ghRepo + '/contents/' + path;
-    const res = await fetch(url, {
-      ...opts,
-      headers: {
-        Authorization: 'Bearer ' + state.ghToken,
-        Accept: 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json',
-        ...(opts.headers || {})
-      }
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.message || ('GitHub ' + res.status));
-    return data;
-  }
-  async function ghGetFile(path) {
-    const data = await ghFetch(path);
-    const content = atob(String(data.content || '').replace(/\n/g, ''));
-    return { content, sha: data.sha };
-  }
-  async function ghPutFile(path, content, sha, message) {
-    await ghFetch(path, {
-      method: 'PUT',
-      body: JSON.stringify({
-        message,
-        content: btoa(unescape(encodeURIComponent(content))),
-        ...(sha ? { sha } : {})
-      })
-    });
-  }
-  async function ghDeleteFile(path, sha, message) {
-    await ghFetch(path, {
-      method: 'DELETE',
-      body: JSON.stringify({ message, sha })
-    });
-  }
 
-  function loadLibrary() {
-    try { state.library = JSON.parse(localStorage.getItem(LS_MEDIA) || '[]'); }
-    catch { state.library = []; }
-  }
-  function saveLibrary() {
-    localStorage.setItem(LS_MEDIA, JSON.stringify(state.library.slice(0, 500)));
-  }
-  function classify(ct, name) {
-    const t = (ct || '').toLowerCase();
-    const n = (name || '').toLowerCase();
-    if (t.startsWith('image/') || /\.(png|jpe?g|gif|webp|avif|svg)$/.test(n)) return 'image';
-    if (t.startsWith('video/') || /\.(mp4|webm|mov)$/.test(n)) return 'video';
-    if (t.startsWith('audio/') || /\.(mp3|wav|ogg|m4a)$/.test(n)) return 'audio';
-    if (t.includes('font') || /\.(woff2?|ttf|otf|eot)$/.test(n)) return 'font';
-    if (t.includes('pdf') || t.includes('document') || /\.(pdf|docx?|txt|md)$/.test(n)) return 'document';
-    return 'other';
-  }
-  function rememberAsset(meta) {
-    const entry = {
-      url: meta.url,
-      key: meta.key || '',
-      contentType: meta.contentType || '',
-      size: meta.size || 0,
-      name: meta.name || (meta.key || meta.url || '').split('/').pop(),
-      kind: classify(meta.contentType, meta.name || meta.key),
-      at: new Date().toISOString()
-    };
-    state.library = [entry, ...state.library.filter(x => x.url !== entry.url)];
-    saveLibrary();
-    return entry;
-  }
+
+
 
   async function api(path, opts = {}) {
     const res = await fetch(state.apiUrl.replace(/\/$/, '') + path, {
@@ -832,24 +811,6 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
     return data;
   }
 
-  async function uploadFile(file) {
-    const fd = new FormData();
-    fd.append('file', file);
-    const res = await fetch(state.apiUrl.replace(/\/$/, '') + '/admin/upload', {
-      method: 'POST',
-      headers: { Authorization: 'Bearer ' + state.key },
-      body: fd
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || 'Upload failed');
-    return rememberAsset({
-      url: data.url,
-      key: data.key,
-      contentType: data.contentType || file.type,
-      size: data.size || file.size,
-      name: file.name
-    });
-  }
 
   function closeMobile() {
     $('sidebar').classList.remove('open');
@@ -862,19 +823,21 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.page === name));
     const titles = {
       dashboard: 'Dashboard', products: 'Products', inventory: 'Inventory',
-      orders: 'Orders', media: 'Media', tools: 'Tools', settings: 'Settings'
+      orders: 'Orders', reviews: 'Reviews', subscribers: 'Subscribers',
+      tools: 'Tools', settings: 'Settings'
     };
     $('page-title').textContent = titles[name] || name;
     closeMobile();
     if (name === 'dashboard') loadDashboard();
     if (name === 'products') {
-      $('prod-catalog').style.display = 'block';
-      $('prod-editor').style.display = 'none';
+      if ($('prod-catalog')) $('prod-catalog').style.display = 'block';
+      if ($('prod-detail')) $('prod-detail').style.display = 'none';
       loadCatalog();
     }
     if (name === 'inventory') loadInventory();
     if (name === 'orders') loadOrders();
-    if (name === 'media') renderLibrary();
+    if (name === 'reviews') loadReviews();
+    if (name === 'subscribers') loadSubscribers();
     if (name === 'settings') fillSettings();
   }
 
@@ -894,7 +857,6 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
     $('connect').style.display = 'none';
     $('app').classList.add('open');
     $('side-meta').textContent = state.apiUrl + (state.storeUrl ? '\n' + state.storeUrl : '');
-    loadLibrary();
     showPage('dashboard');
   }
 
@@ -905,8 +867,7 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
       state.apiUrl = normalizeApiUrl($('conn-api').value);
       state.key = $('conn-key').value.trim();
       state.storeUrl = ($('conn-store').value || '').trim().replace(/\/$/, '');
-      state.ghToken = ($('conn-gh-token').value || '').trim();
-      state.ghRepo = ($('conn-gh-repo').value || '').trim();
+      // GitHub not required for view-only catalogue
     }
     if (!state.apiUrl || !state.key) {
       err.textContent = 'API URL and admin key are required.';
@@ -984,7 +945,7 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
         const avail = (v.qty || 0) - (v.reserved || 0);
         rows.push(
           '<tr data-pid="' + esc(item.productId) + '" data-vid="' + esc(vid) + '">' +
-          '<td class="mono">' + (i === 0 ? esc(item.productId) : '') + '</td>' +
+          '<td class="mono">' + (i === 0 ? '<a href="#" class="inv-open-prod" data-pid="' + esc(item.productId) + '" style="color:inherit;text-decoration:underline;text-underline-offset:2px">' + esc(item.productId) + '</a>' : '') + '</td>' +
           '<td class="mono">' + esc(vid) + '</td>' +
           '<td><input class="input-sm inv-qty" type="number" min="0" value="' + (v.qty ?? 0) + '"></td>' +
           '<td class="mono">' + (v.reserved ?? 0) + '</td>' +
@@ -1017,6 +978,13 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
           toast(e.message);
           btn.disabled = false;
         }
+      });
+    });
+    body.querySelectorAll('.inv-open-prod').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        showPage('products');
+        openProductView(a.dataset.pid);
       });
     });
   }
@@ -1072,6 +1040,120 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
     state.orders.page++;
     loadOrders();
   });
+
+  // ─── Reviews moderation ───
+  const stateReviews = { status: 'pending' };
+
+  async function loadReviews() {
+    const body = $('rev-tbody');
+    if (!body) return;
+    body.innerHTML = '<tr><td colspan="7" class="empty">Loading…</td></tr>';
+    try {
+      const status = stateReviews.status;
+      let path = '/admin/reviews?limit=50';
+      if (status) path += '&status=' + encodeURIComponent(status);
+      const data = await api(path);
+      const reviews = data.reviews || [];
+      try {
+        const pending = await api('/admin/reviews?status=pending&limit=1');
+        $('rev-dot').classList.toggle('show', (pending.total || 0) > 0);
+      } catch { /* ignore */ }
+      body.innerHTML = reviews.length ? reviews.map(r => {
+        const snippet = esc((r.title ? r.title + ' — ' : '') + (r.body || '')).slice(0, 120);
+        return (
+          '<tr data-id="' + esc(r.id) + '">' +
+          '<td class="mono">' + esc(r.productId) + '</td>' +
+          '<td>' + esc(r.customerName) + '</td>' +
+          '<td class="mono muted">' + esc(r.rating != null ? r.rating : '—') + '/5</td>' +
+          '<td title="' + esc(r.body || '') + '">' + snippet + (snippet.length >= 120 ? '…' : '') + '</td>' +
+          '<td><span class="badge ' + esc(r.status || '') + '">' + esc(r.status || '—') + '</span></td>' +
+          '<td class="muted">' + esc(fmtDate(r.createdAt)) + '</td>' +
+          '<td style="white-space:nowrap">' +
+          (r.status !== 'approved' ? '<button type="button" class="btn btn-outline btn-sm" data-act="approve">Accept</button> ' : '') +
+          (r.status !== 'rejected' ? '<button type="button" class="btn btn-ghost btn-sm" data-act="reject">Reject</button> ' : '') +
+          '<button type="button" class="btn btn-ghost btn-sm" data-act="delete" title="Delete">×</button>' +
+          '</td></tr>'
+        );
+      }).join('') : '<tr><td colspan="7" class="empty">None</td></tr>';
+
+      body.querySelectorAll('[data-act]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const tr = btn.closest('tr');
+          const id = tr && tr.dataset.id;
+          if (!id) return;
+          const act = btn.dataset.act;
+          try {
+            if (act === 'delete') {
+              if (!confirm('Delete this review permanently?')) return;
+              await api('/admin/reviews/' + encodeURIComponent(id), { method: 'DELETE' });
+              toast('Deleted');
+            } else {
+              const next = act === 'approve' ? 'approved' : 'rejected';
+              await api('/admin/reviews/' + encodeURIComponent(id), {
+                method: 'PATCH',
+                body: JSON.stringify({ status: next })
+              });
+              toast(next === 'approved' ? 'Approved' : 'Rejected');
+            }
+            loadReviews();
+          } catch (e) {
+            toast(e.message);
+          }
+        });
+      });
+    } catch (e) {
+      body.innerHTML = '<tr><td colspan="7" class="empty">' + esc(e.message) + '</td></tr>';
+    }
+  }
+  if ($('rev-tabs')) {
+    $('rev-tabs').addEventListener('click', (e) => {
+      const t = e.target.closest('.tab');
+      if (!t) return;
+      $('rev-tabs').querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      stateReviews.status = t.dataset.status || '';
+      loadReviews();
+    });
+  }
+  if ($('rev-refresh')) $('rev-refresh').addEventListener('click', loadReviews);
+
+  // ─── Subscribers ───
+  async function loadSubscribers() {
+    const body = $('sub-tbody');
+    if (!body) return;
+    body.innerHTML = '<tr><td colspan="5" class="empty">Loading…</td></tr>';
+    try {
+      const activeOnly = $('sub-active-only') ? $('sub-active-only').checked : true;
+      const data = await api('/admin/subscribers?activeOnly=' + (activeOnly ? 'true' : 'false') + '&limit=100');
+      const list = data.subscribers || [];
+      if ($('sub-count')) {
+        $('sub-count').textContent = (data.total ?? list.length) + ' subscriber(s)' + (activeOnly ? ' (active)' : '');
+      }
+      body.innerHTML = list.length ? list.map(s =>
+        '<tr>' +
+        '<td>' + esc(s.email) + '</td>' +
+        '<td class="muted">' + esc(s.source || '—') + '</td>' +
+        '<td class="muted">' + esc(fmtDate(s.subscribedAt)) + '</td>' +
+        '<td><span class="badge ' + (s.active ? 'paid' : 'cancelled') + '">' + (s.active ? 'active' : 'unsubscribed') + '</span></td>' +
+        '<td><button type="button" class="btn btn-ghost btn-sm" data-del-email="' + esc(s.email) + '">Remove</button></td>' +
+        '</tr>'
+      ).join('') : '<tr><td colspan="5" class="empty">None</td></tr>';
+      body.querySelectorAll('[data-del-email]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Permanently delete ' + btn.dataset.delEmail + '?')) return;
+          try {
+            await api('/admin/subscribers/' + encodeURIComponent(btn.dataset.delEmail), { method: 'DELETE' });
+            toast('Removed');
+            loadSubscribers();
+          } catch (e) { toast(e.message); }
+        });
+      });
+    } catch (e) {
+      body.innerHTML = '<tr><td colspan="5" class="empty">' + esc(e.message) + '</td></tr>';
+    }
+  }
+  if ($('sub-refresh')) $('sub-refresh').addEventListener('click', loadSubscribers);
+  if ($('sub-active-only')) $('sub-active-only').addEventListener('change', loadSubscribers);
 
   async function openOrder(id) {
     $('od-title').textContent = id;
@@ -1153,54 +1235,51 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
   }
   $('od-close').addEventListener('click', closeDrawer);
   $('overlay').addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && $('order-drawer').classList.contains('open')) closeDrawer();
+  });
 
   /* ── Products: catalogue + editor (GitHub save) ── */
-  function csv(s) {
-    return String(s || '').split(',').map(x => x.trim()).filter(Boolean);
-  }
-  function groupIdsFromVariants() {
-    const set = new Set();
-    state.variants.forEach(v => { if (v.variantGroup) set.add(v.variantGroup); });
-    return [...set];
-  }
-
-  async function loadCatalog() {
+  /* ── Products: view-only published catalogue ── */
+  function loadCatalog() {
     const body = $('prod-tbody');
+    if (!body) return;
     if (!state.storeUrl) {
       body.innerHTML = '<tr><td colspan="5" class="empty">Set Store URL in Settings</td></tr>';
       return;
     }
     body.innerHTML = '<tr><td colspan="5" class="empty">Loading catalogue…</td></tr>';
-    try {
-      const res = await fetch(state.storeUrl + '/index.json?t=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) throw new Error('index.json HTTP ' + res.status);
-      const index = await res.json();
-      const products = index.products || {};
-      state.catalog = Object.entries(products).map(([id, ref]) => ({
-        id,
-        name: ref.name || ref.title || id,
-        status: ref.status || 'active',
-        price: ref.price ?? ref.minPrice ?? null,
-        tags: ref.tags || [],
-        categories: ref.categories || []
-      }));
-      renderCatalog();
-    } catch (e) {
-      body.innerHTML = '<tr><td colspan="5" class="empty">' + esc(e.message) + '</td></tr>';
-    }
+    fetch(state.storeUrl + '/index.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => { if (!r.ok) throw new Error('index.json HTTP ' + r.status); return r.json(); })
+      .then(index => {
+        const products = index.products || {};
+        state.catalog = Object.entries(products).map(([id, ref]) => ({
+          id,
+          name: ref.name || ref.title || id,
+          price: ref.price ?? ref.minPrice ?? null,
+          inStock: ref.inStock,
+          tags: ref.tags || [],
+          categories: ref.categories || [],
+          image: ref.image || null
+        }));
+        renderCatalog();
+      })
+      .catch(e => {
+        body.innerHTML = '<tr><td colspan="5" class="empty">' + esc(e.message) + '</td></tr>';
+      });
   }
 
   function renderCatalog() {
     const q = (state.catalogQ || '').toLowerCase().trim();
     const words = q.split(/\s+/).filter(Boolean);
-    let rows = state.catalog;
+    let rows = state.catalog || [];
     if (words.length) {
       rows = rows.filter(p => {
         const hay = [p.id, p.name, ...(p.tags || []), ...(p.categories || [])].join(' ').toLowerCase();
         return words.every(w => hay.includes(w));
       });
     }
-    $('prod-count').textContent = rows.length + ' product' + (rows.length === 1 ? '' : 's');
+    if ($('prod-count')) $('prod-count').textContent = rows.length + ' product' + (rows.length === 1 ? '' : 's');
     const body = $('prod-tbody');
     if (!rows.length) {
       body.innerHTML = '<tr><td colspan="5" class="empty">No products</td></tr>';
@@ -1210,343 +1289,51 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
       '<tr class="row-click" data-id="' + esc(p.id) + '">' +
       '<td class="mono">' + esc(p.id) + '</td>' +
       '<td>' + esc(p.name) + '</td>' +
-      '<td><span class="badge badge-' + esc(p.status) + '">' + esc(p.status) + '</span></td>' +
+      '<td>' + (p.inStock === false ? '<span class="badge low">oos</span>' : (p.inStock === true ? '<span class="badge paid">in stock</span>' : '—')) + '</td>' +
       '<td class="mono">' + (p.price != null ? money(p.price) : '—') + '</td>' +
-      '<td><button type="button" class="btn btn-outline btn-sm pe-edit" data-id="' + esc(p.id) + '">Edit</button></td>' +
+      '<td><button type="button" class="btn btn-outline btn-sm pd-view" data-id="' + esc(p.id) + '">View</button></td>' +
       '</tr>'
     ).join('');
     body.querySelectorAll('tr.row-click').forEach(tr => {
       tr.addEventListener('click', (e) => {
         if (e.target.closest('button')) return;
-        openProductEditor(tr.dataset.id);
+        openProductView(tr.dataset.id);
       });
     });
-    body.querySelectorAll('.pe-edit').forEach(btn => {
+    body.querySelectorAll('.pd-view').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        openProductEditor(btn.dataset.id);
+        openProductView(btn.dataset.id);
       });
     });
   }
 
-  $('prod-search').addEventListener('input', (e) => {
+  if ($('prod-search')) $('prod-search').addEventListener('input', (e) => {
     state.catalogQ = e.target.value;
     renderCatalog();
   });
-  $('prod-refresh').addEventListener('click', loadCatalog);
-  $('prod-add').addEventListener('click', () => openProductEditor(null));
-  $('pe-back').addEventListener('click', () => {
-    $('prod-editor').style.display = 'none';
+  if ($('prod-refresh')) $('prod-refresh').addEventListener('click', loadCatalog);
+  if ($('pd-back')) $('pd-back').addEventListener('click', () => {
+    $('prod-detail').style.display = 'none';
     $('prod-catalog').style.display = 'block';
-    loadCatalog();
   });
-
-  async function openProductEditor(productId) {
-    state.isNewProduct = !productId;
-    state.productSha = null;
-    state.product = null;
-    state.variants = [];
-    state.mediaImages = [];
-
-    if (productId) {
-      try {
-        if (state.ghToken && state.ghRepo) {
-          try {
-            const { content, sha } = await ghGetFile('data/source/products/' + productId + '.json');
-            state.product = JSON.parse(content);
-            state.productSha = sha;
-          } catch (ghErr) {
-            const res = await fetch(state.storeUrl + '/products/' + encodeURIComponent(productId) + '.json?t=' + Date.now());
-            if (!res.ok) throw new Error(ghErr.message + ' · store: HTTP ' + res.status);
-            state.product = await res.json();
-            toast('Loaded from store (GitHub source missing — save will create file)');
-          }
-        } else {
-          if (!state.storeUrl) return toast('Set Store URL');
-          const res = await fetch(state.storeUrl + '/products/' + encodeURIComponent(productId) + '.json?t=' + Date.now());
-          if (!res.ok) throw new Error('Product not found (' + res.status + ')');
-          state.product = await res.json();
-        }
-      } catch (e) {
-        return toast(e.message);
-      }
-    } else {
-      state.product = {
-        id: '', type: 'physical',
-        identity: { name: '', slug: '', sku: '', brand: '', barcode: '', status: 'draft' },
-        pricing: { currency: 'USD', price: 0, compareAtPrice: null, costPrice: null, taxClass: 'standard' },
-        description: { short: '', full: '', highlights: [] },
-        categories: [], tags: [], variants: [],
-        media: { images: [], videos: [] },
-        shipping: { profile: 'standard', weight: 0, requiresShipping: true },
-        seo: { title: '', description: '' },
-        meta: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
-      };
+  if ($('pd-inventory')) $('pd-inventory').addEventListener('click', () => {
+    const id = state.product?.id;
+    showPage('inventory');
+    if (id && $('inv-search')) {
+      $('inv-search').value = id;
+      renderInventory();
     }
-
-    const p = state.product;
-    state.variants = JSON.parse(JSON.stringify(p.variants || []));
-    state.mediaImages = JSON.parse(JSON.stringify((p.media && p.media.images) || [])).map(img => ({
-      ...img,
-      variantGroup: img.variantGroup != null ? img.variantGroup : (img.variant || null)
-    }));
-
-    $('prod-catalog').style.display = 'none';
-    $('prod-editor').style.display = 'block';
-    $('pe-title').textContent = productId ? ('Edit · ' + (p.identity?.name || productId)) : 'New product';
-    $('pe-id').value = p.id || '';
-    $('pe-id').readOnly = !!productId;
-    $('pe-status').value = p.identity?.status || 'active';
-    $('pe-name').value = p.identity?.name || '';
-    $('pe-slug').value = p.identity?.slug || '';
-    $('pe-sku').value = p.identity?.sku || '';
-    $('pe-brand').value = p.identity?.brand || '';
-    $('pe-barcode').value = p.identity?.barcode || '';
-    $('pe-price').value = p.pricing?.price ?? '';
-    $('pe-compare').value = p.pricing?.compareAtPrice ?? '';
-    $('pe-cost').value = p.pricing?.costPrice ?? '';
-    $('pe-currency').value = p.pricing?.currency || 'USD';
-    $('pe-desc-short').value = p.description?.short || '';
-    $('pe-desc-full').value = p.description?.full || '';
-    $('pe-categories').value = (p.categories || []).join(', ');
-    $('pe-tags').value = (p.tags || []).join(', ');
-    $('pe-weight').value = p.shipping?.weight ?? '';
-    $('pe-ship-profile').value = p.shipping?.profile || 'standard';
-    $('pe-requires-ship').checked = p.shipping?.requiresShipping !== false;
-    $('pe-seo-title').value = p.seo?.title || '';
-    $('pe-seo-desc').value = p.seo?.description || '';
-    const optKeys = state.variants[0] ? Object.keys(state.variants[0].options || {}) : [];
-    $('pe-opt-keys').value = optKeys.join(', ');
-    renderVariants();
-    renderMediaRows();
-    syncProductJson();
-  }
-
-  function renderVariants() {
-    const box = $('pe-variants');
-    if (!state.variants.length) {
-      box.innerHTML = '<p class="empty">No variants — add one</p>';
-      return;
-    }
-    const optKeys = csv($('pe-opt-keys').value);
-    box.innerHTML = state.variants.map((v, i) => {
-      const opts = optKeys.map(k =>
-        '<div class="field"><label>' + esc(k) + '</label>' +
-        '<input data-vi="' + i + '" data-opt="' + esc(k) + '" value="' + esc((v.options || {})[k] || '') + '"></div>'
-      ).join('');
-      return (
-        '<div class="variant-box" data-vi="' + i + '">' +
-        '<div style="display:flex;justify-content:space-between;margin-bottom:8px">' +
-        '<span class="mono muted">' + esc(v.id) + '</span>' +
-        '<button type="button" class="btn btn-ghost btn-sm v-del" data-vi="' + i + '">Remove</button></div>' +
-        '<div class="editor-grid cols-2">' +
-        '<div class="field"><label>SKU</label><input data-vi="' + i + '" data-f="sku" value="' + esc(v.sku || '') + '"></div>' +
-        '<div class="field"><label>Price</label><input data-vi="' + i + '" data-f="price" type="number" step="0.01" value="' + (v.price ?? 0) + '"></div>' +
-        '<div class="field"><label>Stock</label><input data-vi="' + i + '" data-f="stock" type="number" value="' + (v.stock ?? 0) + '"></div>' +
-        '<div class="field"><label>Weight</label><input data-vi="' + i + '" data-f="weight" type="number" step="0.01" value="' + (v.weight ?? 0) + '"></div>' +
-        '<div class="field"><label>variantGroup</label><input data-vi="' + i + '" data-f="variantGroup" value="' + esc(v.variantGroup || '') + '" placeholder="e.g. black"></div>' +
-        '<div class="field"><label>Image URL</label><input data-vi="' + i + '" data-f="image" value="' + esc(v.image || '') + '"></div>' +
-        opts +
-        '<div class="field" style="grid-column:1/-1"><label style="display:flex;gap:8px;align-items:center;cursor:pointer">' +
-        '<input type="checkbox" data-vi="' + i + '" data-f="backorder"' + (v.backorder ? ' checked' : '') + '> Allow backorder</label></div>' +
-        '</div></div>'
-      );
-    }).join('');
-    box.querySelectorAll('.v-del').forEach(btn => {
-      btn.addEventListener('click', () => {
-        state.variants.splice(Number(btn.dataset.vi), 1);
-        renderVariants();
-        syncProductJson();
-      });
-    });
-    box.querySelectorAll('input').forEach(inp => {
-      inp.addEventListener('change', () => { collectVariantsFromDom(); syncProductJson(); });
-    });
-  }
-
-  function collectVariantsFromDom() {
-    const optKeys = csv($('pe-opt-keys').value);
-    state.variants.forEach((v, i) => {
-      const box = document.querySelector('.variant-box[data-vi="' + i + '"]');
-      if (!box) return;
-      const get = (f) => box.querySelector('[data-f="' + f + '"]');
-      v.sku = get('sku')?.value?.trim() || '';
-      v.price = parseFloat(get('price')?.value) || 0;
-      v.stock = parseInt(get('stock')?.value, 10) || 0;
-      v.weight = parseFloat(get('weight')?.value) || 0;
-      v.variantGroup = get('variantGroup')?.value?.trim() || undefined;
-      v.image = get('image')?.value?.trim() || undefined;
-      v.backorder = !!get('backorder')?.checked;
-      v.options = {};
-      optKeys.forEach(k => {
-        const el = box.querySelector('[data-opt="' + k + '"]');
-        v.options[k] = el ? el.value.trim() : '';
-      });
-    });
-  }
-
-  $('pe-add-variant').addEventListener('click', () => {
-    const optKeys = csv($('pe-opt-keys').value);
-    const options = {};
-    optKeys.forEach(k => { options[k] = ''; });
-    state.variants.push({
-      id: 'v-' + Date.now(), sku: '', options, variantGroup: '',
-      price: parseFloat($('pe-price').value) || 0,
-      weight: 0, stock: 0, lowStockThreshold: 3, backorder: false
-    });
-    renderVariants();
-    syncProductJson();
   });
-
-  function collectMediaRows() {
-    return [...document.querySelectorAll('#pe-media-list .media-row')].map((row, i) => {
-      const url = row.querySelector('.m-url').value.trim();
-      const alt = row.querySelector('.m-alt').value.trim() || 'Image';
-      const vg = row.querySelector('.m-vg').value.trim();
-      const order = Number(row.querySelector('.m-order').value);
-      return { url, alt, type: 'image', order: Number.isFinite(order) ? order : i, variantGroup: vg || null };
-    }).filter(x => x.url);
-  }
-
-  function renderMediaRows() {
-    const list = $('pe-media-list');
-    const images = state.mediaImages;
-    const groups = groupIdsFromVariants();
-    let dl = document.getElementById('vg-list-shared');
-    if (!dl) {
-      dl = document.createElement('datalist');
-      dl.id = 'vg-list-shared';
-      document.body.appendChild(dl);
-    }
-    dl.innerHTML = groups.map(g => '<option value="' + esc(g) + '">').join('');
-    list.innerHTML = images.length ? images.map((img, idx) => {
-      const vg = img.variantGroup == null ? '' : String(img.variantGroup);
-      return (
-        '<div class="media-row" data-idx="' + idx + '">' +
-        '<div class="thumb">' + (img.url ? '<img src="' + esc(img.url) + '" alt="">' : '') + '</div>' +
-        '<div style="display:grid;gap:6px">' +
-        '<input class="m-url" value="' + esc(img.url || '') + '" placeholder="URL">' +
-        '<input class="m-alt" value="' + esc(img.alt || '') + '" placeholder="Alt text">' +
-        '</div>' +
-        '<div><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">variantGroup</div>' +
-        '<input class="m-vg" list="vg-list-shared" value="' + esc(vg) + '" placeholder="e.g. black"></div>' +
-        '<div><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">order</div>' +
-        '<input class="m-order input-sm" type="number" value="' + (img.order ?? idx) + '"></div>' +
-        '<div><button type="button" class="btn btn-ghost btn-sm m-del">Remove</button></div>' +
-        '</div>'
-      );
-    }).join('') : '<p class="empty">No media rows</p>';
-    list.querySelectorAll('.m-del').forEach(btn => {
-      btn.addEventListener('click', () => {
-        state.mediaImages.splice(Number(btn.closest('.media-row').dataset.idx), 1);
-        renderMediaRows();
-        syncProductJson();
-      });
-    });
-    list.querySelectorAll('input').forEach(inp => {
-      inp.addEventListener('change', () => {
-        state.mediaImages = collectMediaRows();
-        syncProductJson();
-      });
-    });
-    syncProductJson();
-  }
-
-  function addMediaRow(partial) {
-    state.mediaImages.push({
-      url: partial.url || '', alt: partial.alt || '', type: 'image',
-      variantGroup: partial.variantGroup ?? null,
-      order: partial.order ?? state.mediaImages.length
-    });
-    renderMediaRows();
-  }
-
-  function buildProductFromForm() {
-    collectVariantsFromDom();
-    state.mediaImages = collectMediaRows();
-    const name = $('pe-name').value.trim();
-    const id = state.isNewProduct
-      ? (($('pe-id').value.trim()) || ('p-' + Date.now()))
-      : (state.product.id || $('pe-id').value.trim());
-    const slug = $('pe-slug').value.trim() || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    const variants = state.variants.map(v => {
-      const out = {
-        id: v.id, sku: v.sku || '', options: v.options || {},
-        price: v.price || 0, weight: v.weight || 0, stock: v.stock || 0,
-        lowStockThreshold: v.lowStockThreshold || 3, backorder: !!v.backorder
-      };
-      if (v.variantGroup) out.variantGroup = v.variantGroup;
-      if (v.image) out.image = v.image;
-      return out;
-    });
-    const basePrice = parseFloat($('pe-price').value) || (variants[0]?.price || 0);
-    return {
-      id, type: 'physical',
-      identity: {
-        name, slug,
-        sku: $('pe-sku').value.trim(),
-        barcode: $('pe-barcode').value.trim(),
-        brand: $('pe-brand').value.trim(),
-        status: $('pe-status').value
-      },
-      pricing: {
-        currency: $('pe-currency').value.trim() || 'USD',
-        price: basePrice,
-        compareAtPrice: $('pe-compare').value !== '' ? parseFloat($('pe-compare').value) : null,
-        costPrice: $('pe-cost').value !== '' ? parseFloat($('pe-cost').value) : null,
-        taxClass: 'standard'
-      },
-      description: {
-        short: $('pe-desc-short').value.trim(),
-        full: $('pe-desc-full').value.trim(),
-        highlights: (state.product.description && state.product.description.highlights) || []
-      },
-      categories: csv($('pe-categories').value),
-      tags: csv($('pe-tags').value),
-      attributes: state.product.attributes || [],
-      variants,
-      media: { images: state.mediaImages, videos: (state.product.media && state.product.media.videos) || [] },
-      ugc: state.product.ugc || [],
-      relations: state.product.relations || { related: [], upsells: [], crossSells: [] },
-      shipping: {
-        profile: $('pe-ship-profile').value.trim() || 'standard',
-        weight: parseFloat($('pe-weight').value) || 0,
-        requiresShipping: $('pe-requires-ship').checked
-      },
-      seo: {
-        title: $('pe-seo-title').value.trim(),
-        description: $('pe-seo-desc').value.trim(),
-        canonical: state.product.seo?.canonical || '',
-        ogImage: state.product.seo?.ogImage || ''
-      },
-      meta: {
-        createdAt: state.product.meta?.createdAt || new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      }
-    };
-  }
-
-  function syncProductJson() {
-    if (!$('prod-editor') || $('prod-editor').style.display === 'none') return;
+  if ($('pd-copy')) $('pd-copy').addEventListener('click', async () => {
     try {
-      const p = buildProductFromForm();
-      state.product = p;
-      $('pe-json').value = JSON.stringify(p, null, 2);
-    } catch (e) {
-      $('pe-json').value = '// ' + e.message;
-    }
-  }
-
-  $('pe-add-url').addEventListener('click', () => addMediaRow({}));
-  $('pe-copy').addEventListener('click', async () => {
-    syncProductJson();
-    try { await navigator.clipboard.writeText($('pe-json').value); toast('JSON copied'); }
-    catch { toast('Copy failed'); }
+      await navigator.clipboard.writeText($('pd-json').value);
+      toast('JSON copied');
+    } catch { toast('Copy failed'); }
   });
-  $('pe-download').addEventListener('click', () => {
-    syncProductJson();
+  if ($('pd-download')) $('pd-download').addEventListener('click', () => {
     const id = state.product?.id || 'product';
-    const blob = new Blob([$('pe-json').value], { type: 'application/json' });
+    const blob = new Blob([$('pd-json').value], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = id + '.json';
@@ -1554,141 +1341,86 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
     URL.revokeObjectURL(a.href);
     toast('Downloaded ' + id + '.json');
   });
-  $('pe-save').addEventListener('click', async () => {
-    syncProductJson();
-    const p = state.product;
-    if (!p?.id || !p.identity?.name) return toast('ID and name required');
-    if (!state.ghToken || !state.ghRepo) return toast('GitHub token + repo required (Settings)');
-    const path = 'data/source/products/' + p.id + '.json';
-    const btn = $('pe-save');
-    btn.disabled = true; btn.textContent = 'Saving…';
+
+  async function openProductView(productId) {
+    if (!state.storeUrl) return toast('Set Store URL');
     try {
-      let sha = state.productSha;
-      if (!state.isNewProduct && !sha) {
-        try { sha = (await ghGetFile(path)).sha; } catch { /* create */ }
+      const res = await fetch(state.storeUrl + '/products/' + encodeURIComponent(productId) + '.json?t=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error('Product not found (' + res.status + ')');
+      const p = await res.json();
+      state.product = p;
+      $('prod-catalog').style.display = 'none';
+      $('prod-detail').style.display = 'block';
+      $('pd-title').textContent = (p.identity?.name || productId);
+      const idt = p.identity || {};
+      const pr = p.pricing || {};
+      const sh = p.shipping || {};
+      $('pd-summary').innerHTML =
+        '<div class="editor-grid cols-2">' +
+        '<div><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase">ID</div><div class="mono">' + esc(p.id) + '</div></div>' +
+        '<div><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase">Status</div><div>' + esc(idt.status || '—') + '</div></div>' +
+        '<div><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase">Brand</div><div>' + esc(idt.brand || '—') + '</div></div>' +
+        '<div><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase">SKU</div><div class="mono">' + esc(idt.sku || '—') + '</div></div>' +
+        '<div><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase">Price</div><div class="mono">' + money(pr.price) + (pr.compareAtPrice ? ' <span class="muted">compare ' + money(pr.compareAtPrice) + '</span>' : '') + '</div></div>' +
+        '<div><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase">Weight</div><div>' + (sh.weight != null ? sh.weight + ' kg' : '—') + '</div></div>' +
+        '<div style="grid-column:1/-1"><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase">Description</div><div>' + esc((p.description && p.description.short) || '—') + '</div></div>' +
+        '<div style="grid-column:1/-1"><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase">Categories</div><div>' + esc((p.categories || []).join(', ') || '—') + '</div></div>' +
+        '<div style="grid-column:1/-1"><div class="muted" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase">Tags</div><div>' + esc((p.tags || []).join(', ') || '—') + '</div></div>' +
+        '</div>';
+      const variants = p.variants || [];
+      $('pd-var-count').textContent = variants.length + ' variant' + (variants.length === 1 ? '' : 's');
+      $('pd-variants').innerHTML = variants.length ? variants.map(v =>
+        '<tr>' +
+        '<td class="mono">' + esc(v.id) + '</td>' +
+        '<td class="mono">' + esc(v.sku || '') + '</td>' +
+        '<td>' + esc(v.variantGroup || '—') + '</td>' +
+        '<td class="muted">' + esc(Object.entries(v.options || {}).map(([k, val]) => k + ': ' + val).join(', ') || '—') + '</td>' +
+        '<td class="mono">' + money(v.price) + '</td>' +
+        '<td class="mono">' + (v.stock != null ? v.stock : '—') + (v.backorder ? ' <span class="muted">BO</span>' : '') + '</td>' +
+        '</tr>'
+      ).join('') : '<tr><td colspan="6" class="empty">No variants</td></tr>';
+      const images = (p.media && p.media.images) || [];
+      const videos = (p.media && p.media.videos) || [];
+      const itemStyle = 'flex:0 0 140px;width:140px;min-width:140px;max-width:140px;border:1px solid var(--line);background:var(--bg);overflow:hidden;display:flex;flex-direction:column;box-sizing:border-box';
+      const thumbStyle = 'width:140px;height:140px;flex-shrink:0;background:var(--elevated);overflow:hidden';
+      const capStyle = 'padding:5px 6px;font-size:9px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-top:1px solid var(--line)';
+      const trackStyle = 'display:flex;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:8px;padding:10px 12px 14px;-webkit-overflow-scrolling:touch;width:100%;max-width:100%;box-sizing:border-box';
+      if ($('pd-img-count')) $('pd-img-count').textContent = String(images.length);
+      const imgTrack = $('pd-images');
+      if (imgTrack) {
+        imgTrack.setAttribute('style', trackStyle);
+        imgTrack.innerHTML = images.length ? images.map(img =>
+          '<div class="carousel-item" style="' + itemStyle + '">' +
+          '<div class="thumb" style="' + thumbStyle + '">' +
+          (img.url ? '<img src="' + esc(img.url) + '" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">' : '') +
+          '</div>' +
+          '<div class="cap" style="' + capStyle + '">' + esc(img.variantGroup || img.alt || ('#' + (img.order ?? ''))) + '</div>' +
+          '</div>'
+        ).join('') : '<div class="carousel-empty" style="padding:12px;color:var(--muted);font-size:10px">No images</div>';
       }
-      await ghPutFile(path, JSON.stringify(p, null, 2), sha, (state.isNewProduct ? 'Add' : 'Update') + ' product ' + p.id);
-      state.isNewProduct = false;
-      state.product.id = p.id;
-      try { state.productSha = (await ghGetFile(path)).sha; } catch { /* ignore */ }
-      $('pe-id').value = p.id;
-      $('pe-id').readOnly = true;
-      $('pe-title').textContent = 'Edit · ' + (p.identity.name || p.id);
-      toast('Saved ' + p.id + ' — build will run from the commit');
-    } catch (e) { toast(e.message); }
-    btn.disabled = false; btn.textContent = 'Save to GitHub';
-  });
-  $('pe-delete').addEventListener('click', async () => {
-    const id = state.product?.id;
-    if (!id || state.isNewProduct) return toast('Nothing to delete');
-    if (!confirm('Delete ' + id + ' from the repo? This cannot be undone.')) return;
-    if (!state.ghToken || !state.ghRepo) return toast('GitHub not configured');
-    try {
-      const path = 'data/source/products/' + id + '.json';
-      let sha = state.productSha;
-      if (!sha) sha = (await ghGetFile(path)).sha;
-      await ghDeleteFile(path, sha, 'Delete product ' + id);
-      toast('Deleted ' + id);
-      $('pe-back').click();
-    } catch (e) { toast(e.message); }
-  });
-
-  ['pe-id','pe-name','pe-slug','pe-sku','pe-brand','pe-barcode','pe-status','pe-price','pe-compare','pe-cost','pe-currency','pe-desc-short','pe-desc-full','pe-categories','pe-tags','pe-weight','pe-ship-profile','pe-seo-title','pe-seo-desc','pe-opt-keys'].forEach(id => {
-    const el = $(id);
-    if (el) el.addEventListener('input', () => {
-      if (id === 'pe-opt-keys') renderVariants();
-      syncProductJson();
-    });
-  });
-  $('pe-requires-ship').addEventListener('change', syncProductJson);
-
-  async function bulkUpload(files, intoProduct) {
-    for (const file of files) {
-      try {
-        toast('Uploading ' + file.name + '…');
-        const asset = await uploadFile(file);
-        if (intoProduct && state.product) {
-          addMediaRow({
-            url: asset.url,
-            alt: file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '),
-            variantGroup: null
-          });
+      if ($('pd-videos-panel')) {
+        $('pd-videos-panel').style.display = videos.length ? 'block' : 'none';
+        if ($('pd-vid-count')) $('pd-vid-count').textContent = String(videos.length);
+        const vidTrack = $('pd-videos');
+        if (vidTrack) {
+          vidTrack.setAttribute('style', trackStyle);
+          vidTrack.innerHTML = videos.length ? videos.map(v =>
+            '<div class="carousel-item" style="' + itemStyle + '">' +
+            '<div class="thumb" style="' + thumbStyle + '">' +
+            (v.url
+              ? '<video src="' + esc(v.url) + '" muted preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block"></video>'
+              : (v.thumbnail ? '<img src="' + esc(v.thumbnail) + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block">' : '')) +
+            '</div>' +
+            '<div class="cap" style="' + capStyle + '">' + esc(v.url ? v.url.split('/').pop() : 'video') + '</div>' +
+            '</div>'
+          ).join('') : '<div class="carousel-empty" style="padding:12px;color:var(--muted);font-size:10px">No videos</div>';
         }
-      } catch (e) {
-        toast(file.name + ': ' + e.message);
       }
-    }
-    if (intoProduct) toast('Set variantGroup on each row');
-    else renderLibrary();
+      $('pd-json').value = JSON.stringify(p, null, 2);
+    } catch (e) { toast(e.message); }
   }
-  function bindDrop(zone, input, intoProduct) {
-    if (!zone || !input) return;
-    zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag'); });
-    zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
-    zone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      zone.classList.remove('drag');
-      const files = [...(e.dataTransfer.files || [])];
-      if (files.length) bulkUpload(files, intoProduct);
-    });
-    input.addEventListener('change', () => {
-      const files = [...(input.files || [])];
-      if (files.length) bulkUpload(files, intoProduct);
-      input.value = '';
-    });
-  }
-  bindDrop($('pe-drop'), $('pe-files'), true);
-  bindDrop($('lib-drop'), $('lib-files'), false);
 
 
-  function renderLibrary() {
-    const grid = $('media-grid');
-    const items = state.library.filter(x => state.mediaKind === 'all' || x.kind === state.mediaKind);
-    if (!items.length) {
-      grid.innerHTML = '<div class="empty">No assets in this view</div>';
-      return;
-    }
-    grid.innerHTML = items.map((a, i) => {
-      let thumb = '<span>' + esc(a.kind) + '</span>';
-      if (a.kind === 'image') thumb = '<img src="' + esc(a.url) + '" alt="" loading="lazy">';
-      else if (a.kind === 'video') thumb = '<video src="' + esc(a.url) + '" muted></video>';
-      return (
-        '<div class="media-card">' +
-        '<div class="media-thumb">' + thumb + '</div>' +
-        '<div class="media-meta"><div class="name" title="' + esc(a.name || '') + '">' + esc(a.name || 'file') + '</div>' +
-        '<div class="muted">' + esc(a.kind) + (a.size ? ' · ' + Math.round(a.size / 1024) + ' KB' : '') + '</div></div>' +
-        '<div class="media-actions">' +
-        '<button type="button" class="btn btn-outline btn-sm" data-copy="' + i + '">Copy</button>' +
-        '<a class="btn btn-ghost btn-sm" href="' + esc(a.url) + '" target="_blank" rel="noopener">Open</a>' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-del="' + i + '">×</button>' +
-        '</div></div>'
-      );
-    }).join('');
-    grid.querySelectorAll('[data-copy]').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(items[Number(btn.dataset.copy)].url);
-          toast('Copied');
-        } catch { toast('Copy failed'); }
-      });
-    });
-    grid.querySelectorAll('[data-del]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const a = items[Number(btn.dataset.del)];
-        state.library = state.library.filter(x => x.url !== a.url);
-        saveLibrary();
-        renderLibrary();
-      });
-    });
-  }
-  $('media-filters').addEventListener('click', (e) => {
-    const t = e.target.closest('.tab');
-    if (!t) return;
-    $('media-filters').querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    state.mediaKind = t.dataset.kind;
-    renderLibrary();
-  });
 
   async function runCleanup() {
     try {
@@ -1716,8 +1448,6 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
     $('set-api').value = state.apiUrl;
     $('set-key').value = state.key;
     $('set-store').value = state.storeUrl;
-    if ($('set-gh-token')) $('set-gh-token').value = state.ghToken;
-    if ($('set-gh-repo')) $('set-gh-repo').value = state.ghRepo;
   }
   $('set-save').addEventListener('click', async () => {
     state.apiUrl = normalizeApiUrl($('set-api').value);
@@ -1730,19 +1460,11 @@ input[type="datetime-local"], input[type="number"], input[type="range"] { color-
       toast('Connection saved');
     } catch (e) { toast(e.message); }
   });
-  if ($('set-save-gh')) $('set-save-gh').addEventListener('click', () => {
-    state.ghToken = ($('set-gh-token').value || '').trim();
-    state.ghRepo = ($('set-gh-repo').value || '').trim();
-    saveConn();
-    toast(state.ghToken && state.ghRepo ? 'GitHub settings saved' : 'Cleared GitHub settings');
-  });
 
   if (loadConn()) {
     $('conn-api').value = state.apiUrl;
     $('conn-key').value = state.key;
     $('conn-store').value = state.storeUrl;
-    if ($('conn-gh-token')) $('conn-gh-token').value = state.ghToken;
-    if ($('conn-gh-repo')) $('conn-gh-repo').value = state.ghRepo;
     connect(false);
   }
 })();
