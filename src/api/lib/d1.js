@@ -371,16 +371,208 @@ export class D1Store {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 'pending')
     `).bind(
       review.id, review.productId, review.customerName, review.rating,
-      review.title, review.body, review.verified ? 1 : 0,
+      review.title || null, review.body || null, review.verified ? 1 : 0,
       JSON.stringify(review.images || []), review.helpful || 0
     ).run();
+  }
+
+  async getReview(id) {
+    const row = await this.db.prepare('SELECT * FROM reviews WHERE id = ?').bind(id).first();
+    return row ? this._mapReview(row) : null;
   }
 
   async getApprovedReviews(productId) {
     const { results } = await this.db.prepare(`
       SELECT * FROM reviews WHERE product_id = ? AND status = 'approved' ORDER BY created_at DESC
     `).bind(productId).all();
-    return results;
+    return (results || []).map(r => this._mapReview(r));
+  }
+
+  /**
+   * List reviews with optional filters.
+   * @param {{ status?: string, productId?: string, page?: number, limit?: number }} opts
+   */
+  async listReviews({ status, productId, page = 1, limit = 20 } = {}) {
+    const clauses = [];
+    const binds = [];
+    if (status) {
+      clauses.push('status = ?');
+      binds.push(status);
+    }
+    if (productId) {
+      clauses.push('product_id = ?');
+      binds.push(productId);
+    }
+    const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
+    const offset = Math.max(0, (page - 1) * limit);
+
+    const countStmt = this.db.prepare(`SELECT COUNT(*) as c FROM reviews ${where}`);
+    const countRow = binds.length
+      ? await countStmt.bind(...binds).first()
+      : await countStmt.first();
+    const total = countRow?.c || 0;
+
+    const listStmt = this.db.prepare(
+      `SELECT * FROM reviews ${where} ORDER BY created_at DESC LIMIT ? OFFSET ?`
+    );
+    const { results } = binds.length
+      ? await listStmt.bind(...binds, limit, offset).all()
+      : await listStmt.bind(limit, offset).all();
+
+    return {
+      reviews: (results || []).map(r => this._mapReview(r)),
+      total,
+      page,
+      limit
+    };
+  }
+
+  async updateReviewStatus(id, status) {
+    if (!['pending', 'approved', 'rejected'].includes(status)) {
+      throw new Error('Invalid review status');
+    }
+    const result = await this.db.prepare(
+      'UPDATE reviews SET status = ? WHERE id = ?'
+    ).bind(status, id).run();
+    const changes = result.meta?.changes ?? result.changes ?? 0;
+    return changes > 0;
+  }
+
+  async deleteReview(id) {
+    const result = await this.db.prepare('DELETE FROM reviews WHERE id = ?').bind(id).run();
+    const changes = result.meta?.changes ?? result.changes ?? 0;
+    return changes > 0;
+  }
+
+  _mapReview(row) {
+    let images = [];
+    try {
+      images = JSON.parse(row.images || '[]');
+    } catch {
+      images = [];
+    }
+    return {
+      id: row.id,
+      productId: row.product_id,
+      customerName: row.customer_name,
+      rating: row.rating,
+      title: row.title,
+      body: row.body,
+      verified: !!row.verified,
+      images,
+      helpful: row.helpful || 0,
+      createdAt: row.created_at,
+      status: row.status
+    };
+  }
+
+  // ─── Subscribers ───
+  /**
+   * Add or re-activate a subscriber. Email is normalized to lowercase.
+   * Returns { ok, email, token, reactivated? }.
+   */
+  async addSubscriber(email, source = null) {
+    const normalized = String(email || '').trim().toLowerCase();
+    if (!normalized || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized)) {
+      return { ok: false, error: 'invalid_email' };
+    }
+
+    const existing = await this.db.prepare(
+      'SELECT email, unsubscribed_at, unsubscribe_token FROM subscribers WHERE email = ?'
+    ).bind(normalized).first();
+
+    if (existing && !existing.unsubscribed_at) {
+      // Already active — idempotent success, return existing token
+      return { ok: true, email: normalized, token: existing.unsubscribe_token, alreadySubscribed: true };
+    }
+
+    const token = crypto.randomUUID().replace(/-/g, '') + crypto.randomUUID().replace(/-/g, '').slice(0, 16);
+
+    if (existing) {
+      // Re-activate
+      await this.db.prepare(`
+        UPDATE subscribers SET
+          subscribed_at = datetime('now'),
+          unsubscribed_at = NULL,
+          unsubscribe_token = ?,
+          source = COALESCE(?, source)
+        WHERE email = ?
+      `).bind(token, source, normalized).run();
+      return { ok: true, email: normalized, token, reactivated: true };
+    }
+
+    await this.db.prepare(`
+      INSERT INTO subscribers (email, subscribed_at, unsubscribed_at, unsubscribe_token, source)
+      VALUES (?, datetime('now'), NULL, ?, ?)
+    `).bind(normalized, token, source).run();
+
+    return { ok: true, email: normalized, token };
+  }
+
+  async unsubscribeByToken(token) {
+    if (!token || typeof token !== 'string') return { ok: false, error: 'invalid_token' };
+    const row = await this.db.prepare(
+      'SELECT email, unsubscribed_at FROM subscribers WHERE unsubscribe_token = ?'
+    ).bind(token.trim()).first();
+    if (!row) return { ok: false, error: 'not_found' };
+    if (row.unsubscribed_at) return { ok: true, email: row.email, alreadyUnsubscribed: true };
+
+    await this.db.prepare(
+      'UPDATE subscribers SET unsubscribed_at = datetime(\'now\') WHERE unsubscribe_token = ?'
+    ).bind(token.trim()).run();
+    return { ok: true, email: row.email };
+  }
+
+  async unsubscribeByEmail(email) {
+    const normalized = String(email || '').trim().toLowerCase();
+    if (!normalized) return { ok: false, error: 'invalid_email' };
+    const row = await this.db.prepare(
+      'SELECT email, unsubscribed_at FROM subscribers WHERE email = ?'
+    ).bind(normalized).first();
+    if (!row) return { ok: false, error: 'not_found' };
+    if (row.unsubscribed_at) return { ok: true, email: normalized, alreadyUnsubscribed: true };
+
+    await this.db.prepare(
+      'UPDATE subscribers SET unsubscribed_at = datetime(\'now\') WHERE email = ?'
+    ).bind(normalized).run();
+    return { ok: true, email: normalized };
+  }
+
+  async listSubscribers({ activeOnly = true, page = 1, limit = 50 } = {}) {
+    const where = activeOnly ? 'WHERE unsubscribed_at IS NULL' : '';
+    const offset = Math.max(0, (page - 1) * limit);
+
+    const countRow = await this.db.prepare(
+      `SELECT COUNT(*) as c FROM subscribers ${where}`
+    ).first();
+    const total = countRow?.c || 0;
+
+    const { results } = await this.db.prepare(
+      `SELECT email, subscribed_at, unsubscribed_at, source FROM subscribers ${where}
+       ORDER BY subscribed_at DESC LIMIT ? OFFSET ?`
+    ).bind(limit, offset).all();
+
+    return {
+      subscribers: (results || []).map(r => ({
+        email: r.email,
+        subscribedAt: r.subscribed_at,
+        unsubscribedAt: r.unsubscribed_at,
+        source: r.source,
+        active: !r.unsubscribed_at
+      })),
+      total,
+      page,
+      limit
+    };
+  }
+
+  async deleteSubscriber(email) {
+    const normalized = String(email || '').trim().toLowerCase();
+    const result = await this.db.prepare(
+      'DELETE FROM subscribers WHERE email = ?'
+    ).bind(normalized).run();
+    const changes = result.meta?.changes ?? result.changes ?? 0;
+    return changes > 0;
   }
 
   // ─── Stats ───
