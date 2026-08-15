@@ -7,6 +7,8 @@ import { handleCheckout } from './routes/checkout.js';
 import { handleStripeWebhook } from './routes/webhook-stripe.js';
 import { handleAdmin } from './routes/admin.js';
 import { handleStockCheck } from './routes/stock.js';
+import { handleReviews } from './routes/reviews.js';
+import { handleSubscribe } from './routes/subscribe.js';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -34,7 +36,7 @@ export default {
 
     try {
       if (path === '/api/health') {
-        return jsonResponse({ status: 'ok', version: '2.2.0' });
+        return jsonResponse({ status: 'ok', version: '2.3.0' });
       }
 
       if (path === '/api/checkout' && method === 'POST') {
@@ -48,6 +50,16 @@ export default {
       if (path.startsWith('/api/stock/') && method === 'GET') {
         const productId = path.split('/api/stock/')[1];
         return await handleStockCheck(productId, env);
+      }
+
+      // Public reviews
+      if (path === '/api/reviews' || path.startsWith('/api/reviews/')) {
+        return await handleReviews(request, env, { path, method });
+      }
+
+      // Public subscribe / unsubscribe
+      if (path === '/api/subscribe' || path === '/api/unsubscribe') {
+        return await handleSubscribe(request, env, { path, method });
       }
 
       if (path.startsWith('/api/admin')) {
