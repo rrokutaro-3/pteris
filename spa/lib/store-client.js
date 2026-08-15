@@ -218,11 +218,20 @@ export class StoreClient {
   // profile actually serves the destination country (see
   // calculateShipping() in checkout.js). Omit it to let the server
   // auto-select, same as before.
-  async createCheckout(cart, customer, shipping, coupon = null) {
+  /**
+   * @param {Array} cart
+   * @param {object} customer
+   * @param {object} shipping
+   * @param {string|null} [coupon]
+   * @param {string|null} [note] optional customer note (gift message, delivery instructions)
+   */
+  async createCheckout(cart, customer, shipping, coupon = null, note = null) {
+    const payload = { cart, customer, shipping, coupon };
+    if (note) payload.note = note;
     const res = await fetch(`${this.apiUrl}/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cart, customer, shipping, coupon })
+      body: JSON.stringify(payload)
     });
 
     const data = await res.json();
@@ -550,4 +559,4 @@ export class StoreClient {
 // configured for CJS interop) without conflicting with the ES export.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { StoreClient };
-}
+  }
