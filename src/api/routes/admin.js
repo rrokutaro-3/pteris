@@ -208,6 +208,61 @@ export async function handleAdmin(request, env, { path, method }) {
     return json({ cleaned });
   }
 
+  // ─── REVIEWS (moderation) ───
+  if (path === '/api/admin/reviews' && method === 'GET') {
+    const status = url.searchParams.get('status') || undefined;
+    const productId = url.searchParams.get('productId') || undefined;
+    const page = parseInt(url.searchParams.get('page') || '1', 10);
+    const limit = Math.min(parseInt(url.searchParams.get('limit') || '20', 10), 100);
+    const result = await db.listReviews({ status, productId, page, limit });
+    return json(result);
+  }
+
+  const reviewMatch = path.match(/^\/api\/admin\/reviews\/([^/]+)$/);
+  if (reviewMatch) {
+    const id = reviewMatch[1];
+
+    if (method === 'GET') {
+      const review = await db.getReview(id);
+      if (!review) return json({ error: 'Not found' }, 404);
+      return json(review);
+    }
+
+    if (method === 'PATCH') {
+      const body = await request.json().catch(() => ({}));
+      const status = body.status;
+      if (!['approved', 'rejected', 'pending'].includes(status)) {
+        return json({ error: 'status must be approved, rejected, or pending' }, 400);
+      }
+      const ok = await db.updateReviewStatus(id, status);
+      if (!ok) return json({ error: 'Not found' }, 404);
+      return json({ success: true, id, status });
+    }
+
+    if (method === 'DELETE') {
+      const ok = await db.deleteReview(id);
+      if (!ok) return json({ error: 'Not found' }, 404);
+      return json({ success: true, id });
+    }
+  }
+
+  // ─── SUBSCRIBERS ───
+  if (path === '/api/admin/subscribers' && method === 'GET') {
+    const activeOnly = url.searchParams.get('activeOnly') !== 'false';
+    const page = parseInt(url.searchParams.get('page') || '1', 10);
+    const limit = Math.min(parseInt(url.searchParams.get('limit') || '50', 10), 200);
+    const result = await db.listSubscribers({ activeOnly, page, limit });
+    return json(result);
+  }
+
+  const subMatch = path.match(/^\/api\/admin\/subscribers\/(.+)$/);
+  if (subMatch && method === 'DELETE') {
+    const email = decodeURIComponent(subMatch[1]);
+    const ok = await db.deleteSubscriber(email);
+    if (!ok) return json({ error: 'Not found' }, 404);
+    return json({ success: true, email });
+  }
+
   // ─── MEDIA UPLOAD (R2) ───
   // Accepts multipart/form-data with a single `file` field.
   // Requires env.ASSETS_BUCKET (R2 binding) and env.CDN_BASE_URL.
