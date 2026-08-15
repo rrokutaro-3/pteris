@@ -362,13 +362,29 @@ export async function handleCheckout(request, env) {
       return json({ error: 'Invalid product or variant', productId: item.productId, variantId: item.variantId }, 400);
     }
 
-    // Use sale price if active, otherwise regular price
-    const unitPrice = priceRow.sale_active && priceRow.sale_price
+    // Use sale price if active, otherwise regular price.
+    // Coerce to Number so a null/undefined/string from D1 cannot produce
+    // NaN later in toCents() (Stripe rejects non-integer unit_amount).
+    const rawUnit = priceRow.sale_active && priceRow.sale_price != null
       ? priceRow.sale_price
       : priceRow.price;
+    const unitPrice = Number(rawUnit);
+    if (!Number.isFinite(unitPrice) || unitPrice < 0) {
+      console.error('Invalid catalog price', {
+        productId: item.productId,
+        variantId: item.variantId,
+        priceRow,
+        rawUnit
+      });
+      return json({
+        error: 'Invalid product price in catalog',
+        productId: item.productId,
+        variantId: item.variantId
+      }, 500);
+    }
 
     // Validate client-sent price (allow small rounding tolerance)
-    if (Math.abs(item.price - unitPrice) > 0.01) {
+    if (Math.abs(Number(item.price) - unitPrice) > 0.01) {
       return json({
         error: 'Price mismatch detected',
         productId: item.productId,
@@ -382,13 +398,13 @@ export async function handleCheckout(request, env) {
       ...item,
       price: unitPrice, // Use server-verified price
       sku: priceRow.sku,
-      currency: priceRow.currency,
+      currency: (priceRow.currency || 'USD').toLowerCase(),
       // Use server-verified weight, not whatever the client cart sent.
       // A previous version trusted item.weight as submitted by the
       // client, which meant a shopper could set weight: 0 on every item
       // to always land in the cheapest shipping tier — the exact class
       // of spoofing that price verification (above) exists to prevent.
-      weight: priceRow.weight || 0
+      weight: Number(priceRow.weight) || 0
     });
 
     subtotal += unitPrice * item.qty;
@@ -416,15 +432,19 @@ export async function handleCheckout(request, env) {
     }, 400);
   }
 
-  const shippingCost = shippingCalc.cost;
+  const shippingCost = Number(shippingCalc.cost) || 0;
 
   // ─── Step 4: Calculate tax ───
   const taxConfig = await getTaxConfig(env);
   const taxCalc = calculateTax(subtotal - discount, taxConfig, shipping.country, shipping.state);
-  const taxAmount = taxCalc.amount;
+  const taxAmount = Number(taxCalc.amount) || 0;
 
   // ─── Step 5: Calculate total ───
   const total = +(subtotal - discount + shippingCost + (taxCalc.included ? 0 : taxAmount)).toFixed(2);
+  if (!Number.isFinite(total)) {
+    console.error('Computed non-finite order total', { subtotal, discount, shippingCost, taxAmount, taxCalc });
+    return json({ error: 'Unable to calculate order total' }, 500);
+  }
 
   // ─── Step 6: Atomic stock reservation ───
   const reservations = [];
@@ -486,45 +506,55 @@ export async function handleCheckout(request, env) {
   });
 
   // ─── Step 8: Create Stripe Checkout Session ───
-  // Convert to integer cents
-  const toCents = (amount) => Math.round(amount * 100);
+  // Convert to integer cents. Stripe requires a non-negative integer;
+  // NaN / undefined / negative values produce "Invalid non-negative integer"
+  // on line_items[N][price_data][unit_amount].
+  const toCents = (amount, label = 'amount') => {
+    const n = Number(amount);
+    if (!Number.isFinite(n) || n < 0) {
+      throw new Error(`Invalid non-negative amount for ${label}: ${JSON.stringify(amount)}`);
+    }
+    return Math.round(n * 100);
+  };
 
   const lineItems = [];
-  const sessionCurrency = validatedCart[0]?.currency?.toLowerCase() || 'usd';
+  const sessionCurrency = validatedCart[0]?.currency || 'usd';
 
   for (const item of validatedCart) {
     lineItems.push({
       price_data: {
-        currency: item.currency.toLowerCase(),
+        currency: item.currency || sessionCurrency,
         product_data: {
-          name: item.name,
+          name: item.name || 'Item',
           images: item.image ? [item.image] : [],
         },
-        unit_amount: toCents(item.price),
+        unit_amount: toCents(item.price, `product ${item.productId}/${item.variantId}`),
       },
       quantity: item.qty,
     });
   }
 
   // Add shipping as line item
-  if (shippingCost > 0) {
+  const safeShippingCost = Number(shippingCost) || 0;
+  if (safeShippingCost > 0) {
     lineItems.push({
       price_data: {
         currency: sessionCurrency,
         product_data: { name: `Shipping (${shippingCalc.profile?.name || 'Standard'})` },
-        unit_amount: toCents(shippingCost),
+        unit_amount: toCents(safeShippingCost, 'shipping'),
       },
       quantity: 1,
     });
   }
 
   // Add tax as line item (if not included in price)
-  if (!taxCalc.included && taxAmount > 0) {
+  const safeTaxAmount = Number(taxAmount) || 0;
+  if (!taxCalc.included && safeTaxAmount > 0) {
     lineItems.push({
       price_data: {
         currency: sessionCurrency,
-        product_data: { name: `Tax (${(taxCalc.rate * 100).toFixed(1)}%)` },
-        unit_amount: toCents(taxAmount),
+        product_data: { name: `Tax (${(Number(taxCalc.rate) * 100).toFixed(1)}%)` },
+        unit_amount: toCents(safeTaxAmount, 'tax'),
       },
       quantity: 1,
     });
@@ -536,10 +566,11 @@ export async function handleCheckout(request, env) {
   // one-time coupon and attach it via the session's `discounts` array.
   // This also displays the discount properly in the Stripe-hosted checkout UI.
   let stripeDiscounts = [];
-  if (discount > 0) {
+  const safeDiscount = Number(discount) || 0;
+  if (safeDiscount > 0) {
     try {
       const stripeCoupon = await stripe.createCoupon({
-        amount_off: toCents(discount),
+        amount_off: toCents(safeDiscount, 'discount'),
         currency: sessionCurrency,
         duration: 'once',
         name: `${couponCode} discount`,
@@ -594,6 +625,15 @@ export async function handleCheckout(request, env) {
   } catch (err) {
     // CRITICAL: Release stock if Stripe fails
     console.error('Stripe session creation failed:', err);
+    // Log the unit_amounts that Stripe rejected so we can diagnose
+    // "Invalid non-negative integer" without replaying the request.
+    console.error('line_items unit_amounts:', lineItems.map((li, i) => ({
+      i,
+      unit_amount: li.price_data?.unit_amount,
+      currency: li.price_data?.currency,
+      name: li.price_data?.product_data?.name,
+      qty: li.quantity
+    })));
     for (const r of reservations) {
       await db.commitStock(r.productId, r.variantId, r.qty, false);
     }
