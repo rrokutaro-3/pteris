@@ -9,6 +9,8 @@ on:
       - 'data/spa/**'
       - 'src/build/**'
       - 'src/schema/**'
+      - 'src/api/**'
+      - 'wrangler.toml'
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
@@ -98,12 +100,45 @@ jobs:
             -H "Content-Type: application/json" \
             --data '{"purge_everything":true}'
 
+  deploy-api:
+    runs-on: ubuntu-latest
+    # Only runs when src/api or wrangler.toml actually changed, or on
+    # workflow_dispatch (manual trigger). Skipped on scheduled runs and
+    # when only catalog/config files changed — no need to redeploy the
+    # Worker for a product update.
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && (
+        contains(toJson(github.event.commits.*.modified), 'src/api/') ||
+        contains(toJson(github.event.commits.*.added), 'src/api/') ||
+        contains(toJson(github.event.commits.*.modified), 'wrangler.toml')
+      ))
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler deploy src/api/index.js
+
   notify:
-    needs: deploy
+    needs: [deploy, deploy-api]
     runs-on: ubuntu-latest
     if: always()
 
     steps:
       - name: Notify on failure
-        if: needs.deploy.result == 'failure'
+        if: needs.deploy.result == 'failure' || needs.deploy-api.result == 'failure'
         run: echo "::error::Build or deploy failed! Check logs above."
