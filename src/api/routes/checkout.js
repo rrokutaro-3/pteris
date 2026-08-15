@@ -490,6 +490,7 @@ export async function handleCheckout(request, env) {
   const toCents = (amount) => Math.round(amount * 100);
 
   const lineItems = [];
+  const sessionCurrency = validatedCart[0]?.currency?.toLowerCase() || 'usd';
 
   for (const item of validatedCart) {
     lineItems.push({
@@ -509,7 +510,7 @@ export async function handleCheckout(request, env) {
   if (shippingCost > 0) {
     lineItems.push({
       price_data: {
-        currency: 'usd',
+        currency: sessionCurrency,
         product_data: { name: `Shipping (${shippingCalc.profile?.name || 'Standard'})` },
         unit_amount: toCents(shippingCost),
       },
@@ -521,7 +522,7 @@ export async function handleCheckout(request, env) {
   if (!taxCalc.included && taxAmount > 0) {
     lineItems.push({
       price_data: {
-        currency: 'usd',
+        currency: sessionCurrency,
         product_data: { name: `Tax (${(taxCalc.rate * 100).toFixed(1)}%)` },
         unit_amount: toCents(taxAmount),
       },
@@ -529,16 +530,32 @@ export async function handleCheckout(request, env) {
     });
   }
 
-  // Apply coupon discount
+  // Apply coupon discount via Stripe's native coupon system.
+  // Stripe does NOT accept negative unit_amount on line items — passing
+  // unit_amount: -690 causes a hard API rejection. Instead, create a
+  // one-time coupon and attach it via the session's `discounts` array.
+  // This also displays the discount properly in the Stripe-hosted checkout UI.
+  let stripeDiscounts = [];
   if (discount > 0) {
-    lineItems.push({
-      price_data: {
-        currency: 'usd',
-        product_data: { name: `Discount (${couponCode})` },
-        unit_amount: -toCents(discount),
-      },
-      quantity: 1,
-    });
+    try {
+      const stripeCoupon = await stripe.createCoupon({
+        amount_off: toCents(discount),
+        currency: sessionCurrency,
+        duration: 'once',
+        name: `${couponCode} discount`,
+      });
+      stripeDiscounts = [{ coupon: stripeCoupon.id }];
+    } catch (err) {
+      // Coupon creation failed — rollback reservations and bail out cleanly
+      // rather than passing a broken session to Stripe.
+      console.error('Stripe coupon creation failed:', err);
+      for (const r of reservations) {
+        await db.commitStock(r.productId, r.variantId, r.qty, false);
+      }
+      await db.releaseReservation(orderId);
+      await db.updateOrderStatus(orderId, { status: 'cancelled' });
+      return json({ error: 'Payment provider error' }, 502);
+    }
   }
 
   // Ensure total is at least $0.50 (Stripe minimum)
@@ -569,7 +586,10 @@ export async function handleCheckout(request, env) {
         order_id: orderId,
         order_items: JSON.stringify(validatedCart.map(i => ({ productId: i.productId, variantId: i.variantId, qty: i.qty }))),
       },
-      expires_at: Math.floor(Date.now() / 1000) + (stripeExpiryMinutes * 60), // Session expires with reservation (clamped to Stripe's 30-min floor)
+      expires_at: Math.floor(Date.now() / 1000) + (stripeExpiryMinutes * 60),
+      // Only include discounts key when a coupon exists — Stripe rejects
+      // an empty discounts array alongside allow_promotion_codes.
+      ...(stripeDiscounts.length > 0 ? { discounts: stripeDiscounts } : {}),
     });
   } catch (err) {
     // CRITICAL: Release stock if Stripe fails
