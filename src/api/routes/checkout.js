@@ -236,6 +236,79 @@ async function getCouponConfig(env) {
 }
 
 /**
+ * Load a built product JSON from Pages (for shipping restrictions + sourcing
+ * snapshot). Failures are non-fatal — checkout can proceed without them.
+ */
+async function loadProductJson(env, productId) {
+  try {
+    const baseUrl = env.PAGES_URL || env.STORE_URL;
+    if (!baseUrl || !productId) return null;
+    const res = await fetch(`${baseUrl}/products/${encodeURIComponent(productId)}.json`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+/** Strip tags and clamp length for customer-facing free text. */
+function sanitizeCustomerNote(raw, maxLen = 1000) {
+  if (raw == null) return null;
+  const text = String(raw)
+    .replace(/<[^>]*>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!text) return null;
+  return text.length > maxLen ? text.slice(0, maxLen) : text;
+}
+
+/**
+ * Snapshot only the ops-relevant sourcing fields onto an order line.
+ * Never trust/pass through arbitrary client objects.
+ */
+function snapshotSourcing(sourcing) {
+  if (!sourcing || typeof sourcing !== 'object') return undefined;
+  const out = {};
+  if (Array.isArray(sourcing.sources)) {
+    out.sources = sourcing.sources
+      .filter(s => s && (s.name || s.url))
+      .slice(0, 20)
+      .map(s => ({
+        name: s.name ? String(s.name).slice(0, 120) : undefined,
+        url: s.url ? String(s.url).slice(0, 500) : undefined
+      }));
+  }
+  if (Array.isArray(sourcing.links)) {
+    out.links = sourcing.links
+      .filter(l => l && (l.label || l.url))
+      .slice(0, 20)
+      .map(l => ({
+        label: l.label ? String(l.label).slice(0, 120) : undefined,
+        url: l.url ? String(l.url).slice(0, 500) : undefined
+      }));
+  }
+  if (sourcing.notes) {
+    out.notes = String(sourcing.notes).replace(/<[^>]*>/g, '').trim().slice(0, 1000);
+  }
+  return (out.sources?.length || out.links?.length || out.notes) ? out : undefined;
+}
+
+/**
+ * Enforce optional per-product shipping country restrictions.
+ * allowedCountries wins when non-empty; otherwise blockedCountries is applied.
+ * Country codes are ISO 3166-1 alpha-2 (normalized uppercase).
+ */
+function isProductShippableTo(productShipping, country) {
+  if (!productShipping || !country) return true;
+  const code = normalizeRegionCode(country);
+  const allowed = (productShipping.allowedCountries || []).map(normalizeRegionCode).filter(Boolean);
+  const blocked = (productShipping.blockedCountries || []).map(normalizeRegionCode).filter(Boolean);
+  if (allowed.length) return allowed.includes(code);
+  if (blocked.length) return !blocked.includes(code);
+  return true;
+}
+
+/**
  * Validate and apply coupon
  */
 async function validateCoupon(code, cart, subtotal, db, env) {
@@ -293,7 +366,8 @@ export async function handleCheckout(request, env) {
   }
 
   const body = await request.json();
-  const { cart, customer, shipping, coupon: couponCode } = body;
+  const { cart, customer, shipping, coupon: couponCode, note: rawNote } = body;
+  const customerNote = sanitizeCustomerNote(rawNote);
 
   if (!cart?.length || !customer?.email || !shipping?.country) {
     return json({ error: 'Missing required fields: cart, customer.email, shipping.country' }, 400);
@@ -352,9 +426,11 @@ export async function handleCheckout(request, env) {
   // Clean up expired reservations first
   await db.cleanupExpiredReservations();
 
-  // ─── Step 1: Validate prices server-side ───
+  // ─── Step 1: Validate prices server-side + product shipping/sourcing ───
   const validatedCart = [];
   let subtotal = 0;
+  // Cache product JSON per productId (shipping restrictions + sourcing snapshot)
+  const productCache = new Map();
 
   for (const item of cart) {
     const priceRow = await db.getPrice(item.productId, item.variantId);
@@ -394,6 +470,23 @@ export async function handleCheckout(request, env) {
       }, 400);
     }
 
+    // Load product JSON once per productId for restrictions + sourcing
+    if (!productCache.has(item.productId)) {
+      productCache.set(item.productId, await loadProductJson(env, item.productId));
+    }
+    const productJson = productCache.get(item.productId);
+    const productShipping = productJson?.shipping || null;
+
+    if (productShipping && !isProductShippableTo(productShipping, shipping.country)) {
+      return json({
+        error: 'Product cannot be shipped to this destination',
+        productId: item.productId,
+        country: shipping.country
+      }, 400);
+    }
+
+    const sourcingSnap = snapshotSourcing(productJson?.sourcing);
+
     validatedCart.push({
       ...item,
       price: unitPrice, // Use server-verified price
@@ -404,7 +497,9 @@ export async function handleCheckout(request, env) {
       // client, which meant a shopper could set weight: 0 on every item
       // to always land in the cheapest shipping tier — the exact class
       // of spoofing that price verification (above) exists to prevent.
-      weight: Number(priceRow.weight) || 0
+      weight: Number(priceRow.weight) || 0,
+      // Frozen ops snapshot for admin fulfillment (dropship sources, etc.)
+      sourcing: sourcingSnap
     });
 
     subtotal += unitPrice * item.qty;
@@ -484,16 +579,21 @@ export async function handleCheckout(request, env) {
 
   await db.createOrder({
     id: orderId,
-    items: validatedCart.map(i => ({
-      productId: i.productId,
-      variantId: i.variantId,
-      sku: i.sku,
-      name: i.name,
-      qty: i.qty,
-      price: i.price,
-      image: i.image,
-      weight: i.weight || 0
-    })),
+    items: validatedCart.map(i => {
+      const line = {
+        productId: i.productId,
+        variantId: i.variantId,
+        sku: i.sku,
+        name: i.name,
+        qty: i.qty,
+        price: i.price,
+        image: i.image,
+        weight: i.weight || 0
+      };
+      // Snapshot only — frozen at order time for admin/dropship ops
+      if (i.sourcing) line.sourcing = i.sourcing;
+      return line;
+    }),
     customer,
     shipping,
     subtotal,
@@ -502,7 +602,8 @@ export async function handleCheckout(request, env) {
     total,
     status: 'pending',
     stripeSessionId: null,
-    coupon: couponCode || null
+    coupon: couponCode || null,
+    customerNote
   });
 
   // ─── Step 8: Create Stripe Checkout Session ───
