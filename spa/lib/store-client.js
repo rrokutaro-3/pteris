@@ -450,6 +450,78 @@ export class StoreClient {
     keys.slice(0, toRemove).forEach(k => localStorage.removeItem(k));
   }
 
+  // ─── Reviews ───
+
+  /**
+   * Fetch approved reviews for a product from the live API.
+   * @param {string} productId
+   * @returns {Promise<{ productId: string, reviews: Array, count: number }>}
+   */
+  async getReviews(productId) {
+    // apiUrl already ends with /api (same convention as /stock and /checkout)
+    const res = await fetch(`${this.apiUrl}/reviews/${encodeURIComponent(productId)}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Failed to load reviews: ${res.status}`);
+    }
+    return res.json();
+  }
+
+  /**
+   * Submit a product review (goes to pending moderation).
+   * @param {{ productId: string, customerName: string, rating: number, title?: string, body: string, images?: string[] }} data
+   */
+  async submitReview(data) {
+    const res = await fetch(`${this.apiUrl}/reviews`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        productId: data.productId,
+        customerName: data.customerName || data.name,
+        rating: data.rating,
+        title: data.title,
+        body: data.body || data.text || data.review,
+        images: data.images
+      })
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(json.error || `Submit review failed: ${res.status}`);
+    return json;
+  }
+
+  // ─── Email subscriptions ───
+
+  /**
+   * Subscribe an email address to the newsletter list.
+   * @param {string} email
+   * @param {string} [source] optional label e.g. 'footer'
+   */
+  async subscribe(email, source) {
+    const res = await fetch(`${this.apiUrl}/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source })
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(json.error || `Subscribe failed: ${res.status}`);
+    return json;
+  }
+
+  /**
+   * Unsubscribe by token (from email link) or by email.
+   * @param {{ token?: string, email?: string }} opts
+   */
+  async unsubscribe(opts = {}) {
+    const res = await fetch(`${this.apiUrl}/unsubscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(opts)
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(json.error || `Unsubscribe failed: ${res.status}`);
+    return json;
+  }
+
   // ─── Utilities ───
   getProductRef(productId) {
     return this.index?.products?.[productId] || null;
