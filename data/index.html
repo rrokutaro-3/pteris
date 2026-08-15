@@ -490,7 +490,87 @@
       font-size: 10px; font-weight: 400; letter-spacing: .14em;
       text-transform: uppercase; margin-bottom: 14px;
     }
-    .reviews-empty { color: var(--muted); font-size: 11px; font-weight: 300; }
+    .reviews-empty { color: var(--muted); font-size: 11px; font-weight: 300; margin-bottom: 16px; }
+    .reviews-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+    .review-card {
+      padding: 14px 0; border-bottom: 1px solid var(--line);
+    }
+    .review-card:last-child { border-bottom: none; }
+    .review-header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 6px; flex-wrap: wrap;
+    }
+    .review-author { font-size: 12px; font-weight: 400; }
+    .review-stars { letter-spacing: 1px; font-size: 12px; color: #0d0d0d; }
+    .review-stars .empty { color: #ccc; }
+    .review-date { font-size: 10px; color: var(--muted); font-weight: 300; margin-bottom: 4px; }
+    .review-title { font-size: 12px; font-weight: 400; margin-bottom: 4px; }
+    .review-body { font-size: 12px; font-weight: 300; line-height: 1.55; color: var(--text); }
+    .review-verified {
+      display: inline-block; font-size: 9px; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted); margin-left: 8px;
+    }
+    .reviews-form-wrap {
+      margin-top: 8px; padding-top: 18px; border-top: 1px solid var(--line);
+    }
+    .reviews-form-wrap h4 {
+      font-size: 10px; font-weight: 400; letter-spacing: .12em;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .reviews-form .input-group textarea {
+      width: 100%; padding: 11px 12px; border: 1px solid var(--line);
+      background: #fff; font-size: 12px; font-weight: 300; outline: none;
+      min-height: 90px; resize: vertical; font-family: inherit; box-sizing: border-box;
+    }
+    .reviews-form .input-group textarea:focus { border-color: #0d0d0d; }
+    .rating-row { display: flex; gap: 6px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+    .rating-row button {
+      background: none; border: 1px solid var(--line); width: 36px; height: 36px;
+      cursor: pointer; font-size: 14px; color: #ccc; transition: color .15s, border-color .15s;
+      padding: 0; line-height: 1;
+    }
+    .rating-row button.active, .rating-row button:hover { color: #0d0d0d; border-color: #0d0d0d; }
+    .reviews-form-msg {
+      display: none; font-size: 11px; font-weight: 300; margin-top: 10px; padding: 8px 10px;
+      border: 1px solid var(--line);
+    }
+    .reviews-form-msg.ok { color: var(--text); }
+    .reviews-form-msg.err { color: #b00000; }
+
+    /* Newsletter (footer) */
+    .newsletter-block {
+      margin: 28px 0 8px; padding-top: 20px; border-top: 1px solid var(--line);
+    }
+    .newsletter-block h3 {
+      font-size: 10px; font-weight: 400; letter-spacing: .14em;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .newsletter-block > p {
+      font-size: 11px; font-weight: 300; color: var(--muted);
+      margin-bottom: 12px; max-width: 360px; line-height: 1.5;
+    }
+    .newsletter-form {
+      display: flex; flex-direction: column; gap: 8px; max-width: 320px;
+    }
+    @media (min-width: 520px) {
+      .newsletter-form {
+        flex-direction: row; align-items: stretch; max-width: 420px;
+      }
+      .newsletter-form input[type="email"] { flex: 1; }
+      .newsletter-form .btn { width: auto; white-space: nowrap; padding-left: 20px; padding-right: 20px; }
+    }
+    .newsletter-form input[type="email"] {
+      width: 100%; padding: 11px 12px; border: 1px solid var(--line);
+      background: #fff; font-size: 12px; font-weight: 300; outline: none; box-sizing: border-box;
+    }
+    .newsletter-form input[type="email"]:focus { border-color: #0d0d0d; }
+    .newsletter-form .btn { width: 100%; }
+    .newsletter-msg {
+      display: none; font-size: 11px; font-weight: 300; margin-top: 8px;
+    }
+    .newsletter-msg.ok { color: var(--text); }
+    .newsletter-msg.err { color: #b00000; }
+
     .related-grid {
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
     }
@@ -812,7 +892,38 @@
           </div>
           <div class="reviews-section" id="pd-reviews-section" style="display:none;">
             <h3>Customer Reviews</h3>
-            <div class="reviews-empty">No reviews yet. Be the first to write one!</div>
+            <div id="pd-reviews-empty" class="reviews-empty" style="display:none;">No reviews yet. Be the first to write one!</div>
+            <div id="pd-reviews-list" class="reviews-list"></div>
+            <div class="reviews-form-wrap">
+              <h4>Write a Review</h4>
+              <form id="pd-review-form" class="reviews-form" autocomplete="on">
+                <div class="input-group">
+                  <label for="rv-name">Your Name</label>
+                  <input type="text" id="rv-name" name="customerName" required minlength="2" maxlength="80" placeholder="Jane">
+                </div>
+                <div class="input-group">
+                  <label>Rating</label>
+                  <div class="rating-row" id="rv-rating-row" role="group" aria-label="Star rating">
+                    <button type="button" data-rating="1" aria-label="1 star">★</button>
+                    <button type="button" data-rating="2" aria-label="2 stars">★</button>
+                    <button type="button" data-rating="3" aria-label="3 stars">★</button>
+                    <button type="button" data-rating="4" aria-label="4 stars">★</button>
+                    <button type="button" data-rating="5" aria-label="5 stars">★</button>
+                  </div>
+                  <input type="hidden" id="rv-rating" name="rating" value="5">
+                </div>
+                <div class="input-group">
+                  <label for="rv-title">Title <span style="font-weight:300;text-transform:none;letter-spacing:0;">(optional)</span></label>
+                  <input type="text" id="rv-title" name="title" maxlength="120" placeholder="Great fit">
+                </div>
+                <div class="input-group">
+                  <label for="rv-body">Review</label>
+                  <textarea id="rv-body" name="body" required minlength="5" maxlength="2000" placeholder="Share your experience…"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" id="rv-submit-btn">Submit Review</button>
+                <div id="rv-form-msg" class="reviews-form-msg" role="status"></div>
+              </form>
+            </div>
           </div>
           <div class="related-section" id="pd-related-section" style="display:none;">
             <h3>You May Also Like</h3>
@@ -921,6 +1032,15 @@
   <footer>
     <div class="container">
       <div class="footer-grid" id="footer-grid"></div>
+      <div class="newsletter-block" id="newsletter-block">
+        <h3>Newsletter</h3>
+        <p>New arrivals, exclusive offers, and early access. Unsubscribe anytime.</p>
+        <form id="newsletter-form" class="newsletter-form" autocomplete="on">
+          <input type="email" id="nl-email" name="email" required placeholder="you@example.com" aria-label="Email for newsletter">
+          <button type="submit" class="btn btn-primary" id="nl-submit-btn">Subscribe</button>
+        </form>
+        <div id="nl-msg" class="newsletter-msg" role="status"></div>
+      </div>
       <div class="footer-bottom">
         <span id="footer-copy"></span>
         <div class="footer-social" id="footer-social"></div>
@@ -1739,6 +1859,199 @@
       }
     }
 
+    // ─── Reviews helpers ───
+    function starsHtml(rating) {
+      const r = Math.max(0, Math.min(5, Number(rating) || 0));
+      let s = '';
+      for (let i = 1; i <= 5; i++) s += i <= r ? '★' : '<span class="empty">★</span>';
+      return s;
+    }
+
+    function formatReviewDate(iso) {
+      if (!iso) return '';
+      try {
+        const d = new Date(iso);
+        return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+      } catch { return ''; }
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderReviewCard(r) {
+      const name = r.customerName || r.name || 'Customer';
+      const title = r.title ? '<div class="review-title">' + escapeHtml(r.title) + '</div>' : '';
+      const verified = r.verified ? '<span class="review-verified">Verified</span>' : '';
+      return (
+        '<div class="review-card">' +
+          '<div class="review-header">' +
+            '<span class="review-author">' + escapeHtml(name) + verified + '</span>' +
+            '<span class="review-stars" aria-label="' + (r.rating || 0) + ' out of 5 stars">' + starsHtml(r.rating) + '</span>' +
+          '</div>' +
+          (r.createdAt ? '<div class="review-date">' + formatReviewDate(r.createdAt) + '</div>' : '') +
+          title +
+          '<div class="review-body">' + escapeHtml(r.body || r.text || '') + '</div>' +
+        '</div>'
+      );
+    }
+
+    async function loadProductReviews(productId) {
+      const listEl = document.getElementById('pd-reviews-list');
+      const emptyEl = document.getElementById('pd-reviews-empty');
+      if (!listEl || !emptyEl) return;
+      listEl.innerHTML = '';
+      emptyEl.style.display = 'none';
+
+      if (!API_URL) {
+        emptyEl.textContent = 'Reviews unavailable (API not configured).';
+        emptyEl.style.display = 'block';
+        return;
+      }
+
+      try {
+        const data = await client.getReviews(productId);
+        const reviews = data?.reviews || [];
+        if (!reviews.length) {
+          emptyEl.textContent = 'No reviews yet. Be the first to write one!';
+          emptyEl.style.display = 'block';
+          return;
+        }
+        listEl.innerHTML = reviews.map(renderReviewCard).join('');
+      } catch (err) {
+        console.warn('[Pteris] Reviews load failed:', err);
+        emptyEl.textContent = 'Unable to load reviews right now.';
+        emptyEl.style.display = 'block';
+      }
+    }
+
+    function setupReviewForm(productId) {
+      const form = document.getElementById('pd-review-form');
+      const msg = document.getElementById('rv-form-msg');
+      const ratingInput = document.getElementById('rv-rating');
+      const row = document.getElementById('rv-rating-row');
+      const btn = document.getElementById('rv-submit-btn');
+      if (!form) return;
+
+      form.dataset.productId = productId;
+
+      if (form.dataset.bound === '1') return;
+      form.dataset.bound = '1';
+
+      const setRating = (n) => {
+        if (!ratingInput || !row) return;
+        ratingInput.value = String(n);
+        row.querySelectorAll('button').forEach(b => {
+          b.classList.toggle('active', Number(b.dataset.rating) <= n);
+        });
+      };
+      setRating(5);
+
+      if (row) {
+        row.addEventListener('click', (e) => {
+          const b = e.target.closest('button[data-rating]');
+          if (b) setRating(Number(b.dataset.rating));
+        });
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!msg || !btn) return;
+
+        if (!API_URL) {
+          msg.textContent = 'API not configured.';
+          msg.className = 'reviews-form-msg err';
+          msg.style.display = 'block';
+          return;
+        }
+
+        const pid = form.dataset.productId || productId;
+        const name = (document.getElementById('rv-name')?.value || '').trim();
+        const title = (document.getElementById('rv-title')?.value || '').trim();
+        const body = (document.getElementById('rv-body')?.value || '').trim();
+        const rating = Number(ratingInput?.value) || 5;
+
+        btn.disabled = true;
+        btn.textContent = 'Submitting…';
+        msg.style.display = 'none';
+
+        try {
+          const result = await client.submitReview({
+            productId: pid,
+            customerName: name,
+            rating,
+            title: title || undefined,
+            body
+          });
+          msg.textContent = result?.message || 'Review submitted and awaiting moderation. Thank you!';
+          msg.className = 'reviews-form-msg ok';
+          msg.style.display = 'block';
+          form.reset();
+          setRating(5);
+        } catch (err) {
+          msg.textContent = (err && err.message) ? err.message : 'Could not submit review.';
+          msg.className = 'reviews-form-msg err';
+          msg.style.display = 'block';
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Submit Review';
+        }
+      });
+    }
+
+    // ─── Newsletter ───
+    function setupNewsletterForm() {
+      const form = document.getElementById('newsletter-form');
+      const msg = document.getElementById('nl-msg');
+      const btn = document.getElementById('nl-submit-btn');
+      if (!form || form.dataset.bound === '1') return;
+      form.dataset.bound = '1';
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!msg || !btn) return;
+
+        const email = (document.getElementById('nl-email')?.value || '').trim();
+        if (!email) return;
+
+        if (!API_URL) {
+          msg.textContent = 'API not configured.';
+          msg.className = 'newsletter-msg err';
+          msg.style.display = 'block';
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Subscribing…';
+        msg.style.display = 'none';
+
+        try {
+          const result = await client.subscribe(email, 'footer');
+          if (result?.alreadySubscribed) {
+            msg.textContent = 'You are already subscribed. Thanks!';
+          } else if (result?.reactivated) {
+            msg.textContent = 'Welcome back — your subscription is active again.';
+          } else {
+            msg.textContent = result?.message || 'Subscribed successfully. Thank you!';
+          }
+          msg.className = 'newsletter-msg ok';
+          msg.style.display = 'block';
+          form.reset();
+        } catch (err) {
+          msg.textContent = (err && err.message) ? err.message : 'Subscription failed. Please try again.';
+          msg.className = 'newsletter-msg err';
+          msg.style.display = 'block';
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Subscribe';
+        }
+      });
+    }
+
     // ─── View: Product ───
     let _pdState = { product: null, liveStock: null, options: {}, qty: 1, variantGroups: {}, groupIds: [] };
 
@@ -1758,6 +2071,12 @@
       document.getElementById('pd-attributes').style.display = 'none';
       document.getElementById('pd-related-section').style.display = 'none';
       document.getElementById('pd-reviews-section').style.display = 'none';
+      const _rvList = document.getElementById('pd-reviews-list');
+      const _rvEmpty = document.getElementById('pd-reviews-empty');
+      const _rvMsg = document.getElementById('rv-form-msg');
+      if (_rvList) _rvList.innerHTML = '';
+      if (_rvEmpty) { _rvEmpty.style.display = 'none'; _rvEmpty.textContent = 'No reviews yet. Be the first to write one!'; }
+      if (_rvMsg) { _rvMsg.style.display = 'none'; _rvMsg.textContent = ''; }
       document.getElementById('pd-brand').textContent = '';
       _pdState.qty = 1;
       document.getElementById('pd-qty-val').textContent = 1;
@@ -1903,6 +2222,8 @@
         // Reviews
         if (appState.state.configs.store?.features?.reviews) {
           document.getElementById('pd-reviews-section').style.display = 'block';
+          loadProductReviews(id);
+          setupReviewForm(id);
         }
 
         // Related products
@@ -2592,6 +2913,7 @@
 
         appState.set('configs', { store, menus, ...(home ? { home } : {}) });
         renderShell(store, menus);
+        setupNewsletterForm();
 
         // Stripe post-checkout redirect
         if (params.has('session_id')) {
