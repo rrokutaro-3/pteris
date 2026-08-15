@@ -89,6 +89,33 @@ export interface Product {
     weight?: number;
     dimensions?: { l: number; w: number; h: number; unit: string };
     requiresShipping?: boolean;
+    /** ISO 3166-1 alpha-2. If set, only these countries may receive this product. */
+    allowedCountries?: string[];
+    /** ISO 3166-1 alpha-2. If set, these countries cannot receive this product. */
+    blockedCountries?: string[];
+    handlingDays?: { min?: number; max?: number };
+    shipsFrom?: { country?: string; city?: string };
+    note?: string;
+  };
+  /** Prefer product.sizeGuide over global config/size-guide.json */
+  sizeGuide?: {
+    title?: string;
+    unit?: string;
+    unitAlternates?: string[];
+    note?: string;
+    fitNotes?: string[];
+    columns?: string[];
+    rows?: Record<string, string>[];
+    alternateUnitRows?: Record<string, string>[];
+    howToMeasure?: { label?: string; text?: string }[];
+    image?: string;
+    links?: { label?: string; url?: string }[];
+  };
+  /** Dropship / ops info; snapshotted onto order line items at checkout */
+  sourcing?: {
+    sources?: { name?: string; url?: string }[];
+    links?: { label?: string; url?: string }[];
+    notes?: string;
   };
   seo?: {
     title?: string;

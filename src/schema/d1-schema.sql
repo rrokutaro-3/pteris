@@ -30,6 +30,9 @@ CREATE TABLE IF NOT EXISTS orders (
   tracking_number TEXT,
   carrier TEXT,
   notes TEXT,
+  -- Customer-facing note from checkout (gift message, delivery instructions).
+  -- Separate from admin `notes` which are internal fulfillment comments.
+  customer_note TEXT,
   -- Refund fields, set via POST /api/admin/orders/:id/refund.
   -- Same issue: refundAmount/refundReason/refundedAt had no columns.
   refund_amount REAL,
@@ -38,6 +41,9 @@ CREATE TABLE IF NOT EXISTS orders (
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );
+
+-- Existing databases created before customer_note was added need:
+--   wrangler d1 execute lean-store-db --remote --command "ALTER TABLE orders ADD COLUMN customer_note TEXT"
 
 -- Price verification table (populated at build time)
 CREATE TABLE IF NOT EXISTS prices (

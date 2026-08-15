@@ -147,7 +147,100 @@
             "unit": { "type": "string" }
           }
         },
-        "requiresShipping": { "type": "boolean" }
+        "requiresShipping": { "type": "boolean" },
+        "allowedCountries": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[A-Za-z]{2}$" },
+          "description": "ISO 3166-1 alpha-2. If set, only these countries may receive this product."
+        },
+        "blockedCountries": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[A-Za-z]{2}$" },
+          "description": "ISO 3166-1 alpha-2. If set, these countries cannot receive this product."
+        },
+        "handlingDays": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "number", "minimum": 0 },
+            "max": { "type": "number", "minimum": 0 }
+          }
+        },
+        "shipsFrom": {
+          "type": "object",
+          "properties": {
+            "country": { "type": "string" },
+            "city": { "type": "string" }
+          }
+        },
+        "note": { "type": "string" }
+      }
+    },
+    "sizeGuide": {
+      "type": "object",
+      "description": "Optional per-product size guide. SPA should prefer this over the global size-guide config.",
+      "properties": {
+        "title": { "type": "string" },
+        "unit": { "type": "string" },
+        "unitAlternates": { "type": "array", "items": { "type": "string" } },
+        "note": { "type": "string" },
+        "fitNotes": { "type": "array", "items": { "type": "string" } },
+        "columns": { "type": "array", "items": { "type": "string" } },
+        "rows": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": { "type": "string" } }
+        },
+        "alternateUnitRows": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": { "type": "string" } }
+        },
+        "howToMeasure": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "text": { "type": "string" }
+            }
+          }
+        },
+        "image": { "type": "string" },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "sourcing": {
+      "type": "object",
+      "description": "Optional dropship / ops info. Snapshotted onto order line items at checkout for admin fulfillment.",
+      "properties": {
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        },
+        "notes": { "type": "string" }
       }
     },
     "seo": {
