@@ -39,7 +39,9 @@ Pteris splits e-commerce into two parts: **static** and **live**.
 - Checkout (price validation, stock reservation, Stripe session creation)
 - Stripe webhook handling (stock commit, order status, confirmation emails)
 - Stock checks
-- Admin API (inventory, orders, coupons, stats)
+- Reviews (submit + list approved; moderation is admin-only)
+- Email subscriptions (subscribe / unsubscribe)
+- Admin API (inventory, orders, reviews, subscribers, coupons, stats)
 
 Your SPA runs in the browser. It fetches static files directly from Pages (fast, cached), and only calls the Worker for real-time operations like checkout and stock checks.
 
@@ -50,9 +52,13 @@ Browser SPA
   ├── GET /products/{id}.json  → Cloudflare Pages (static)
   ├── GET /config/{name}.json  → Cloudflare Pages (static)
   │
-  ├── POST /api/checkout       → Cloudflare Worker (live)
-  ├── GET  /api/stock/{id}     → Cloudflare Worker (live)
-  └── GET  /api/admin/*        → Cloudflare Worker (live, auth required)
+  ├── POST /api/checkout            → Cloudflare Worker (live)
+  ├── GET  /api/stock/{id}          → Cloudflare Worker (live)
+  ├── POST /api/reviews             → Cloudflare Worker (live)
+  ├── GET  /api/reviews/{productId} → Cloudflare Worker (live)
+  ├── POST /api/subscribe           → Cloudflare Worker (live)
+  ├── GET|POST /api/unsubscribe     → Cloudflare Worker (live)
+  └── /api/admin/*                  → Cloudflare Worker (live, auth required)
 ```
 
 The D1 database (SQLite) is only touched by the Worker — never directly from the browser. It stores live data: inventory quantities, orders, price verification table, reservations, coupon usage.
@@ -852,6 +858,40 @@ const result = await client.createCheckout(
 // Redirect to result.checkoutUrl
 ```
 
+---
+
+### Reviews
+
+```js
+// Approved reviews only (public)
+const { reviews, count } = await client.getReviews('p-8392');
+
+// Submit — always lands in pending moderation
+await client.submitReview({
+  productId: 'p-8392',
+  customerName: 'Jane',
+  rating: 5,
+  title: 'Great fit',
+  body: 'Wore it to dinner — fabric feels premium.'
+});
+// → { success: true, id: '…', status: 'pending', message: '…' }
+```
+
+Review **bodies are user-generated**. Escape or sanitize with DOMPurify when rendering; do not use `client.sanitizeHtml()` (that helper is for trusted product copy only).
+
+---
+
+### Email subscriptions
+
+```js
+await client.subscribe('jane@example.com', 'footer');
+// → { success: true, email: 'jane@example.com', alreadySubscribed?: boolean, … }
+
+await client.unsubscribe({ email: 'jane@example.com' });
+// or token from an email link:
+await client.unsubscribe({ token: '…' });
+```
+
 **Cart item shape:**
 ```js
 {
@@ -1092,7 +1132,7 @@ Returns API status and version.
 
 ```
 Response 200:
-{ "status": "ok", "version": "2.2.0" }
+{ "status": "ok", "version": "2.3.0" }
 ```
 
 ---
@@ -1212,6 +1252,116 @@ Returns live inventory for a product from D1. Not cached.
 **Response `404`:**
 ```json
 { "error": "Product not found" }
+```
+
+---
+
+### Reviews (public)
+
+Reviews are stored in D1 only. Product source JSON is never modified. Submitted reviews are always `pending` until an admin approves them. The public list endpoint returns **approved** reviews only.
+
+#### `POST /api/reviews`
+
+Submit a review (no auth). Body text is plain-text sanitized server-side (HTML stripped, length-capped).
+
+**Request body:**
+```json
+{
+  "productId": "p-8392",
+  "customerName": "Jane",
+  "rating": 5,
+  "title": "Great fit",
+  "body": "Wore it to a dinner — fabric feels premium.",
+  "images": ["https://cdn.example.com/r1.webp"]
+}
+```
+
+| Field | Required | Notes |
+|---|---|---|
+| `productId` | yes | Must match product id pattern |
+| `customerName` (or `name`) | yes | 2–80 chars after sanitize |
+| `rating` | yes | Integer 1–5 |
+| `title` | no | Max 120 chars |
+| `body` (or `text` / `review`) | yes | Min 5, max 2000 chars |
+| `images` | no | Up to 5 `http(s)` URLs |
+
+**Success `201`:**
+```json
+{
+  "success": true,
+  "id": "…uuid…",
+  "status": "pending",
+  "message": "Review submitted and awaiting moderation"
+}
+```
+
+#### `GET /api/reviews/:productId`
+
+List approved reviews for a product.
+
+```json
+{
+  "productId": "p-8392",
+  "reviews": [
+    {
+      "id": "…",
+      "productId": "p-8392",
+      "customerName": "Jane",
+      "rating": 5,
+      "title": "Great fit",
+      "body": "…",
+      "verified": false,
+      "images": [],
+      "helpful": 0,
+      "createdAt": "2026-08-15T…",
+      "status": "approved"
+    }
+  ],
+  "count": 1
+}
+```
+
+---
+
+### Email subscriptions (public)
+
+Subscribers live in D1. Email is normalized to lowercase; the primary key prevents duplicates. Unsubscribing is a soft delete (`unsubscribed_at` set). Re-subscribing reactivates the same row.
+
+#### `POST /api/subscribe`
+
+```json
+{ "email": "jane@example.com", "source": "footer" }
+```
+
+**Success `201`** (new) or **`200`** (already subscribed):
+```json
+{
+  "success": true,
+  "email": "jane@example.com",
+  "alreadySubscribed": false,
+  "reactivated": false,
+  "message": "Subscribed successfully"
+}
+```
+
+The unsubscribe token is **not** returned in the public response (only stored for email links you may send via Resend).
+
+#### `POST /api/unsubscribe`
+
+Body: `{ "token": "…" }` **or** `{ "email": "…" }`.
+
+#### `GET /api/unsubscribe?token=…`
+
+One-click unsubscribe for links in emails.
+
+**Success:**
+```json
+{
+  "success": true,
+  "email": "jane@example.com",
+  "alreadyUnsubscribed": false,
+  "message": "You have been unsubscribed"
+}
 ```
 
 ---
@@ -1425,6 +1575,75 @@ Response: `{ "success": true }`
 
 ---
 
+### Reviews (moderation)
+
+#### `GET /api/admin/reviews`
+
+Query params:
+- `?status=pending|approved|rejected` — filter by status
+- `?productId=p-8392` — filter by product
+- `?page=1&limit=20` — pagination (max limit 100)
+
+```json
+{
+  "reviews": [ /* same shape as public list, may include pending/rejected */ ],
+  "total": 12,
+  "page": 1,
+  "limit": 20
+}
+```
+
+#### `GET /api/admin/reviews/:id`
+
+Single review or `404`.
+
+#### `PATCH /api/admin/reviews/:id`
+
+```json
+{ "status": "approved" }
+```
+
+Allowed: `approved`, `rejected`, `pending`.
+
+Response: `{ "success": true, "id": "…", "status": "approved" }`
+
+#### `DELETE /api/admin/reviews/:id`
+
+Hard delete. Response: `{ "success": true, "id": "…" }`
+
+---
+
+### Subscribers
+
+#### `GET /api/admin/subscribers`
+
+Query params:
+- `?activeOnly=true` (default) or `false` to include unsubscribed
+- `?page=1&limit=50` (max 200)
+
+```json
+{
+  "subscribers": [
+    {
+      "email": "jane@example.com",
+      "subscribedAt": "2026-08-15T…",
+      "unsubscribedAt": null,
+      "source": "footer",
+      "active": true
+    }
+  ],
+  "total": 1,
+  "page": 1,
+  "limit": 50
+}
+```
+
+#### `DELETE /api/admin/subscribers/:email`
+
+Hard delete (URL-encode the email). Response: `{ "success": true, "email": "…" }`
+
+---
+
 ### Products (note)
 
 #### `GET /api/admin/products`
@@ -1539,6 +1758,21 @@ helpful INTEGER
 created_at TEXT
 status TEXT                -- pending | approved | rejected
 ```
+
+Indexes: `(product_id, status)`, `(status, created_at)`.  
+Public `GET /api/reviews/:productId` only returns `status = 'approved'`. New submissions always insert as `pending`.
+
+**`subscribers`** — newsletter / email list
+
+```sql
+email TEXT PRIMARY KEY     -- normalized lowercase
+subscribed_at TEXT
+unsubscribed_at TEXT       -- null = currently subscribed
+unsubscribe_token TEXT UNIQUE
+source TEXT                -- e.g. footer, checkout, popup
+```
+
+Soft-unsubscribe sets `unsubscribed_at`. Re-subscribe clears it and rotates the token. The public subscribe response never returns the token.
 
 **`coupon_usage`**
 
