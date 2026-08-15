@@ -93,9 +93,21 @@ CREATE TABLE IF NOT EXISTS reservations (
   created_at TEXT NOT NULL
 );
 
+-- Email / newsletter subscribers
+CREATE TABLE IF NOT EXISTS subscribers (
+  email TEXT PRIMARY KEY,                 -- normalized lowercase
+  subscribed_at TEXT NOT NULL,
+  unsubscribed_at TEXT,                   -- null = currently subscribed
+  unsubscribe_token TEXT NOT NULL UNIQUE,
+  source TEXT                             -- e.g. 'footer', 'checkout', 'popup'
+);
+
 -- Create indexes
 CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
 CREATE INDEX IF NOT EXISTS idx_orders_session ON orders(stripe_session_id);
 CREATE INDEX IF NOT EXISTS idx_reviews_product ON reviews(product_id, status);
+CREATE INDEX IF NOT EXISTS idx_reviews_status ON reviews(status, created_at);
 CREATE INDEX IF NOT EXISTS idx_reservations_expires ON reservations(expires_at);
 CREATE INDEX IF NOT EXISTS idx_reservations_order ON reservations(order_id);
+CREATE INDEX IF NOT EXISTS idx_subscribers_token ON subscribers(unsubscribe_token);
+CREATE INDEX IF NOT EXISTS idx_subscribers_active ON subscribers(subscribed_at) WHERE unsubscribed_at IS NULL;
