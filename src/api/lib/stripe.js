@@ -73,6 +73,18 @@ export class StripeAPI {
     return this.request('/checkout/sessions', 'POST', params);
   }
 
+  /**
+   * Create a one-time Stripe coupon to represent an internal discount.
+   * Stripe does not accept negative unit_amount on line items, so discounts
+   * must be applied via the session's `discounts` array referencing a coupon
+   * object created here. The coupon is duration: 'once' so it can't be
+   * reused, and is identified by the internal coupon code for traceability
+   * in the Stripe dashboard.
+   */
+  async createCoupon(params) {
+    return this.request('/coupons', 'POST', params);
+  }
+
   async retrieveSession(sessionId) {
     return this.request(`/checkout/sessions/${sessionId}`);
   }
