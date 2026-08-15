@@ -56,6 +56,7 @@ Map every piece of hardcoded data into JSON configs. Invent any custom config fi
 | `tax.json` | `defaultRate`, `includedInPrice`, `rules[]` (country, optional state, rate, included, name) |
 | `coupons.json` | `active[]`, `codes` (type: percentage/fixed, value, minOrder, usageLimit, maxDiscount, expires, description) |
 | `sale.json` | `active`, `saleName`, `startDate`, `endDate`, `rules[]`, `badgeText`, `badgeColor`, `badgeTextColor` |
+| `size-guide.json` | **Optional.** Global size guide: `default` object, optional `byCategory` / `byTag` maps. Same shape as product-level `sizeGuide` (title, unit, columns, rows, fitNotes, howToMeasure, links, …). SPA: prefer `product.sizeGuide` → category/tag match → `default`. |
 
 ### Custom Configs (Invent as Needed)
 
@@ -363,6 +364,16 @@ const cartItem = {
 - Strictly avoid JS floating-point artifacts by rounding subtotals to 2 decimal places before display (e.g., `(price * qty).toFixed(2)`).
 - Update the cart count badge in the shell on every mutation. Use `aria-live="polite"` on the cart total.
 
+**Optional checkout note:** If the mockup has a note / gift message / delivery-instructions field, wire it as an optional 5th argument to `createCheckout`. Server stores it as `customerNote` (max 1000 chars, HTML stripped). Omit when empty.
+
+**Country codes:** Shipping `country` (and product-level shipping restrictions) use **ISO 3166-1 alpha-2** (e.g. `US`, `GB`). Server normalizes case.
+
+**Product shipping restrictions:** Products may set `shipping.allowedCountries` / `shipping.blockedCountries`. Server rejects checkout with `400` / "Product cannot be shipped to this destination" when a line is not allowed for the destination. Surface this clearly in the checkout error UI.
+
+**Sourcing / dropship:** Optional `product.sourcing` (`sources[]`, `links[]`, `notes`) is snapshotted onto order line items server-side at checkout for admin ops. SPA does **not** need to send sourcing in the cart payload.
+
+**Size guide (product page):** If the mockup has a size guide control, resolve in order: `product.sizeGuide` → `config/size-guide.json` `byCategory` / `byTag` → `default`. Same object shape in all places (`title`, `unit`, `columns`, `rows`, `fitNotes`, `howToMeasure`, `links`, …).
+
 **Checkout Submission & Error Handling:**
 
 ```js
@@ -377,12 +388,15 @@ const cartPayload = cart.map(item => ({
   image: item.image
 }));
 
+const note = document.getElementById('co-note')?.value?.trim() || null;
+
 try {
   const result = await client.createCheckout(
     cartPayload,
     { email, name, firstName, lastName },
     { country, state, address1, city, zip, method: shippingMethod },
-    couponCode || null
+    couponCode || null,
+    note   // optional customer note
   );
   window.location.href = result.checkoutUrl;
 } catch (err) {
@@ -393,6 +407,8 @@ try {
   } else if (err.status === 400 || msg.includes('Price mismatch')) {
     showPriceChangedError();
     await refreshProductData();
+  } else if (msg.includes('cannot be shipped') || msg.includes('Shipping not available')) {
+    showShippingError(msg);
   } else {
     showGenericCheckoutError(msg);
   }
@@ -506,3 +522,4 @@ Output the `_redirects` file required for path-based routing to work on deep lin
 **Pteris Backend Documentation:** [Provided in context above / attached]
 
 **Static Mockup HTML:** [Provided in context or attached]
+ 
