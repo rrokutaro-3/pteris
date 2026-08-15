@@ -132,8 +132,8 @@ export class D1Store {
   // ─── Orders ───
   async createOrder(order) {
     await this.db.prepare(`
-      INSERT INTO orders (id, items, customer, shipping, subtotal, shipping_cost, tax, total, status, stripe_session_id, coupon, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+      INSERT INTO orders (id, items, customer, shipping, subtotal, shipping_cost, tax, total, status, stripe_session_id, coupon, customer_note, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
     `).bind(
       order.id,
       JSON.stringify(order.items),
@@ -145,7 +145,8 @@ export class D1Store {
       order.total,
       order.status,
       order.stripeSessionId,
-      order.coupon || null
+      order.coupon || null,
+      order.customerNote || null
     ).run();
   }
 
@@ -277,6 +278,7 @@ export class D1Store {
       trackingNumber: row.tracking_number || null,
       carrier: row.carrier || null,
       notes: row.notes || null,
+      customerNote: row.customer_note || null,
       refundAmount: row.refund_amount ?? null,
       refundReason: row.refund_reason || null,
       refundedAt: row.refunded_at || null,
